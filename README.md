@@ -43,7 +43,7 @@ TSHillData combines simplicity with automation:
 - **Automated Output**: Exports directly to pre-configured Excel templates.
 
 ### Target Audience
-Specifically designed for **Pathfinder Inspection**, TSHillData integrates into workflows to enhance service delivery for clients like **Marathon Oil** and **ConocoPhillips**.
+Specifically designed for **Pathfinder Inspections**, TSHillData integrates into workflows to enhance service delivery for clients like **Marathon Oil** and **ConocoPhillips**.
 
 ### Usage Context
 1. **On-Site Operations**: Installed on laptops in field conex boxes for inspector data entry.
