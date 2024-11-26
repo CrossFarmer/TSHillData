@@ -18,6 +18,7 @@ import openpyxl
 import re
 from fpdf import FPDF
 
+
 root_width = 1080
 root_height = 720
 
@@ -291,8 +292,9 @@ class WidgetManager:
 
         col_header_display_frame = self.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
         if event.widget.winfo_parent() == str(col_header_display_frame):
+            active_tab = self.data_manager.json_data_dict['active_tab']
             column = event.widget.grid_info()['column']
-            headers_list = self.data_manager.json_data_dict['report_user_metadata']['users_column_select']
+            headers_list = self.data_manager.json_data_dict['report_data'][active_tab]['users_column_select']
             header = headers_list[column]
             self.magni_header.set(header)
             self.magni_content.set(event.widget.get())
@@ -358,7 +360,8 @@ class WidgetManager:
                 col_header_display_frame = self.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
                 if focus_widget.winfo_parent() == str(col_header_display_frame):
                     column = focus_widget.grid_info()['column']
-                    headers_list = self.data_manager.json_data_dict['report_user_metadata']['users_column_select']
+                    active_tab = self.data_manager.json_data_dict['active_tab']
+                    headers_list = self.data_manager.json_data_dict['report_data'][active_tab]['users_column_select']
                     header = headers_list[column]
                     self.magni_header.set(header)
                     self.magni_content.set(focus_widget.get())
@@ -488,7 +491,13 @@ class WidgetManager:
 
 class DataManager:
     def __init__(self):
-        self.json_data_dict = {'report_user_metadata': {}, 'report_data': {}}
+        self.json_data_dict = {
+            "branch": "", 
+            "report_type": "", 
+            "active_tab": "", 
+            "report_user_metadata": {}, 
+            "report_data": {}
+        }
         self.is_saving = False
         self.lock = threading.Lock()
         self.save_thread = None
@@ -587,29 +596,17 @@ class DataManager:
     def initialize_json(self, widmg):
         #Create a JSON File To Store The Input Data For Report, Saving it as the Date and Time For Filename
         md = self.json_data_dict['report_user_metadata']
+        active_tab = self.json_data_dict['active_tab']
+
         current_date = datetime.now().strftime('%m.%d.%Y')
         current_time = datetime.now().strftime('%m.%d.%Y_%I.%M.%p')
         md['create_date'] = current_date
         md['create_time'] = current_time
 
-        if md['add_pdpir_tab']:
-            typrep = 'DP'
-        elif md['add_hwdp_tab']:
-            if md['active_tab'] == 'Prop HWDP Inp Report':
-                typrep = 'HWDP'
-            else:
-                typrep = 'DP'
-        elif md['add_subs_tab']:
-            if md['active_tab'] == 'Prop Subs Inp Report':
-                typrep = 'SUBS'
-            else:
-                typrep = 'HWDP'
-        else:
-            typrep = 'DP'
 
-        if md['report_type'] == "Drill Pipe Inspection Report":
-            base_filename = f"{md['date_entry'].replace('/', '.')}_INV{md['invoice_entry']}_{md['connection_size_selection']} Inch {typrep} Inspection Report_{md['operator_entry']}_{md['contractor_entry']}_{widmg.tab_data_header.get()}"
-        elif md['report_type'] == "Tubing/Casing Report":
+        if self.json_data_dict['report_type'] == "Drill Pipe Inspection Report":
+            base_filename = f"{md['date_entry'].replace('/', '.')}_INV{md['invoice_entry']}_{md['connection_size_selection']} Inch DP Inspection Report_{md['operator_entry']}_{md['contractor_entry']}"
+        elif self.json_data_dict['report_type'] == "Tubing/Casing Report":
             if md['connection_size_selection'] == "2 7/8\"":
                 file_con_sizesel = '2.875'
             elif md['connection_size_selection'] == "2 3/8\"":
@@ -617,7 +614,7 @@ class DataManager:
             else:
                 file_con_sizesel = md['connection_size_selection'].strip('"')
 
-            if 'grade_info' in md and md['grade_info'] != "":
+            if 'grade_info' in md and md['grade_info'] != None:
                 grade_info = f"{md['grade_info']}_"
             else:
                 grade_info = f"{md['grade_info']}_" if 'grade_info' in md else ""
@@ -626,6 +623,7 @@ class DataManager:
 
         self.filename = f"{base_filename}.json"
         self.save_dict_to_file_start()
+
 
 
     def save_tab_status_table_to_json(self, file_name):
@@ -678,7 +676,7 @@ def branch_select_screen(widmg, datmg, root):
 
 
 def select_nd_but_to_tdpselscreen(branch, widmg, datmg, root):
-    datmg.json_data_dict['report_user_metadata']['branch'] = branch
+    datmg.json_data_dict['branch'] = branch
     widmg.branch_var.set(branch)
     page = widmg.branch_select_menu
     widmg.hide_widget_grouping(page['labels'])
@@ -686,9 +684,9 @@ def select_nd_but_to_tdpselscreen(branch, widmg, datmg, root):
     create_tubing_drillpipe_selection_screen(widmg, datmg, root)
 
 def select_tx_but_to_tdpselscreen(branch, widmg, datmg, root):
-    datmg.json_data_dict['report_user_metadata']['branch'] = branch
+    datmg.json_data_dict['branch'] = branch
     widmg.branch_var.set(branch)
-    datmg.json_data_dict['report_user_metadata']['report_type'] = "Drill Pipe Inspection Report"
+    datmg.json_data_dict['report_type'] = "Drill Pipe Inspection Report"
     page = widmg.branch_select_menu
     widmg.hide_widget_grouping(page['labels'])
     widmg.hide_widget_grouping(page['buttons'])
@@ -718,8 +716,21 @@ def back_to_branch_action(widmg, datmg, root):
     branch_select_screen(widmg, datmg, root)
 
 def tubing_button_to_ssescreen(widmg, datmg, root):
-    datmg.json_data_dict['report_user_metadata']['report_type'] = "Tubing/Casing Report"
-    datmg.json_data_dict['report_user_metadata']['active_tab'] = 'Tubing Insp Report'
+    datmg.json_data_dict['report_type'] = "Tubing/Casing Report"
+    datmg.json_data_dict['active_tab'] = 'Tubing Insp Report'
+    datmg.json_data_dict['report_data'] = {
+        "Tubing Insp Report": {
+            'joint_count': 0,
+            'users_column_select': [],
+            "is_complete": False,
+            "inspection_type_data": {
+                "inspection_type_selection": "", 
+                "inspection_type_addodid": "", 
+                "inspection_type_additional": ""
+            },
+            "joint_data": {}
+        }
+    }
     widmg.spreadsheet_type_prework.set("Tubing Spreadsheet")
     page = widmg.tubing_or_drillpipe_menu
 
@@ -729,8 +740,10 @@ def tubing_button_to_ssescreen(widmg, datmg, root):
     does_spreadsheet_exist_screen(widmg, datmg, root)
 
 
+
 def drill_pipe_button_to_ssescreen(widmg, datmg, root):
-    datmg.json_data_dict['report_user_metadata']['report_type'] = "Drill Pipe Inspection Report"
+    datmg.json_data_dict['report_type'] = "Drill Pipe Inspection Report"
+
     widmg.spreadsheet_type_prework.set("Drill Pipe Spreadsheet")
     page = widmg.tubing_or_drillpipe_menu
 
@@ -748,31 +761,33 @@ def continue_existing_report_btn(widmg, datmg, root):
     widmg.hide_widget_grouping(page['labels'])
     widmg.hide_widget_grouping(page['buttons'])
 
-    display_excel_files(widmg, datmg, root)
+    display_incomplete_reports(widmg, datmg, root)
 
 
 
-def display_excel_files(widmg, datmg, root):
+### Function that allows user to continue working on an existing report. This function currently works correctly assuming that
+### the datmg.json_data_dict/self.filename is in the proper format. Currently, having issues due to this.
+
+
+
+def display_incomplete_reports(widmg, datmg, root):
+    import os
+    import tkinter as tk
+    from tkinter import ttk
+    
     # Define the page variable for easy reference
     page = widmg.continue_existing_report_screen
     
     # Path to the folder containing incomplete report files
-    folder_path = os.path.join(os.path.dirname(__file__), 'incomplete_reports')
-
+    folder_path = os.path.join(os.path.dirname(__file__), 'data_entry_files')
+    
     # Label to instruct user
     select_existing_report = ttk.Label(root, text="SELECT EXISTING REPORT FILE", font=('Arial', 32))
     widmg.store_and_place(page['labels'], "select_existing_report", select_existing_report, relx=0.5, rely=0.05, relheight=0.10, anchor='c')
-
-    pdpir_display_frame = ttk.Frame(root)
-    widmg.store_and_place(page['display_frames'], "pdpir_display_frame", pdpir_display_frame, relx=0.2, rely=0.65, relwidth=0.25, relheight=0.50, anchor='center')
-    hwdp_display_frame = ttk.Frame(root)
-    widmg.store_and_place(page['display_frames'], "hwdp_display_frame", hwdp_display_frame, relx=0.5, rely=0.65, relwidth=0.25, relheight=0.50, anchor='center')
-    subs_display_frame = ttk.Frame(root)
-    widmg.store_and_place(page['display_frames'], "subs_display_frame", subs_display_frame, relx=0.8, rely=0.65, relwidth=0.25, relheight=0.50, anchor='center')
-
+    
     # Frame for holding the filename list
     file_display_frame = ttk.Frame(root)
-    widmg.store_and_place(page['display_frames'], "file_display_frame", file_display_frame, relx=0.5, rely=0.225, relwidth=0.8, relheight=0.2, anchor='center')
+    widmg.store_and_place(page['display_frames'], "file_display_frame", file_display_frame, relx=0.5, rely=0.225, relwidth=0.8, relheight=0.1, anchor='center')
     
     # Listbox for displaying Excel filenames
     file_listbox = tk.Listbox(file_display_frame, selectmode=tk.SINGLE)
@@ -782,312 +797,168 @@ def display_excel_files(widmg, datmg, root):
     file_scrollbar = tk.Scrollbar(file_display_frame, orient=tk.VERTICAL, command=file_listbox.yview)
     widmg.store_and_place(page['scrollbars'], "file_scrollbar", file_scrollbar, relx=0.98, rely=0, relheight=1.0)
     file_listbox.config(yscrollcommand=file_scrollbar.set)
-
-    # Populate listbox with .xlsx filenames from the specified folder
+    
+    # Populate listbox with .json filenames from the specified folder
     for filename in os.listdir(folder_path):
-        if filename.endswith('.xlsx'):
+        if filename.endswith('.json'):
             file_listbox.insert(tk.END, filename)
-
-    # Bind the selection event to load Excel data and search for JSON files when a file is selected
-    file_listbox.bind("<<ListboxSelect>>", lambda event: handle_file_selection(root, datmg, widmg, event, file_listbox, folder_path, pdpir_display_frame, hwdp_display_frame, subs_display_frame, page))
-
+    
+    # Bind the selection event to load data and determine frames dynamically
+    file_listbox.bind("<<ListboxSelect>>", lambda event: handle_file_selection(root, datmg, widmg, event))
+    
     # Create the 'BACK' button
-    back_button = ttk.Button(root, text="BACK", command=lambda: back_from_displayexcelfiles(widmg, datmg, root), style='Large.TButton')
+    back_button = ttk.Button(root, text="BACK", command=lambda: back_from_displayincompletereports(widmg, datmg, root), style='Large.TButton')
     widmg.store_and_place(page['buttons'], "back_button", back_button, relx=0.5, rely=0.95, relwidth=0.33, relheight=0.075, anchor='center')
     
-
-
-    def handle_file_selection(root, datmg, widmg, event, file_listbox, folder_path, pdpir_display_frame, hwdp_display_frame, subs_display_frame, page):
+    def handle_file_selection(root, datmg, widmg, event):
         # Retrieve the selected file from the listbox
         selected_index = file_listbox.curselection()
         if not selected_index:
             return
         selected_file = file_listbox.get(selected_index[0])
-
+        
         sel_file_full_path = os.path.join(folder_path, selected_file)
         
-        # Load Excel data
-        pdpir_included, pdpir_complete, hwdp_included, hwdp_complete, subs_included, subs_complete, report_status = load_tct_data(datmg, selected_file, folder_path)
+        # Load data from the file
+        datmg.load_file_to_dict(sel_file_full_path)
+        datmg.filename = sel_file_full_path
         
-        # Find matching JSON files
-        pdpir_json, hwdp_json, subs_json = find_related_json_files(datmg, selected_file)
+        # Retrieve tabs information
+        included_tabs = get_report_tabs_info(datmg)
+        create_tab_display_frames(root, datmg, widmg, included_tabs)
 
-        # Populate each display frame with status and button
-        update_display_frame(root, datmg, widmg, pdpir_display_frame, pdpir_included, pdpir_complete, pdpir_json, "PDPIR", page, sel_file_full_path)
-        update_display_frame(root, datmg, widmg, hwdp_display_frame, hwdp_included, hwdp_complete, hwdp_json, "HWDP", page, sel_file_full_path)
-        update_display_frame(root, datmg, widmg, subs_display_frame, subs_included, subs_complete, subs_json, "SUBS", page, sel_file_full_path)
+    def get_report_tabs_info(datmg):
+        included_tabs = []
+        for tab in datmg.json_data_dict['report_data']:
+            included_tabs.append(tab)
+        return included_tabs
 
 
-    def update_display_frame(root, datmg, widmg, frame, included, complete, json_file, label_text, page, sel_file_full_path):
-        # Clear the frame first
-        for widget in frame.winfo_children():
-            widget.destroy()
+    def create_tab_display_frames(root, datmg, widmg, included_tabs):
+        # Determine frame configurations based on included_tabs length
+        frame_count = min(len(included_tabs), 3)  # Limit to a maximum of 3 frames
         
-        # Determine status and button text based on conditions
-        if included == "Yes":
-            if complete == "Yes":
-                if json_file is not None:
-                    status_text = "COMPLETE"
-                    status_color = "green"
-                    button_text = "EDIT"
-            else:
-                if json_file is not None:
-                    status_text = "INCOMPLETE"
-                    status_color = "orange"
-                    button_text = "CONTINUE"
-                else:
-                    status_text = "NOT STARTED"
-                    status_color = "#8B0000"  # Darker red color
-                    button_text = "START"
-        else:
-            # If `included` is "No" or any other unexpected value, show a simple label
-            not_included_label = ttk.Label(frame, text=f"{label_text} Not Included", font=('Arial', 14))
-            not_included_label.pack(anchor="center", pady=(10, 10))
-            return  # Exit since we don’t need a button in this case
+        # Define the page variable for easy reference
+        page = widmg.continue_existing_report_screen
 
-        # Add primary label for inclusion
-        title_label = ttk.Label(frame, text=f"{label_text} Included", font=('Arial', 16, 'bold'))
-        title_label.pack(anchor="n", pady=(10, 5))
-
-        # Add status label with color
-        status_label = ttk.Label(frame, text=f"STATUS: {status_text}", font=('Arial', 14))
-        status_label.config(foreground=status_color)
-        status_label.pack(anchor="n", pady=(5, 10))
-
-        # Add button with conditional command based on `button_text`
-        action_button = ttk.Button(frame, text=button_text, command=lambda: handle_action(root, datmg, widmg, button_text, json_file, label_text, page, sel_file_full_path))
-        action_button.pack(anchor="n", pady=(10, 5))
-
-    def load_tct_data(datmg, selected_file, folder_path):
-        file_path = os.path.join(folder_path, selected_file)
-        datmg.load_tab_status_table_to_dict(file_path)
-        tctable = datmg.excel_files_tct
-
-
+        for frame_key in list(page['display_frames'].keys()):
+            frame = page['display_frames'].pop(frame_key)
+            if isinstance(frame, ttk.Frame) or isinstance(frame, tk.Frame):
+                frame.destroy()
         
-        # Retrieve cell values and assign them to variables
-        pdpir_included = tctable["PDPIR"]["Included?"]
-        hwdp_included = tctable["HWDP"]["Included?"]
-        subs_included = tctable["SUBS"]["Included?"]
-        pdpir_complete = tctable["PDPIR"]["Completed?"]
-        hwdp_complete = tctable["HWDP"]["Completed?"]
-        subs_complete = tctable["SUBS"]["Completed?"]
-        report_status = tctable["REPORT_COMPLETE"]
-
-        return pdpir_included, pdpir_complete, hwdp_included, hwdp_complete, subs_included, subs_complete, report_status
-
-    def find_related_json_files(datmg, selected_file):
-        inc_rep_folder_path = os.path.join(os.path.dirname(__file__), 'incomplete_reports')
-        selected_file_path = os.path.join(inc_rep_folder_path, selected_file)
-        datmg.xel_file_path = selected_file_path
-        raw_excel_filename = selected_file.rsplit('_', 1)[0]
+        # Calculate frame width based on the number of frames
+        frame_width = 0.8 / frame_count  # Equal width division
         
-        # Directory where JSON files are stored
-        json_folder_path = os.path.join(os.path.dirname(__file__), 'data_entry_files')
+        # Display the report type in a separate frame
+        report_type_display_frame = ttk.Frame(root)
+        report_type_label = ttk.Label(report_type_display_frame, text=datmg.json_data_dict['report_type'], font=('Arial', 20))
+        report_type_label.pack(anchor='center')
+        widmg.store_and_place(page['display_frames'], "report_type_display_frame", report_type_display_frame, relx=0.5, rely=0.35, relwidth=0.8, relheight=0.05, anchor='center')
         
-        # Variables for JSON filenames
-        pdpir_json, hwdp_json, subs_json = None, None, None
+        # Get user metadata to display in each tab frame
+        user_metadata = datmg.json_data_dict['report_user_metadata']
+        metadata_list = [
+            user_metadata['operator_entry'], user_metadata['contractor_entry'], user_metadata['location_entry'], 
+            user_metadata['date_entry'], user_metadata['invoice_entry'], user_metadata['connection_size_selection'], 
+            user_metadata['connection_type_selection'], user_metadata['inspected_by_entry'], user_metadata.get('grade_info')
+        ]
+        metadata_text = "\n".join(str(item) for item in metadata_list if item)  # Join metadata into one block of text
 
-        # Search for JSON files with the correct pattern
-        for filename in os.listdir(json_folder_path):
-            if filename == f"{raw_excel_filename}_PDPIR.json":
-                pdpir_json = filename
-            elif filename == f"{raw_excel_filename}_HWDP.json":
-                hwdp_json = filename
-            elif filename == f"{raw_excel_filename}_SUBS.json":
-                subs_json = filename
+        # Dynamically create frames based on the number of included tabs
+        for i, tab_key in enumerate(included_tabs):
+            frame_name = f"tab_display_frame_{i + 1}"
+            tab_label_name = f"tab_label_name_{i + 1}"
+            tdf_completion_lbl_name = f"tdf_completion_lbl_name_{i + 1}"
+            tdf_metadata_lbl_name = f"tdf_metadata_lbl_name_{i + 1}"
+            tdf_inspection_lbl_name = f"tdf_inspection_lbl_name_{i + 1}"
+            tdf_button_name = f"tdf_button_name_{i + 1}"
 
-        if pdpir_json is not None:
-            json_file_path = os.path.join(json_folder_path, pdpir_json)
-        elif hwdp_json is not None:
-            json_file_path = os.path.join(json_folder_path, hwdp_json)
-        elif subs_json is not None:
-            json_file_path = os.path.join(json_folder_path, subs_json)
+            frame = ttk.Frame(root)
+            relx_position = 0.1 + i * frame_width + frame_width / 2
+            widmg.store_and_place(page['display_frames'], frame_name, frame, relx=relx_position, rely=0.65, relwidth=frame_width, relheight=0.45, anchor='center')
+            
+            # Add the tab name at the top
+            tab_label = ttk.Label(frame, text=tab_key, font=('Arial', 14, 'bold'))
+            widmg.store_and_place(page['labels'], tab_label_name, tab_label, relx=0.5, rely=0.04, relwidth=0.95, relheight=0.10, anchor='center')
+            
+            # Check if tab is complete and set completion status
+            tab_data = datmg.json_data_dict['report_data'][tab_key]
+            is_complete = tab_data['is_complete']
+            completion_text = "Complete" if is_complete else "Incomplete"
+            completion_color = "green" if is_complete else "red"
 
-        datmg.load_file_to_dict(json_file_path)
-        datmg.filename = None
-        datmg.json_data_dict['report_data'] = {}
+            completion_label = ttk.Label(frame, text=completion_text, font=('Arial', 14, 'bold'), foreground=completion_color)
+            widmg.store_and_place(page['labels'], tdf_completion_lbl_name, completion_label, relx=0.5, rely=0.12, relwidth=0.95, relheight=0.10, anchor='center')
 
-        # Return the JSON file references
-        return pdpir_json, hwdp_json, subs_json
+            # Display user metadata
+            metadata_label = ttk.Label(frame, text=metadata_text, font=('Arial', 10), wraplength=frame_width*500)  # Wrap text to fit frame
+            widmg.store_and_place(page['labels'], tdf_metadata_lbl_name, metadata_label, relx=0.5, rely=0.40, relwidth=0.95, relheight=0.30, anchor='center')
+            
+            # Display unique inspection data for this tab
+            inspection_data = tab_data["inspection_type_data"]
+            inspection_parts = []
+            if inspection_data.get("inspection_type_selection"):
+                inspection_parts.append(inspection_data["inspection_type_selection"])
+            if inspection_data.get("inspection_type_addodid"):
+                inspection_parts.append(inspection_data["inspection_type_addodid"])
+            if inspection_data.get("inspection_type_additional"):
+                inspection_parts.append(inspection_data["inspection_type_additional"])
+            # Filter out any None values in inspection_parts
+            inspection_text = " ".join(str(part) for part in inspection_parts if part is not None)
+
+            
+            inspection_label = ttk.Label(frame, text=inspection_text, font=('Arial', 12, 'italic'), wraplength=frame_width*300)
+            widmg.store_and_place(page['labels'], tdf_inspection_lbl_name, inspection_label, relx=0.5, rely=0.71, relwidth=0.95, relheight=0.15, anchor='center')
+            
+            # Add button based on completion status
+            button_text = "EDIT" if is_complete else "START"
+            action_button = ttk.Button(frame, text=button_text, command=lambda tab=tab_key: bring_to_main_report_scrn(widmg, datmg, root, tab))
+            widmg.store_and_place(page['buttons'], tdf_button_name, action_button, relx=0.5, rely=0.91, relwidth=0.87, relheight=0.09, anchor='center')
 
 
-def handle_action(root, datmg, widmg, button_text, json_file, label_text, page, sel_file_full_path):
+
+def bring_to_main_report_scrn(widmg, datmg, root, tab_key):
+    page = widmg.continue_existing_report_screen
     widmg.hide_widget_grouping(page['display_frames'])
     widmg.hide_widget_grouping(page['listboxes'])
     widmg.hide_widget_grouping(page['scrollbars'])
     widmg.hide_widget_grouping(page['buttons'])
     widmg.hide_widget_grouping(page['labels'])
 
-    if json_file is not None:
-        json_folder_path = os.path.join(os.path.dirname(__file__), 'data_entry_files')
-        json_file_path = os.path.join(json_folder_path, json_file)
-        datmg.load_file_to_dict(json_file_path)
+    if tab_key == "Prop Drill Pipe Inp Report":
+        widmg.tab_data_header.set("PDPIR")
+    elif tab_key == "Prop HWDP Inp Report":
+        widmg.tab_data_header.set("HWDP")
+    elif tab_key == "Prop Subs Inp Report":
+        widmg.tab_data_header.set("SUBS")
+    elif tab_key == "Tubing Insp Report":
+        widmg.tab_data_header.set(datmg.json_data_dict['report_user_metadata']['connection_type_selection'])
 
-    widmg.tab_data_header.set(label_text)
+    datmg.json_data_dict['active_tab'] = tab_key
+    active_tab = datmg.json_data_dict['active_tab']
 
-    if label_text == "PDPIR":
-        active_tab = "Prop Drill Pipe Inp Report"
-    elif label_text == "HWDP":
-        active_tab = "Prop HWDP Inp Report"
-    elif label_text == "SUBS":
-        active_tab = "Prop Subs Inp Report"
+    datmg.json_data_dict['report_data'][tab_key]['is_complete'] = False
+    datmg.save_dict_to_file()
 
-    datmg.json_data_dict['report_user_metadata']['active_tab'] = active_tab
-
-    if button_text == "EDIT":
-        datmg.filename = json_file
-        datmg.editing_spec_tab = True
-        # org_wb = openpyxl.load_workbook(sel_file_full_path)
-
-        # # Create the backup filename with '_orig' before the .xlsx extension
-        # org_basename = os.path.basename(sel_file_full_path)
-        # org_filename, ext = os.path.splitext(org_basename)
-        # new_org_basename = f"{org_filename}_orig{ext}"
-        # new_full_path = os.path.join(os.path.dirname(sel_file_full_path), new_org_basename)
-        # org_wb.save(new_full_path)
-        # org_wb.close()
-
-        # editab_wb = openpyxl.load_workbook(sel_file_full_path)
-        # editab_wb = switcharoo_tabs(editab_wb, label_text)
-        # editab_wb.save(sel_file_full_path)
-
-        # datmg.xel_file_path = sel_file_full_path
-        display_main_report_screen(widmg, datmg, root)
-        update_all_row_cells(widmg, datmg, root)
-
-    elif button_text == "CONTINUE":
-        datmg.filename = json_file
-        datmg.xel_file_path = sel_file_full_path
-        display_main_report_screen(widmg, datmg, root)
-        update_all_row_cells(widmg, datmg, root)
-    elif button_text == "START":
-        create_report_metadata_input_widgets(widmg, datmg, root, editing=False)
+    if datmg.json_data_dict['report_data'][active_tab]['users_column_select'] == []:
+        show_table_selection_screen(widmg, datmg, root)
     else:
-        print("Unknown action.")
-
-
-def switcharoo_tabs(workbook, reptype):
-    # Define the mapping of reptype to associated tab names and positions
-    tab_mapping = {
-        'PDPIR': ('Prop Drill Pipe Inp Report', 'PDPIR BACKUP', 'Sum Drill Pipe', 'Sum HWDP'),
-        'HWDP': ('Prop HWDP Inp Report', 'HWDP BACKUP', 'Sum HWDP', 'Sum Subs'),
-        'SUBS': ('Prop Subs Inp Report', 'SUBS BACKUP', 'Sum Subs', 'Data Sheet')
-    }
-
-    if reptype not in tab_mapping:
-        raise ValueError("Invalid reptype. Must be one of: 'PDPIR', 'HWDP', 'SUBS'")
-
-    inp_report_tab, backup_tab, before_tab, after_tab = tab_mapping[reptype]
-
-    if backup_tab not in workbook.sheetnames:
-        raise ValueError(f"The backup tab '{backup_tab}' does not exist in the workbook.")
-
-    duplicate_sheet = workbook.copy_worksheet(workbook[backup_tab])
-
-    duplicate_sheet.title = f"{backup_tab} (2)"
-
-    if inp_report_tab in workbook.sheetnames:
-        del workbook[inp_report_tab]
-
-    duplicate_sheet.title = inp_report_tab
-
-    before_index = workbook.sheetnames.index(before_tab)
-    after_index = workbook.sheetnames.index(after_tab)
-    target_index = before_index + 1 if after_index > before_index else after_index - 1
-
-    workbook._sheets.remove(duplicate_sheet)
-    workbook._sheets.insert(target_index, duplicate_sheet)
-
-    return workbook
-
-def update_new_edit_count_and_get_pdf_filename(reptyp, org_basename):
-    # Define the directory containing the PDF files
-    pdf_directory = os.path.join(os.getcwd(), 'incomplete_reports')
+        display_main_report_screen(widmg, datmg, root)
     
-    # Function to reduce filenames for comparison
-    def reduce_filename(filename):
-        # Remove the last underscore and everything after it
-        reduced = '_'.join(filename.split('_')[:-1])
-        return reduced
-
     
-    org_last_part = org_basename.split('_')[-1].replace('.xlsx', '')
-    
-    try:
-        report_total_count = int(re.match(r'\d+', org_last_part).group())
-    except AttributeError:
-        print("Error extracting report_total_count from org_basename")
-        return None
 
-    org_bn_compare = reduce_filename(org_basename.replace('.xlsx', ''))
-
-
-    # Prepare to find the matching PDF file
-    pdf_to_delete = None
-    pdf_matches_joint_count = None
-
-    # Check if the PDF directory exists
-    if not os.path.exists(pdf_directory):
-        print(f"PDF directory '{pdf_directory}' does not exist.")
-        return None
-
-    # Iterate over PDF files in the directory
-    for pdf_file in os.listdir(pdf_directory):
-        if pdf_file.endswith('_PDF-COPY.pdf'):
-            
-            # Remove '_PDF-COPY.pdf' and reduce the filename for comparison
-            pdf_reduced = reduce_filename(pdf_file.replace('_PDF-COPY.pdf', ''))
-
-            # Extract the fixed parts of the filename (everything before "Inch" and everything after "Inspection")
-            fixed_part_pattern = r'^(.*Inch )(.+?)( Inspection.*)$'
-            orig_match = re.match(fixed_part_pattern, org_bn_compare)
-            pdf_match = re.match(fixed_part_pattern, pdf_reduced)
-
-            if orig_match and pdf_match:
-                # Check if the fixed parts of the filenames match
-                if orig_match.group(1) == pdf_match.group(1) and orig_match.group(3) == pdf_match.group(3):
-
-                    # Now check if the variable part between "Inch" and "Inspection" matches reptyp
-                    if pdf_match.group(2) == reptyp:
-                        # Extract the joint count from the PDF filename
-                        joint_count_match = re.search(r'_(\d+)JTS_PDF-COPY.pdf', pdf_file)
-                        if joint_count_match:
-                            pdf_matches_joint_count = int(joint_count_match.group(1))
-                            pdf_to_delete = pdf_file
-                            break
-                        else:
-                            print("Failed to extract joint count from PDF filename.")
-                else:
-                    print("Fixed parts of the filenames do not match.")
-            else:
-                print("Failed to match fixed part pattern.")
-
-    # If a matching PDF file is found, proceed
-    if pdf_to_delete and pdf_matches_joint_count is not None:
-
-        # Calculate the new joint count
-        new_xlsx_joint_count = report_total_count - pdf_matches_joint_count
-
-        # Create the updated xlsx filename
-        updated_xlsx_basename = org_basename.replace(
-            f'{report_total_count}JTS',
-            f'{new_xlsx_joint_count}JTS'
-        )
-
-        # Return both the updated xlsx filename and the PDF filename
-        return updated_xlsx_basename, pdf_to_delete
-
-    return None
-
-
-def back_from_displayexcelfiles(widmg, datmg, root):
+def back_from_displayincompletereports(widmg, datmg, root):
     # Clear the widgets from the 'continue_existing_report_screen'
-    datmg.xel_file_path = None
     datmg.filename = None
-    branch = datmg.json_data_dict['report_user_metadata']['branch']
-    report_type = datmg.json_data_dict['report_user_metadata']['report_type']
-    datmg.json_data_dict = {'report_user_metadata': {'branch': branch, 'report_type': report_type}, 'report_data': {}}
+    branch = datmg.json_data_dict['branch']
+    report_type = datmg.json_data_dict['report_type']
+    datmg.json_data_dict = {
+        "branch": branch, 
+        "report_type": report_type, 
+        "active_tab": "", 
+        "report_user_metadata": {}, 
+        "report_data": {}
+    }
 
     page = widmg.continue_existing_report_screen
     widmg.hide_widget_grouping(page['display_frames'])
@@ -1098,6 +969,8 @@ def back_from_displayexcelfiles(widmg, datmg, root):
     
     # Navigate to the 'does_spreadsheet_exist_screen'
     does_spreadsheet_exist_screen(widmg, datmg, root)
+
+
 
 
 def does_spreadsheet_exist_screen(widmg, datmg, root):
@@ -1125,7 +998,7 @@ def ss_exist_back_bridge_tx(widmg, datmg, root):
     does_spreadsheet_exist_screen(widmg, datmg, root)
 
 def back_to_dptubesel_action(widmg, datmg, root):
-    branch = datmg.json_data_dict['report_user_metadata']['branch']
+    branch = datmg.json_data_dict['branch']
     page = widmg.spreadsheet_exist_menu
     widmg.hide_widget_grouping(page['labels'])
     widmg.hide_widget_grouping(page['buttons'])
@@ -1139,13 +1012,13 @@ def create_new_ss_bridge(widmg, datmg, root):
     widmg.hide_widget_grouping(page['labels'])
     widmg.hide_widget_grouping(page['buttons'])
 
-    if datmg.json_data_dict['report_user_metadata']['branch'] == 'ND':
-        if datmg.json_data_dict['report_user_metadata']['report_type'] == 'Drill Pipe Inspection Report':
+    if datmg.json_data_dict['branch'] == 'ND':
+        if datmg.json_data_dict['report_type'] == 'Drill Pipe Inspection Report':
             create_tab_select_screen(widmg, datmg, root)
-        elif datmg.json_data_dict['report_user_metadata']['report_type'] == 'Tubing/Casing Report':
+        elif datmg.json_data_dict['report_type'] == 'Tubing/Casing Report':
             widmg.tab_data_header.set('TUBING/CASING')
             create_report_metadata_input_widgets(widmg, datmg, root, editing=False)
-    elif datmg.json_data_dict['report_user_metadata']['branch'] == 'TX':
+    elif datmg.json_data_dict['branch'] == 'TX':
         select_tx_ss_style_screen(widmg, datmg, root)
         
 
@@ -1174,8 +1047,8 @@ def tx_ss_style_to_tab_select(widmg, datmg, root, ss_style):
     widmg.hide_widget_grouping(page['labels'])
     widmg.hide_widget_grouping(page['buttons'])
 
-    datmg.json_data_dict['report_user_metadata']['report_style'] = ss_style
-    type_storage = datmg.json_data_dict['report_user_metadata']['report_style']
+    datmg.json_data_dict['report_style'] = ss_style
+    type_storage = datmg.json_data_dict['report_style']
 
     if ss_style == 'Class 2 DBR':
         type_storage = 'Class 2 DBR'
@@ -1188,8 +1061,8 @@ def tx_ss_style_to_tab_select(widmg, datmg, root, ss_style):
 
 
 def use_existing_ss_bridge(widmg, datmg, root):
-    report_type = datmg.json_data_dict['report_user_metadata']['report_type']
-    branch = datmg.json_data_dict['report_user_metadata']['branch']
+    report_type = datmg.json_data_dict['report_type']
+    branch = datmg.json_data_dict['branch']
     datmg.xel_file_path = None
     datmg.new_excel_fp = None
     page = widmg.spreadsheet_exist_menu
@@ -1209,7 +1082,7 @@ def use_existing_ss_bridge(widmg, datmg, root):
         if 'DATA SHEET' in workbook.sheetnames:
             data_sheet = workbook['DATA SHEET']
             value_j2 = data_sheet['J2'].value  # Store the value in J2
-            datmg.json_data_dict['report_user_metadata']['report_style'] = value_j2
+            datmg.json_data_dict['report_style'] = value_j2
 
         create_tab_select_existing_screen(avail_tabs, widmg, datmg, root)
 
@@ -1273,7 +1146,7 @@ def create_tab_select_screen(widmg, datmg, root):
 
 
 def create_tab_select_existing_screen(visible_tabs, widmg, datmg, root):
-    branch = datmg.json_data_dict['report_user_metadata']['branch']
+    branch = datmg.json_data_dict['branch']
     page = widmg.drillpipe_tabs_usemenu
     style = ttk.Style()
     style.configure('LargeFont.TButton', font=('Helvetica', 28))
@@ -1307,10 +1180,32 @@ def create_tab_select_existing_screen(visible_tabs, widmg, datmg, root):
 
 
 def tabs_select_next_action(widmg, datmg, root):
-    save_tabs_clear(widmg, datmg, root)
-    datmg.json_data_dict['report_user_metadata']['add_pdpir_tab'] = widmg.pdpir_boolean.get()
-    datmg.json_data_dict['report_user_metadata']['add_hwdp_tab'] =  widmg.hwdp_boolean.get() 
-    datmg.json_data_dict['report_user_metadata']['add_subs_tab'] = widmg.subs_boolean.get() 
+    save_tabs_screen_clear(widmg, datmg, root)
+    if widmg.pdpir_boolean.get():
+        datmg.json_data_dict['report_data']['Prop Drill Pipe Inp Report'] = {
+        'joint_count': 0,
+        'users_column_select': [],
+        'is_complete': False,
+        'inspection_type_data': {"inspection_type_selection": None, "inspection_type_addodid": None, "inspection_type_additional": None },
+        'joint_data': {}
+        }
+    if widmg.hwdp_boolean.get():
+        datmg.json_data_dict['report_data']['Prop HWDP Inp Report'] = {
+        'joint_count': 0,
+        'users_column_select': [],
+        'is_complete': False,
+        'inspection_type_data': {"inspection_type_selection": None, "inspection_type_addodid": None, "inspection_type_additional": None },
+        'joint_data': {}
+        }
+    if widmg.subs_boolean.get():
+        datmg.json_data_dict['report_data']['Prop Subs Inp Report'] = {
+        'joint_count': 0,
+        'users_column_select': [],
+        'is_complete': False,
+        'inspection_type_data': {"inspection_type_selection": None, "inspection_type_addodid": None, "inspection_type_additional": None },
+        'joint_data': {}
+        }
+
     select_active_tab_menu(widmg, datmg, root)
 
 def tabs_select_back_action(widmg, datmg, root):
@@ -1323,7 +1218,7 @@ def tabs_select_back_action(widmg, datmg, root):
 
 
 
-def save_tabs_clear(widmg, datmg, root):
+def save_tabs_screen_clear(widmg, datmg, root):
     page = widmg.drillpipe_tabs_usemenu
 
     widmg.hide_widget_grouping(page['check_buttons'])
@@ -1336,18 +1231,19 @@ def select_active_tab_menu(widmg, datmg, root):
     active_tab_fresh_select_header = ttk.Label(root, text="WHICH WOULD YOU LIKE TO START?", font=('Arial', 24))
     widmg.store_and_place(page['labels'], "active_tab_fresh_select_header", active_tab_fresh_select_header, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
 
-    if datmg.json_data_dict['report_user_metadata']['add_pdpir_tab']:
+    if 'Prop Drill Pipe Inp Report' in datmg.json_data_dict['report_data']:
         pdpir_sel_button = ttk.Button(root, text="Drill Pipe Inspection (PDPIR)", command=lambda: sel_btn_to_create_dp_spread('Prop Drill Pipe Inp Report', widmg, datmg, root), style='Large.TButton')
         widmg.store_and_place(page['buttons'], "pdpir_sel_button", pdpir_sel_button, relx=0.5, rely=0.24, relwidth=0.75, relheight=0.17, anchor='n')
-    if datmg.json_data_dict['report_user_metadata']['add_hwdp_tab']:
+    if 'Prop HWDP Inp Report' in datmg.json_data_dict['report_data']:
         hwdp_sel_button = ttk.Button(root, text="Heavy Weight Drill Pipe Inspection (HWDP)", command=lambda: sel_btn_to_create_dp_spread('Prop HWDP Inp Report', widmg, datmg, root), style='Large.TButton')
         widmg.store_and_place(page['buttons'], "hwdp_sel_button", hwdp_sel_button, relx=0.5, rely=0.42, relwidth=0.75, relheight=0.17, anchor='n')
-    if datmg.json_data_dict['report_user_metadata']['add_subs_tab']: 
+    if 'Prop Subs Inp Report' in datmg.json_data_dict['report_data']: 
         subs_sel_button = ttk.Button(root, text="Subs Inspection (SUBS)", command=lambda: sel_btn_to_create_dp_spread('Prop Subs Inp Report', widmg, datmg, root), style='LargeFont.TButton')
         widmg.store_and_place(page['buttons'], "subs_sel_button", subs_sel_button, relx=0.50, rely=0.60, relwidth=0.75, relheight=0.17, anchor='n')
 
     actab_select_back_button = ttk.Button(root, text="BACK", command=lambda: sel_act_tab_bridge_back(widmg, datmg, root), style='Large.TButton')
     widmg.store_and_place(page['buttons'], "actab_select_back_button", actab_select_back_button, relx=0.25, rely=0.87, relwidth=0.3, relheight=0.08, anchor='n')
+
 
 
 def sel_act_tab_bridge_back(widmg, datmg, root):
@@ -1357,7 +1253,7 @@ def sel_act_tab_bridge_back(widmg, datmg, root):
     create_tab_select_screen(widmg, datmg, root)
 
 def sel_btn_to_create_dp_spread(type_rep, widmg, datmg, root, existing=False):
-    datmg.json_data_dict['report_user_metadata']['active_tab'] = type_rep
+    datmg.json_data_dict['active_tab'] = type_rep
     if type_rep == 'Prop Drill Pipe Inp Report':
         tab_set = 'PDPIR'
     elif type_rep == 'Prop HWDP Inp Report':
@@ -1579,15 +1475,15 @@ def select_back_to_choose_button(widmg, datmg, root, editing=False):
 
 
 def create_report_metadata_input_widgets(widmg, datmg, root, editing=False):
-    report_type = datmg.json_data_dict['report_user_metadata']['report_type']
-    tab_type = datmg.json_data_dict['report_user_metadata']['active_tab']
+    report_type = datmg.json_data_dict['report_type']
+    tab_type = datmg.json_data_dict['active_tab']
 
     page = widmg.main_metadata_widgets
 
-    if datmg.json_data_dict['report_user_metadata']['report_type'] == 'Tubing/Casing Report':
+    if datmg.json_data_dict['report_type'] == 'Tubing/Casing Report':
         inspection_type_list, connection_size_list, connection_type_list = datmg.tubing_inspection_type_list, datmg.tubing_conn_size_list, datmg.tubing_conn_type_list 
-    elif datmg.json_data_dict['report_user_metadata']['report_type'] == 'Drill Pipe Inspection Report':
-        if datmg.json_data_dict['report_user_metadata']['branch'] == 'TX':
+    elif datmg.json_data_dict['report_type'] == 'Drill Pipe Inspection Report':
+        if datmg.json_data_dict['branch'] == 'TX':
             inspection_type_list, connection_size_list, connection_type_list = datmg.dp_inspection_type_list_short, datmg.dp_conn_size_list, datmg.dp_conn_type_list
         else:
             inspection_type_list, connection_size_list, connection_type_list = datmg.dp_inspection_type_list_short, datmg.dp_conn_size_list, datmg.dp_conn_type_list
@@ -1933,7 +1829,7 @@ def show_table_selection_screen(widmg, datmg, root, editing=False):
     widmg.magni_header.set("")
     widmg.magni_content.set("")
 
-    if datmg.json_data_dict['report_user_metadata']['active_tab'] == 'Tubing Insp Report':
+    if datmg.json_data_dict['active_tab'] == 'Tubing Insp Report':
         widmg.tab_data_header.set(datmg.json_data_dict['report_user_metadata']['connection_type_selection'])
 
     widmg.hide_widget_grouping(widmg.main_table_display_widgets['back_buttons'])
@@ -1943,13 +1839,13 @@ def show_table_selection_screen(widmg, datmg, root, editing=False):
 
     widmg.hide_widget_grouping(widmg.main_table_display_widgets['display_frames'])
     widmg.hide_widget_grouping(widmg.main_table_display_widgets['buttons'])
-
-
+    
     if editing == True:
         display_main_report_screen(widmg, datmg, root, editing=editing)
         update_all_row_cells(widmg, datmg, root)
     else:
-        datmg.json_data_dict['report_data'] = {}
+        active_tab = datmg.json_data_dict['active_tab']
+        datmg.json_data_dict['report_data'][active_tab]['joint_data'] = {}
         widmg.prev_first_row_label_list = []
         widmg.prev_sec_row_label_list = []
         widmg.next_first_row_label_list = []
@@ -1967,46 +1863,51 @@ def select_custom_columns_fn_button(widmg, datmg, root):
 
 
 def determine_allowed_columns(widmg, datmg, root):
+    branch = datmg.json_data_dict['branch']
+    report_type = datmg.json_data_dict['report_type']
+    report_style = datmg.json_data_dict['report_style'] if 'report_style' in datmg.json_data_dict else None
+    active_tab = datmg.json_data_dict['active_tab']
+
     metadata = datmg.json_data_dict['report_user_metadata']
-    if metadata['branch'] == "ND":
+    if branch == "ND":
         cols = list(datmg.nd_column_types.keys())
-        if metadata['report_type'] == 'Drill Pipe Inspection Report':
-            if metadata['active_tab'] == 'Prop Drill Pipe Inp Report':
+        if report_type == 'Drill Pipe Inspection Report':
+            if active_tab == 'Prop Drill Pipe Inp Report':
                 return [key for key in cols if key not in ['DESCRIPTION', 'SUBS CONN/DATA', 'Visual OD']]
-            elif metadata['active_tab'] == 'Prop HWDP Inp Report':
+            elif active_tab == 'Prop HWDP Inp Report':
                 return [key for key in cols if key not in ['UT', 'DESCRIPTION', 'SUBS CONN/DATA', 'Visual OD']]
-            elif metadata['active_tab'] == 'Prop Subs Inp Report':
+            elif active_tab == 'Prop Subs Inp Report':
                 return [key for key in cols if key not in ['UT', 'Visual OD']]
         else:
             return [key for key in cols if key not in ['DESCRIPTION', 'SUBS CONN/DATA', 'SERIAL', 'TS-BOX', 'TS-PIN', 'OD', 'ID']]
-    elif metadata['branch'] == 'TX':
+    elif branch == 'TX':
         cols = list(datmg.tx_column_types.keys())
-        if metadata['report_style'] in ['Class 2 DBR', 'Class 2 NOT DBR']:
-            if metadata['active_tab'] == 'Prop Drill Pipe Inp Report':
+        if report_style in ['Class 2 DBR', 'Class 2 NOT DBR']:
+            if active_tab == 'Prop Drill Pipe Inp Report':
                 return [key for key in cols if key not in ['DESCRIPTION', 'SUBS CONN/DATA', 'BORBAK', 'STRES REL GRV', 'C BORE', 'PIN NOSE DIA', 'SEAL WIDTH']]
-            elif metadata['active_tab'] == 'Prop HWDP Inp Report':
+            elif active_tab == 'Prop HWDP Inp Report':
                 return [key for key in cols if key not in ['UT', 'DESCRIPTION', 'SUBS CONN/DATA', 'BORBAK', 'STRES REL GRV', 'C BORE', 'PIN NOSE DIA', 'SEAL WIDTH']]
-            elif metadata['active_tab'] == 'Prop Subs Inp Report':
+            elif active_tab == 'Prop Subs Inp Report':
                 return [key for key in cols if key not in ['UT', 'BORBAK', 'STRES REL GRV', 'C BORE', 'PIN NOSE DIA', 'SEAL WIDTH']]
-        elif metadata['report_style'] == 'Full Dimensional':
-            if metadata['active_tab'] == 'Prop Drill Pipe Inp Report':
+        elif report_style == 'Full Dimensional':
+            if active_tab == 'Prop Drill Pipe Inp Report':
                 return [key for key in cols if key not in ['DESCRIPTION', 'SUBS CONN/DATA', 'BORBAK', 'STRES REL GRV']]
-            elif metadata['active_tab'] == 'Prop HWDP Inp Report':
+            elif active_tab == 'Prop HWDP Inp Report':
                 return [key for key in cols if key not in ['UT', 'DESCRIPTION', 'SUBS CONN/DATA']]
-            elif metadata['active_tab'] == 'Prop Subs Inp Report':
+            elif active_tab == 'Prop Subs Inp Report':
                 return [key for key in cols if key not in ['UT']]
     else:
         return
 
 
-
 def add_dropdowns(widmg, datmg, root, editing=False):
+    active_tab = datmg.json_data_dict['active_tab']
     page = widmg.custom_column_selection_page_widgets
     options = determine_allowed_columns(widmg, datmg, root)
     
     if editing:
-        current_selections = {f"combo_box{i}": datmg.json_data_dict['report_user_metadata']['users_column_select'][i-1] 
-                              if i-1 < len(datmg.json_data_dict['report_user_metadata']['users_column_select']) else '' 
+        current_selections = {f"combo_box{i}": datmg.json_data_dict['report_data'][active_tab]['users_column_select'][i-1] 
+                              if i-1 < len(datmg.json_data_dict['report_data'][active_tab]['users_column_select']) else '' 
                               for i in range(1, 16)}  # Updated for 15 comboboxes
     else:
         current_selections = {f"combo_box{i}": '' for i in range(1, 16)}  # Updated for 15 comboboxes
@@ -2065,6 +1966,7 @@ def dropdown_back_bridge(widmg, datmg, root, editing=False):
         cust_columns_to_review_screen(widmg, datmg, root)
 
 def start_edited_col_report(widmg, datmg, root):
+    active_tab = datmg.json_data_dict['active_tab']
     page = widmg.custom_column_selection_page_widgets
     combobox_list = page['dropdown_menus']
     
@@ -2082,7 +1984,7 @@ def start_edited_col_report(widmg, datmg, root):
         return
 
     # Identify removed columns
-    original_selections = datmg.json_data_dict['report_user_metadata']['users_column_select']
+    original_selections = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
     removed_columns = [col for col in original_selections if col not in new_selections]
 
     if removed_columns:
@@ -2091,13 +1993,14 @@ def start_edited_col_report(widmg, datmg, root):
             return
 
     # Update users_column_select
-    datmg.json_data_dict['report_user_metadata']['users_column_select'] = new_selections
+    datmg.json_data_dict['report_data'][active_tab]['users_column_select'] = new_selections
     datmg.save_dict_to_file()
 
+    joint_data = datmg.json_data_dict['report_data'][active_tab]['joint_data']
     # Update report_data
-    for joint, data in datmg.json_data_dict['report_data'].items():
+    for joint, data in joint_data.items():
         updated_data = {key: value for key, value in data.items() if key in new_selections}
-        datmg.json_data_dict['report_data'][joint] = updated_data
+        datmg.json_data_dict['report_data'][active_tab]['joint_data'][joint] = updated_data
 
 def start_report_fn_button(widmg, datmg, root, editing=False):
     if editing:
@@ -2115,6 +2018,7 @@ def cust_columns_to_review_screen(widmg, datmg, root):
     show_review_screen(widmg, datmg, root, editing=False)
 
 def add_column_selections_to_meta(widmg, datmg, root):
+    active_tab = datmg.json_data_dict['active_tab']
     combobox_list = widmg.custom_column_selection_page_widgets['dropdown_menus']
     values = []
     for key, widget_info in combobox_list.items():
@@ -2123,7 +2027,7 @@ def add_column_selections_to_meta(widmg, datmg, root):
         if value != "":
             values.append(value)
 
-    datmg.json_data_dict['report_user_metadata']['users_column_select'] = values
+    datmg.json_data_dict['report_data'][active_tab]['users_column_select'] = values
     datmg.save_dict_to_file()
 
 
@@ -2237,7 +2141,9 @@ def create_row_count_box(widmg, datmg, root):
 
 def create_header_and_first_row(widmg, datmg, root):
     page = widmg.main_table_display_widgets
-    joint_1_data = datmg.json_data_dict['report_data'].get('Joint_1', None)
+    active_tab = datmg.json_data_dict['active_tab']
+    joint_1_data = datmg.json_data_dict['report_data'][active_tab]['joint_data'].get('Joint_1', None)
+
 
     def adjust_row_height(event):
         # Calculate half the height of the frame
@@ -2254,7 +2160,7 @@ def create_header_and_first_row(widmg, datmg, root):
     col_header_display_frame.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
     col_header_display_frame.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
 
-    headers_list = datmg.json_data_dict['report_user_metadata']['users_column_select']
+    headers_list = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
     total_headers = len(headers_list)
     grid_size = 15 // total_headers
 
@@ -2286,7 +2192,8 @@ def create_header_and_first_row(widmg, datmg, root):
 
 def create_all_four_rows(widmg, datmg, root, editing=False):
     page = widmg.main_table_display_widgets
-    headers_list = datmg.json_data_dict['report_user_metadata']['users_column_select']
+    active_tab = datmg.json_data_dict['active_tab']
+    headers_list = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
     total_headers = len(headers_list)
 
     def create_row_frame(rel_y, row_var_list, initial_value):
@@ -2648,11 +2555,13 @@ def decrement_joint_number(widmg, datmg, root):
 
 
 def update_all_row_cells(widmg, datmg, root, editing=False):
-    report_type = datmg.json_data_dict['report_user_metadata']['report_type']
-    col_selects = datmg.json_data_dict['report_user_metadata']['users_column_select']
-    current_value = int(widmg.current_joint_number.get())
-    headers_list = datmg.json_data_dict['report_user_metadata']['users_column_select']
+    report_type = datmg.json_data_dict['report_type']
+    active_tab = datmg.json_data_dict['active_tab']
+    col_selects = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
+    headers_list = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
     total_headers = len(headers_list)
+    current_value = int(widmg.current_joint_number.get())
+    joint_data = datmg.json_data_dict['report_data'][active_tab]['joint_data']
 
     def adjust_font_to_fit_label(up_lab_widget, fontchange, text):
         base_font_family, base_font_size, base_font_weight = fontchange
@@ -2678,6 +2587,7 @@ def update_all_row_cells(widmg, datmg, root, editing=False):
         return (base_font_family, base_font_size, base_font_weight), text
 
     def update_cells(joint_key_offset, row_var_list, set_default=False):
+        active_tab = datmg.json_data_dict['active_tab']
         joint_key = f"Joint_{current_value + joint_key_offset}"
         cells = getattr(widmg, row_var_list)
         row_dict = widmg.main_table_display_widgets['display_frames'][row_var_list]
@@ -2697,9 +2607,11 @@ def update_all_row_cells(widmg, datmg, root, editing=False):
         else:
             for idx, header in enumerate(col_selects):
                 label_key = f"{header}_{idx}"
-                if joint_key in datmg.json_data_dict['report_data'] and header in datmg.json_data_dict['report_data'][joint_key]:
-                    header_value = datmg.json_data_dict['report_data'][joint_key][header]
+                if joint_key in joint_data and header in joint_data[joint_key]:
+                    header_value = datmg.json_data_dict['report_data'][active_tab]['joint_data'][joint_key][header]
                     cells[idx].set(header_value)
+
+
 
                     if header == 'UT':
                         txt_color, bg_color, fontchange = validate_ut(header_value, header, datmg)
@@ -2799,9 +2711,10 @@ def update_all_row_cells(widmg, datmg, root, editing=False):
 
 
 def validate_ut(header_value, header, datmg):
+    active_tab = datmg.json_data_dict['active_tab']
     connection_size = datmg.json_data_dict['report_user_metadata']['connection_size_selection']
     conn_type_select = datmg.json_data_dict['report_user_metadata']['connection_type_selection'] 
-    report_type = datmg.json_data_dict['report_user_metadata']['report_type']
+    report_type = datmg.json_data_dict['report_type']
     if report_type == 'Drill Pipe Inspection Report':
         nominal_wall = 1000 * (datmg.dp_conn_size_nom_rel_dict[connection_size])
     elif report_type == 'Tubing/Casing Report':
@@ -2872,7 +2785,8 @@ def validate_reface(header_value, header, datmg):
 
 
 def save_current_row_data(widmg, datmg, root):
-    col_selects = datmg.json_data_dict['report_user_metadata']['users_column_select']
+    active_tab = datmg.json_data_dict['active_tab']
+    col_selects = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
     col_head_frame = widmg.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
     current_value = int(widmg.current_joint_number.get())
     joint_key = f"Joint_{current_value}"
@@ -2883,26 +2797,32 @@ def save_current_row_data(widmg, datmg, root):
         entry_data[header] = entry_widget.get() 
 
 
-    datmg.json_data_dict['report_data'][joint_key] = entry_data
+    datmg.json_data_dict['report_data'][active_tab]['joint_data'][joint_key] = entry_data
 
 def load_row_data(widmg, datmg, root):
-    col_selects = datmg.json_data_dict['report_user_metadata']['users_column_select']
+    active_tab = datmg.json_data_dict['active_tab']
+    col_selects = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
+
     col_head_frame = widmg.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
     current_value = int(widmg.current_joint_number.get())
     joint_key = f"Joint_{current_value}"
 
+    joint_data = datmg.json_data_dict['report_data'][active_tab]['joint_data']
     for idx, header in enumerate(col_selects):
         entry_widget = col_head_frame.grid_slaves(row=1, column=idx)[0]
         entry_widget.delete(0, tk.END)
-        if joint_key in datmg.json_data_dict['report_data'] and header in datmg.json_data_dict['report_data'][joint_key]:
-            entry_widget.insert(0, datmg.json_data_dict['report_data'][joint_key][header])
+        if joint_key in joint_data and header in joint_data[joint_key]:
+            entry_widget.insert(0, datmg.json_data_dict['report_data'][active_tab]['joint_data'][joint_key][header])
 
 
 def update_report_data(widmg, datmg, root):
+    active_tab = datmg.json_data_dict['active_tab']
+    joint_data = datmg.json_data_dict['report_data'][active_tab]['joint_data']
+
     max_joint_number = int(widmg.update_rows_entry_widget.get())
-    keys_to_delete = [key for key in datmg.json_data_dict["report_data"].keys() if int(key.split('_')[1]) > max_joint_number]
+    keys_to_delete = [key for key in joint_data.keys() if int(key.split('_')[1]) > max_joint_number]
     for key in keys_to_delete:
-        del datmg.json_data_dict["report_data"][key]
+        del joint_data[key]
     datmg.save_dict_to_file()
 
 def create_confirmation_window(widmg, datmg, root):
@@ -3038,21 +2958,18 @@ def delete_excel_from_incomplete_reports(datmg, excel_file, incomplete_reports_f
 
 def update_new_report_metadata(datmg, widmg, typrep):
     # Step 1: Clear the 'report_data' section but keep the key
-    datmg.json_data_dict['report_data'] = {}
     widmg.tab_data_header.set(typrep)
 
     # Step 2: Update 'active_tab' based on the value of typrep
     if typrep == 'PDPIR':
-        datmg.json_data_dict['report_user_metadata']['active_tab'] = 'Prop Drill Pipe Inp Report'
+        datmg.json_data_dict['active_tab'] = 'Prop Drill Pipe Inp Report'
     elif typrep == 'HWDP':
-        datmg.json_data_dict['report_user_metadata']['active_tab'] = 'Prop HWDP Inp Report'
+        datmg.json_data_dict['active_tab'] = 'Prop HWDP Inp Report'
     elif typrep == 'SUBS':
-        datmg.json_data_dict['report_user_metadata']['active_tab'] = 'Prop Subs Inp Report'
+        datmg.json_data_dict['active_tab'] = 'Prop Subs Inp Report'
     else:
         raise ValueError("Invalid typrep value. Expected 'PDPIR', 'HWDP', or 'SUBS'.")
 
-    # Step 3: Call initialize_json function
-    datmg.initialize_json(widmg)
 
 def hide_main_report_scrn_dp_tab_new_json(datmg, widmg, root):
     page = widmg.main_table_display_widgets
@@ -3390,9 +3307,11 @@ def confirm_joints_button(widmg, datmg, root, confirmation_window):
     confirmation_window.destroy()
 
 def find_highest_joint_num_for_export(widmg, datmg, root):
+    active_tab = datmg.json_data_dict['active_tab']
+    joint_data = datmg.json_data_dict['report_data'][active_tab]['joint_data']
     joint_numbers = []
 
-    for key in datmg.json_data_dict['report_data'].keys():
+    for key in joint_data.keys():
         match = re.match(r'Joint_(\d+)', key)
         if match:
             joint_number = int(match.group(1))
@@ -3402,6 +3321,7 @@ def find_highest_joint_num_for_export(widmg, datmg, root):
         return highest_joint_number
     else:
         return 0
+
 
 
 def create_modify_excel_document_nd_tubing(folder_selected, widmg, datmg, root):
@@ -5709,7 +5629,6 @@ def process_for_write_report_nd_tubing(joint_values, row_num, sheet, datmg):
 
     write_final_class_status(scrap_col, repair_col, ready_col, hb_col, row_num)
 
-from fpdf import FPDF
 
 def generate_pdf_copy(summary_data, filename, widmg, datmg, root):
     pdf = FPDF()
@@ -5967,8 +5886,9 @@ def generate_pdf_copy(summary_data, filename, widmg, datmg, root):
 
 
     # Prepare the table
-    columns = datmg.json_data_dict['report_user_metadata']['users_column_select']
-    report_data = datmg.json_data_dict['report_data']
+    active_tab = datmg.json_data_dict['active_tab']
+    columns = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
+    report_data = datmg.json_data_dict['report_data'][active_tab]['joint_data']
     table_columns = ["JOINT #"] + columns
 
     # Set default margins
