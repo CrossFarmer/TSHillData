@@ -112,7 +112,7 @@ Specifically designed for **Pathfinder Inspections**, TSHillData integrates into
 ## Screenshots and Flowchart
 ![TSHillData's User Interface Function Flow Chart](assets/TSHillData_UserInterface_FlowChart.png)
 [Download the Flowchart PDF](assets/TSHillData_UserInterface_FlowChart.pdf)
-Screenshots, video tutorials, and a flowchart detailing the user interface progression will be added to this repository soon.
+Screenshots and video tutorials will be added to this repository soon.
 
 ---
 
