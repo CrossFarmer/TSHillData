@@ -1,6 +1,7 @@
 import logging
 import sys 
 import tkinter as tk
+from tkcalendar import Calendar
 from tkinter import ttk
 from tkinter import font
 import tkinter.font as tkFont
@@ -89,40 +90,39 @@ class WidgetManager:
         self.resize_scheduled = False
         self.last_width = root_width
         self.last_height = root_height
-        self.tubing_or_drillpipe_menu = {'buttons': {}, 'labels': {}}
-        self.saved_file_select_window = {'display_frames': {}, 'buttons': {}, 'labels': {}, 'listboxes': {}, 'scrollbars': {}, 'meta_labels': {}}
-        self.branch_select_menu = {'buttons': {}, 'labels': {}}
-        self.spreadsheet_exist_menu = {'buttons': {}, 'labels': {}}
-        self.select_tx_ss_style_menu = {'buttons': {}, 'labels': {}}
-        self.drillpipe_tabs_usemenu = {'buttons': {}, 'labels': {}, 'check_buttons': {}}
-        self.select_active_tab_fresh_menu = {'buttons': {}, 'labels': {}}
-        self.ask_datentry_file_window = {'buttons': {}, 'labels': {}}
-        self.add_notes_window = {'buttons': {}, 'text': {}, 'labels': {}}
-        self.main_metadata_widgets = {
-            'labels': {}, 'entries': {}, 'buttons': {}, 'dropdown_menus': {},
-            'review_widgets': {
-                'review_buttons': {},
-                'review_labels': {}
-            }
-        }
-        self.table_select_page_widgets = {'buttons': {}, 'labels': {}}
-        self.custom_column_selection_page_widgets = {'dropdown_menus': {}, 'labels': {}, 'buttons': {}}
+        self.tubing_or_drillpipe_menu = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.saved_file_select_window = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.branch_select_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.start_inspection_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.select_tx_ss_style_menu = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.drillpipe_tabs_usemenu = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.select_active_tab_fresh_menu = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.ask_datentry_file_window = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.date_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.operator_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.contractor_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.location_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.invoice_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.inspectiontype_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.grade_info_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.inspected_by_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.conn_size_type_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.add_notes_entry_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        
+        self.metadata_edit_screen_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}, 'calendar': {}}
+        self.table_select_page_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}}
+        self.custom_column_selection_page_widgets = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}}
+        self.continue_existing_report_screen = {'display_frame': {}, 'button': {}, 'label': {},'listbox': {}, 'scrollbar': {}, 'combobox': {}, 'entry': {}, 'checkbutton': {}, 'text': {}}
+
         self.main_table_display_widgets = {
-            'display_frames': {},
-            'buttons': {},
+            'display_frame': {},
+            'button': {},
             'back_buttons': {},
-            'labels': {},
+            'label': {},
             'header_col_labels': {},
             'col_entry_labels': {}
         }
 
-        self.continue_existing_report_screen = {
-            'display_frames': {}, 
-            'listboxes': {}, 
-            'scrollbars': {},
-            'buttons': {},
-            'labels': {}
-        }
         self.branch_var = tk.StringVar()
         self.branch_var.set("")
         self.branch_label = ttk.Label(self.root, textvariable=self.branch_var, font=('Arial', 24))
@@ -242,6 +242,10 @@ class WidgetManager:
             if key in self.font_widgets:
                 self.font_widgets[key]['visible'] = False
 
+    def hide_all_page_widgets(self, page):
+        for widget_type in page:
+            self.hide_widget_grouping(page[widget_type])
+
     def place_back_widgets(self, widget_grouping):
         for key, widget_info in widget_grouping.items():
             widget = widget_info['widget']
@@ -250,7 +254,7 @@ class WidgetManager:
                 self.font_widgets[key]['visible'] = True
 
     def get_label_widget(self, widmg, frame_key, label_key):
-        label_info = widmg.main_table_display_widgets['display_frames'][frame_key][label_key]['widget']
+        label_info = widmg.main_table_display_widgets['display_frame'][frame_key][label_key]['widget']
         return label_info
 
   # Interactions
@@ -279,7 +283,7 @@ class WidgetManager:
             label.config(font=(base_font_family, base_font_size, base_font_weight))
 
             # Update the widmg.font_widgets dictionary
-            widget_dict_id = id(self.main_table_display_widgets['labels'])
+            widget_dict_id = id(self.main_table_display_widgets['label'])
             label_key = label._name
             if widget_dict_id not in self.font_widgets:
                 self.font_widgets[widget_dict_id] = {}
@@ -290,7 +294,7 @@ class WidgetManager:
                 'initial_font': (base_font_family, base_font_size, base_font_weight)
             }
 
-        col_header_display_frame = self.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
+        col_header_display_frame = self.main_table_display_widgets['display_frame']['col_header_display_frame']['widget']
         if event.widget.winfo_parent() == str(col_header_display_frame):
             active_tab = self.data_manager.json_data_dict['active_tab']
             column = event.widget.grid_info()['column']
@@ -301,11 +305,11 @@ class WidgetManager:
             event.widget.config(highlightthickness=3, highlightbackground='blue', highlightcolor='green')  # Change border on focus
 
             # Adjust font for magni_header_label
-            magni_header_label = self.main_table_display_widgets['labels']['magni_header_label']['widget']
+            magni_header_label = self.main_table_display_widgets['label']['magni_header_label']['widget']
             adjust_font(magni_header_label, self.magni_header, "Arial", 45, 'bold')
 
             # Adjust font for magni_content_label
-            magni_content_label = self.main_table_display_widgets['labels']['magni_content_label']['widget']
+            magni_content_label = self.main_table_display_widgets['label']['magni_content_label']['widget']
             adjust_font(magni_content_label, self.magni_content, "Helvetica", 38, 'italic')
 
     def on_focus_out(self, event):
@@ -313,7 +317,7 @@ class WidgetManager:
 
 
     def on_key_release(self, event):
-        col_header_display_frame = self.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
+        col_header_display_frame = self.main_table_display_widgets['display_frame']['col_header_display_frame']['widget']
         if event.widget.winfo_parent() == str(col_header_display_frame):
             self.magni_content.set(event.widget.get())
 
@@ -342,7 +346,7 @@ class WidgetManager:
             label.config(font=(base_font_family, base_font_size, base_font_weight))
 
             # Update the widmg.font_widgets dictionary
-            widget_dict_id = id(self.main_table_display_widgets['labels'])
+            widget_dict_id = id(self.main_table_display_widgets['label'])
             label_key = label._name
             if widget_dict_id not in self.font_widgets:
                 self.font_widgets[widget_dict_id] = {}
@@ -357,7 +361,7 @@ class WidgetManager:
         focus_widget = root.focus_get()
         if isinstance(focus_widget, tk.Entry):
             try:
-                col_header_display_frame = self.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
+                col_header_display_frame = self.main_table_display_widgets['display_frame']['col_header_display_frame']['widget']
                 if focus_widget.winfo_parent() == str(col_header_display_frame):
                     column = focus_widget.grid_info()['column']
                     active_tab = self.data_manager.json_data_dict['active_tab']
@@ -367,11 +371,11 @@ class WidgetManager:
                     self.magni_content.set(focus_widget.get())
 
                     # Adjust font for magni_header_label
-                    magni_header_label = self.main_table_display_widgets['labels']['magni_header_label']['widget']
+                    magni_header_label = self.main_table_display_widgets['label']['magni_header_label']['widget']
                     adjust_font(magni_header_label, self.magni_header, "Arial", 45, 'bold')
 
                     # Adjust font for magni_content_label
-                    magni_content_label = self.main_table_display_widgets['labels']['magni_content_label']['widget']
+                    magni_content_label = self.main_table_display_widgets['label']['magni_content_label']['widget']
                     adjust_font(magni_content_label, self.magni_content, "Helvetica", 38, 'italic')
             except KeyError:
                 print("Error: The focused widget is not configured properly.")
@@ -506,7 +510,7 @@ class DataManager:
         self.excel_files_tct = None
         self.json_tct_filepath = None
         self.filename = None
-        self.notes_prefill = {"Tubing/Casing Report": "Missing Caps: () BOX ; () PIN"}
+        self.notes_prefill = {"Tubing/Casing Report": "Missing Caps: () BOX ; () PIN", "Drill Pipe Inspection Report": "Test Notes Prefill DP"}
         self.keyword_tally_dict = {"Keyword Tallies": {}, "Joint Tallies": {}}
         self.nd_column_types = load_json_dict(resource_path('external_files/nd_column_types.json'))
         self.tx_column_types = load_json_dict(resource_path('external_files/tx_column_types.json'))
@@ -593,62 +597,55 @@ class DataManager:
         except Exception as e:
             print(f"Error reading file {filename}: {e}")
 
-    def initialize_json(self, widmg):
-        #Create a JSON File To Store The Input Data For Report, Saving it as the Date and Time For Filename
+    def initialize_json(self):
+        """
+        Initialize the JSON file, setting up the filename based on current metadata.
+        """
+        # Add creation date and time to metadata
         md = self.json_data_dict['report_user_metadata']
-        active_tab = self.json_data_dict['active_tab']
+        md['create_date'] = datetime.now().strftime('%m.%d.%Y')
+        md['create_time'] = datetime.now().strftime('%m.%d.%Y_%I.%M.%p')
 
-        current_date = datetime.now().strftime('%m.%d.%Y')
-        current_time = datetime.now().strftime('%m.%d.%Y_%I.%M.%p')
-        md['create_date'] = current_date
-        md['create_time'] = current_time
+        # Generate the filename using the helper function
+        self.filename = self.get_json_filename_from_dict()
 
-
-        if self.json_data_dict['report_type'] == "Drill Pipe Inspection Report":
-            base_filename = f"{md['date_entry'].replace('/', '.')}_INV{md['invoice_entry']}_{md['connection_size_selection']} Inch DP Inspection Report_{md['operator_entry']}_{md['contractor_entry']}"
-        elif self.json_data_dict['report_type'] == "Tubing/Casing Report":
-            if md['connection_size_selection'] == "2 7/8\"":
-                file_con_sizesel = '2.875'
-            elif md['connection_size_selection'] == "2 3/8\"":
-                file_con_sizesel = '2.375'
-            else:
-                file_con_sizesel = md['connection_size_selection'].strip('"')
-
-            if 'grade_info' in md and md['grade_info'] != None:
-                grade_info = f"{md['grade_info']}_"
-            else:
-                grade_info = f"{md['grade_info']}_" if 'grade_info' in md else ""
-
-            base_filename = f"{md['date_entry'].replace('/', '.')}_INV{md['invoice_entry']}_{md['operator_entry']}_{file_con_sizesel}_{grade_info}Tubing_{md['contractor_entry']}_{md['connection_type_selection']}"
-
-        self.filename = f"{base_filename}.json"
+        # Save the dictionary to the file
         self.save_dict_to_file_start()
 
+    def get_json_filename_from_dict(datmg):
+        """
+        Generate a base filename based on the current contents of datmg.json_data_dict.
 
+        Parameters:
+            datmg: Data manager instance containing json_data_dict.
 
-    def save_tab_status_table_to_json(self, file_name):
-        with open(file_name, 'w') as json_file:
-            json.dump(self.excel_files_tct, json_file, indent=4)  
+        Returns:
+            str: The base filename.
+        """
+        md = datmg.json_data_dict['report_user_metadata']
 
-    def load_tab_status_table_to_dict(self, excel_filename):
-        raw_filename = excel_filename.replace(".xlsx", "")
-        tct_filename = f"{raw_filename}_tct.json"
-        try:
-            with open(tct_filename, 'r') as file:
-                self.excel_files_tct = json.load(file)
-                self.json_tct_filepath = tct_filename
-        except Exception as e:
-            print(f"Error reading file {tct_filename}: {e}")
+        if datmg.json_data_dict['report_type'] == "Drill Pipe Inspection Report":
+            base_filename = (
+                f"{md['date_choice']}_INV{md['invoice_choice']}_{md['connection_size_choice']} Inch DP Inspection Report_"
+                f"{md['operator_choice']}_{md['contractor_choice']}"
+            )
+        elif datmg.json_data_dict['report_type'] == "Tubing/Casing Report":
+            if md['connection_size_choice'] == "2 7/8\"":
+                file_con_sizesel = '2.875'
+            elif md['connection_size_choice'] == "2 3/8\"":
+                file_con_sizesel = '2.375'
+            else:
+                file_con_sizesel = md['connection_size_choice'].strip('"')
 
-    def update_user_report_metadata(self):
-        widges = self.widget_manager.main_metadata_widgets
+            grade_choice = f"{md['grade_choice']}_" if md['grade_choice'] else ""
+            base_filename = (
+                f"{md['date_choice']}_INV{md['invoice_choice']}_{md['operator_choice']}_{file_con_sizesel}_"
+                f"{grade_choice}{md['connection_type_choice']} Tubing_{md['contractor_choice']}"
+            )
+        else:
+            raise ValueError("Unsupported report type in json_data_dict.")
 
-        combined_widgets = list(widges['entries'].items()) + list(widges['dropdown_menus'].items())
-
-        for key, widget_info in combined_widgets:
-            user_input = widget_info['widget'].get()
-            self.json_data_dict['report_user_metadata'][key] = user_input
-
+        return f"{base_filename}.json"
 
 #-----------------------------------------------------------------------
 
@@ -662,118 +659,45 @@ def initialize_main_window():
     root.geometry(f"{root_width}x{root_height}")
     return root
 
-def branch_select_screen(widmg, datmg, root):
-    page = widmg.branch_select_menu
+
+def start_inspection_screen(widmg, datmg, root, prev_page=None):
+    widmg.branch_label.place(relx=0.92, rely=0.02, relheight=0.07, relwidth=0.07)
+
+    if prev_page is not None:
+        widmg.hide_all_page_widgets(prev_page)
+
+    page = widmg.start_inspection_screen_widgets
+
+    spread_exist_label = ttk.Label(root, text="START AN INSPECTION", font=('Arial', 32))
+    widmg.store_and_place(page['label'], "spread_exist_label", spread_exist_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
+
+    create_new_ss_button = ttk.Button(root, text="Create New Report", command=lambda: branch_select_screen(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "create_new_ss_button", create_new_ss_button, relx=0.5, rely=0.27, relwidth=0.75, relheight=0.20, anchor='n')
+
+    use_existing_ss_button = ttk.Button(root, text="Continue Existing Report", command=lambda: display_incomplete_reports(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "use_existing_ss_button", use_existing_ss_button, relx=0.5, rely=0.52, relwidth=0.75, relheight=0.20, anchor='n')
+
+
+
+def branch_select_screen(widmg, datmg, root, prev_page):
+    set_json_metadata_key_dict(datmg)
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.branch_select_screen_widgets
 
     branch_select_label = ttk.Label(root, text="Select Your Branch", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "branch_select_label", branch_select_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
+    widmg.store_and_place(page['label'], "branch_select_label", branch_select_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
    
-    select_nd_button = ttk.Button(root, text="ND", command=lambda: select_nd_but_to_tdpselscreen('ND', widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "select_nd_button", select_nd_button, relx=0.5, rely=0.30, relwidth=0.50, relheight=0.2, anchor='center')
+    select_nd_button = ttk.Button(root, text="ND", command=lambda: after_selecting_branch_screen('ND', widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "select_nd_button", select_nd_button, relx=0.5, rely=0.30, relwidth=0.50, relheight=0.2, anchor='center')
 
-    select_tx_button = ttk.Button(root, text="TX", command=lambda: select_tx_but_to_tdpselscreen('TX', widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "select_tx_button", select_tx_button, relx=0.5, rely=0.55, relwidth=0.50, relheight=0.2, anchor='center')
+    select_tx_button = ttk.Button(root, text="TX", command=lambda: after_selecting_branch_screen('TX', widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "select_tx_button", select_tx_button, relx=0.5, rely=0.55, relwidth=0.50, relheight=0.2, anchor='center')
 
+    back_to_start_inspection = ttk.Button(root, text="BACK", command=lambda: start_inspection_screen(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_to_start_inspection", back_to_start_inspection, relx=0.5, rely=0.85, relwidth=0.5, relheight=0.15, anchor='center')  
 
-def select_nd_but_to_tdpselscreen(branch, widmg, datmg, root):
-    datmg.json_data_dict['branch'] = branch
-    widmg.branch_var.set(branch)
-    page = widmg.branch_select_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-    create_tubing_drillpipe_selection_screen(widmg, datmg, root)
-
-def select_tx_but_to_tdpselscreen(branch, widmg, datmg, root):
-    datmg.json_data_dict['branch'] = branch
-    widmg.branch_var.set(branch)
-    datmg.json_data_dict['report_type'] = "Drill Pipe Inspection Report"
-    page = widmg.branch_select_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-    does_spreadsheet_exist_screen(widmg, datmg, root)
-
-
-def create_tubing_drillpipe_selection_screen(widmg, datmg, root):
-    widmg.branch_label.place(relx=0.92, rely=0.02, relheight=0.07, relwidth=0.07)
-    page = widmg.tubing_or_drillpipe_menu
-
-    menu_selection_header_label = ttk.Label(root, text="SELECT YOUR REPORT TYPE", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "menu_selection_header_label", menu_selection_header_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
-
-    tube_casing_button = ttk.Button(root, text="Tubing/Casing Report", command=lambda: tubing_button_to_ssescreen(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "tube_casing_button", tube_casing_button, relx=0.5, rely=0.27, relwidth=0.75, relheight=0.20, anchor='n')
-   
-    drill_pipe_button = ttk.Button(root, text="Drill Pipe Inspection Report", command=lambda: drill_pipe_button_to_ssescreen(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "drill_pipe_button", drill_pipe_button, relx=0.5, rely=0.52, relwidth=0.75, relheight=0.20, anchor='n')
-
-    back_to_branch_btn = ttk.Button(root, text="BACK", command=lambda: back_to_branch_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "back_to_branch_btn", back_to_branch_btn, relx=0.5, rely=0.85, relwidth=0.40, relheight=0.15, anchor='center')
-
-def back_to_branch_action(widmg, datmg, root):
-    page = widmg.tubing_or_drillpipe_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-    branch_select_screen(widmg, datmg, root)
-
-def tubing_button_to_ssescreen(widmg, datmg, root):
-    datmg.json_data_dict['report_type'] = "Tubing/Casing Report"
-    datmg.json_data_dict['active_tab'] = 'Tubing Insp Report'
-    datmg.json_data_dict['report_data'] = {
-        "Tubing Insp Report": {
-            'joint_count': 0,
-            'users_column_select': [],
-            "is_complete": False,
-            "inspection_type_data": {
-                "inspection_type_selection": "", 
-                "inspection_type_addodid": "", 
-                "inspection_type_additional": ""
-            },
-            "joint_data": {}
-        }
-    }
-    widmg.spreadsheet_type_prework.set("Tubing Spreadsheet")
-    page = widmg.tubing_or_drillpipe_menu
-
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-    
-    does_spreadsheet_exist_screen(widmg, datmg, root)
-
-
-
-def drill_pipe_button_to_ssescreen(widmg, datmg, root):
-    datmg.json_data_dict['report_type'] = "Drill Pipe Inspection Report"
-
-    widmg.spreadsheet_type_prework.set("Drill Pipe Spreadsheet")
-    page = widmg.tubing_or_drillpipe_menu
-
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-    
-    does_spreadsheet_exist_screen(widmg, datmg, root)
-
-#### START HERE ###
-## IMPLEMENTING TEXAS' "DOES SPREADSHEET EXIST" SCREEN
-
-
-def continue_existing_report_btn(widmg, datmg, root):
-    page = widmg.spreadsheet_exist_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-
-    display_incomplete_reports(widmg, datmg, root)
-
-
-
-### Function that allows user to continue working on an existing report. This function currently works correctly assuming that
-### the datmg.json_data_dict/self.filename is in the proper format. Currently, having issues due to this.
-
-
-
-def display_incomplete_reports(widmg, datmg, root):
-    import os
-    import tkinter as tk
-    from tkinter import ttk
+def display_incomplete_reports(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
     
     # Define the page variable for easy reference
     page = widmg.continue_existing_report_screen
@@ -783,19 +707,19 @@ def display_incomplete_reports(widmg, datmg, root):
     
     # Label to instruct user
     select_existing_report = ttk.Label(root, text="SELECT EXISTING REPORT FILE", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "select_existing_report", select_existing_report, relx=0.5, rely=0.05, relheight=0.10, anchor='c')
+    widmg.store_and_place(page['label'], "select_existing_report", select_existing_report, relx=0.5, rely=0.05, relheight=0.10, anchor='c')
     
     # Frame for holding the filename list
     file_display_frame = ttk.Frame(root)
-    widmg.store_and_place(page['display_frames'], "file_display_frame", file_display_frame, relx=0.5, rely=0.225, relwidth=0.8, relheight=0.1, anchor='center')
+    widmg.store_and_place(page['display_frame'], "file_display_frame", file_display_frame, relx=0.5, rely=0.225, relwidth=0.8, relheight=0.1, anchor='center')
     
     # Listbox for displaying Excel filenames
     file_listbox = tk.Listbox(file_display_frame, selectmode=tk.SINGLE)
-    widmg.store_and_place(page['listboxes'], "file_listbox", file_listbox, relx=0, rely=0, relwidth=1.0, relheight=1.0)
+    widmg.store_and_place(page['listbox'], "file_listbox", file_listbox, relx=0, rely=0, relwidth=1.0, relheight=1.0)
     
     # Scrollbar for the listbox
     file_scrollbar = tk.Scrollbar(file_display_frame, orient=tk.VERTICAL, command=file_listbox.yview)
-    widmg.store_and_place(page['scrollbars'], "file_scrollbar", file_scrollbar, relx=0.98, rely=0, relheight=1.0)
+    widmg.store_and_place(page['scrollbar'], "file_scrollbar", file_scrollbar, relx=0.98, rely=0, relheight=1.0)
     file_listbox.config(yscrollcommand=file_scrollbar.set)
     
     # Populate listbox with .json filenames from the specified folder
@@ -807,8 +731,8 @@ def display_incomplete_reports(widmg, datmg, root):
     file_listbox.bind("<<ListboxSelect>>", lambda event: handle_file_selection(root, datmg, widmg, event))
     
     # Create the 'BACK' button
-    back_button = ttk.Button(root, text="BACK", command=lambda: back_from_displayincompletereports(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "back_button", back_button, relx=0.5, rely=0.95, relwidth=0.33, relheight=0.075, anchor='center')
+    back_button = ttk.Button(root, text="BACK", command=lambda: back_from_displayincompletereports(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.5, rely=0.95, relwidth=0.33, relheight=0.075, anchor='center')
     
     def handle_file_selection(root, datmg, widmg, event):
         # Retrieve the selected file from the listbox
@@ -841,8 +765,8 @@ def display_incomplete_reports(widmg, datmg, root):
         # Define the page variable for easy reference
         page = widmg.continue_existing_report_screen
 
-        for frame_key in list(page['display_frames'].keys()):
-            frame = page['display_frames'].pop(frame_key)
+        for frame_key in list(page['display_frame'].keys()):
+            frame = page['display_frame'].pop(frame_key)
             if isinstance(frame, ttk.Frame) or isinstance(frame, tk.Frame):
                 frame.destroy()
         
@@ -853,14 +777,14 @@ def display_incomplete_reports(widmg, datmg, root):
         report_type_display_frame = ttk.Frame(root)
         report_type_label = ttk.Label(report_type_display_frame, text=datmg.json_data_dict['report_type'], font=('Arial', 20))
         report_type_label.pack(anchor='center')
-        widmg.store_and_place(page['display_frames'], "report_type_display_frame", report_type_display_frame, relx=0.5, rely=0.35, relwidth=0.8, relheight=0.05, anchor='center')
+        widmg.store_and_place(page['display_frame'], "report_type_display_frame", report_type_display_frame, relx=0.5, rely=0.35, relwidth=0.8, relheight=0.05, anchor='center')
         
         # Get user metadata to display in each tab frame
         user_metadata = datmg.json_data_dict['report_user_metadata']
         metadata_list = [
-            user_metadata['operator_entry'], user_metadata['contractor_entry'], user_metadata['location_entry'], 
-            user_metadata['date_entry'], user_metadata['invoice_entry'], user_metadata['connection_size_selection'], 
-            user_metadata['connection_type_selection'], user_metadata['inspected_by_entry'], user_metadata.get('grade_info')
+            user_metadata['operator_choice'], user_metadata['contractor_choice'], user_metadata['location_choice'], 
+            user_metadata['date_choice'], user_metadata['invoice_choice'], user_metadata['connection_size_choice'], 
+            user_metadata['connection_type_choice'], user_metadata['inspected_by_choice'], user_metadata.get('grade_choice')
         ]
         metadata_text = "\n".join(str(item) for item in metadata_list if item)  # Join metadata into one block of text
 
@@ -875,11 +799,11 @@ def display_incomplete_reports(widmg, datmg, root):
 
             frame = ttk.Frame(root)
             relx_position = 0.1 + i * frame_width + frame_width / 2
-            widmg.store_and_place(page['display_frames'], frame_name, frame, relx=relx_position, rely=0.65, relwidth=frame_width, relheight=0.45, anchor='center')
+            widmg.store_and_place(page['display_frame'], frame_name, frame, relx=relx_position, rely=0.65, relwidth=frame_width, relheight=0.45, anchor='center')
             
             # Add the tab name at the top
             tab_label = ttk.Label(frame, text=tab_key, font=('Arial', 14, 'bold'))
-            widmg.store_and_place(page['labels'], tab_label_name, tab_label, relx=0.5, rely=0.04, relwidth=0.95, relheight=0.10, anchor='center')
+            widmg.store_and_place(page['label'], tab_label_name, tab_label, relx=0.5, rely=0.04, relwidth=0.95, relheight=0.10, anchor='center')
             
             # Check if tab is complete and set completion status
             tab_data = datmg.json_data_dict['report_data'][tab_key]
@@ -888,43 +812,37 @@ def display_incomplete_reports(widmg, datmg, root):
             completion_color = "green" if is_complete else "red"
 
             completion_label = ttk.Label(frame, text=completion_text, font=('Arial', 14, 'bold'), foreground=completion_color)
-            widmg.store_and_place(page['labels'], tdf_completion_lbl_name, completion_label, relx=0.5, rely=0.12, relwidth=0.95, relheight=0.10, anchor='center')
+            widmg.store_and_place(page['label'], tdf_completion_lbl_name, completion_label, relx=0.5, rely=0.12, relwidth=0.95, relheight=0.10, anchor='center')
 
             # Display user metadata
             metadata_label = ttk.Label(frame, text=metadata_text, font=('Arial', 10), wraplength=frame_width*500)  # Wrap text to fit frame
-            widmg.store_and_place(page['labels'], tdf_metadata_lbl_name, metadata_label, relx=0.5, rely=0.40, relwidth=0.95, relheight=0.30, anchor='center')
+            widmg.store_and_place(page['label'], tdf_metadata_lbl_name, metadata_label, relx=0.5, rely=0.40, relwidth=0.95, relheight=0.30, anchor='center')
             
             # Display unique inspection data for this tab
             inspection_data = tab_data["inspection_type_data"]
             inspection_parts = []
-            if inspection_data.get("inspection_type_selection"):
-                inspection_parts.append(inspection_data["inspection_type_selection"])
-            if inspection_data.get("inspection_type_addodid"):
-                inspection_parts.append(inspection_data["inspection_type_addodid"])
-            if inspection_data.get("inspection_type_additional"):
-                inspection_parts.append(inspection_data["inspection_type_additional"])
+            if inspection_data.get("category_choice"):
+                inspection_parts.append(inspection_data["category_choice"])
+            if inspection_data.get("addodid_choice"):
+                inspection_parts.append(inspection_data["addodid_choice"])
+            if inspection_data.get("additional_choice"):
+                inspection_parts.append(inspection_data["additional_choice"])
             # Filter out any None values in inspection_parts
             inspection_text = " ".join(str(part) for part in inspection_parts if part is not None)
 
             
             inspection_label = ttk.Label(frame, text=inspection_text, font=('Arial', 12, 'italic'), wraplength=frame_width*300)
-            widmg.store_and_place(page['labels'], tdf_inspection_lbl_name, inspection_label, relx=0.5, rely=0.71, relwidth=0.95, relheight=0.15, anchor='center')
+            widmg.store_and_place(page['label'], tdf_inspection_lbl_name, inspection_label, relx=0.5, rely=0.71, relwidth=0.95, relheight=0.15, anchor='center')
             
             # Add button based on completion status
             button_text = "EDIT" if is_complete else "START"
-            action_button = ttk.Button(frame, text=button_text, command=lambda tab=tab_key: bring_to_main_report_scrn(widmg, datmg, root, tab))
-            widmg.store_and_place(page['buttons'], tdf_button_name, action_button, relx=0.5, rely=0.91, relwidth=0.87, relheight=0.09, anchor='center')
+            action_button = ttk.Button(frame, text=button_text, command=lambda tab=tab_key: after_display_incomplete_reports(widmg, datmg, root, tab, page))
+            widmg.store_and_place(page['button'], tdf_button_name, action_button, relx=0.5, rely=0.91, relwidth=0.87, relheight=0.09, anchor='center')
 
 
 
-def bring_to_main_report_scrn(widmg, datmg, root, tab_key):
-    page = widmg.continue_existing_report_screen
-    widmg.hide_widget_grouping(page['display_frames'])
-    widmg.hide_widget_grouping(page['listboxes'])
-    widmg.hide_widget_grouping(page['scrollbars'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
 
+def after_display_incomplete_reports(widmg, datmg, root, tab_key, prev_page):
     if tab_key == "Prop Drill Pipe Inp Report":
         widmg.tab_data_header.set("PDPIR")
     elif tab_key == "Prop HWDP Inp Report":
@@ -932,7 +850,7 @@ def bring_to_main_report_scrn(widmg, datmg, root, tab_key):
     elif tab_key == "Prop Subs Inp Report":
         widmg.tab_data_header.set("SUBS")
     elif tab_key == "Tubing Insp Report":
-        widmg.tab_data_header.set(datmg.json_data_dict['report_user_metadata']['connection_type_selection'])
+        widmg.tab_data_header.set(datmg.json_data_dict['report_user_metadata']['connection_type_choice'])
 
     datmg.json_data_dict['active_tab'] = tab_key
     active_tab = datmg.json_data_dict['active_tab']
@@ -941,17 +859,109 @@ def bring_to_main_report_scrn(widmg, datmg, root, tab_key):
     datmg.save_dict_to_file()
 
     if datmg.json_data_dict['report_data'][active_tab]['users_column_select'] == []:
-        show_table_selection_screen(widmg, datmg, root)
+        create_select_columns_screen(widmg, datmg, root, prev_page)
     else:
-        display_main_report_screen(widmg, datmg, root)
+        display_main_report_screen(widmg, datmg, root, prev_page, in_sequence=True)
+
+
+
+def after_selecting_branch_screen(branch, widmg, datmg, root, prev_page):
+    datmg.json_data_dict['branch'] = branch
+    widmg.branch_var.set(branch)
+
+    if branch == 'ND':
+        create_tubing_drillpipe_selection_screen(widmg, datmg, root, prev_page)
+    elif branch == 'TX':
+        select_tx_ss_style_screen(widmg, datmg, root, prev_page)
+
+
+
+
+
+def create_tubing_drillpipe_selection_screen(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.tubing_or_drillpipe_menu
+
+    menu_selection_header_label = ttk.Label(root, text="SELECT YOUR REPORT TYPE", font=('Arial', 32))
+    widmg.store_and_place(page['label'], "menu_selection_header_label", menu_selection_header_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
+
+    tube_casing_button = ttk.Button(root, text="Tubing/Casing Report", command=lambda: after_tubing_drillpipe_selection_screen("Tubing/Casing Report", widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "tube_casing_button", tube_casing_button, relx=0.5, rely=0.27, relwidth=0.75, relheight=0.20, anchor='n')
+   
+    drill_pipe_button = ttk.Button(root, text="Drill Pipe Inspection Report", command=lambda: after_tubing_drillpipe_selection_screen("Drill Pipe Inspection Report", widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "drill_pipe_button", drill_pipe_button, relx=0.5, rely=0.52, relwidth=0.75, relheight=0.20, anchor='n')
+
+    back_to_branch_btn = ttk.Button(root, text="BACK", command=lambda: branch_select_screen(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_to_branch_btn", back_to_branch_btn, relx=0.5, rely=0.85, relwidth=0.40, relheight=0.15, anchor='center')
+
+
+def select_tx_ss_style_screen(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.select_tx_ss_style_menu
+
+    spread_exist_label = ttk.Label(root, text="SELECT SPREADSHEET STYLE", font=('Arial', 32))
+    widmg.store_and_place(page['label'], "spread_exist_label", spread_exist_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
+
+    class_2_dbr_btn = ttk.Button(root, text="Class 2 DBR", command=lambda: tx_ss_style_to_tab_select(widmg, datmg, root, 'Class 2 DBR', page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "class_2_dbr_btn", class_2_dbr_btn, relx=0.5, rely=0.25, relwidth=0.75, relheight=0.15, anchor='n')
+
+    class_2_not_dbr_btn = ttk.Button(root, text="Class 2 NOT DBR", command=lambda: tx_ss_style_to_tab_select(widmg, datmg, root, 'Class 2 NOT DBR', page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "class_2_not_dbr_btn", class_2_not_dbr_btn, relx=0.5, rely=0.45, relwidth=0.75, relheight=0.15, anchor='n')
+
+    full_dimensional_btn = ttk.Button(root, text="Full Dimensional", command=lambda: tx_ss_style_to_tab_select(widmg, datmg, root, 'Full Dimensional', page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "full_dimensional_btn", full_dimensional_btn, relx=0.5, rely=0.65, relwidth=0.75, relheight=0.15, anchor='n')
+
+    backto_dptubesel_btn = ttk.Button(root, text="BACK", command=lambda: branch_select_screen(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "backto_dptubesel_btn", backto_dptubesel_btn, relx=0.5, rely=0.90, relwidth=0.5, relheight=0.10, anchor='center')  
+
+
+def after_tubing_drillpipe_selection_screen(report_type, widmg, datmg, root, prev_page):
+    datmg.json_data_dict['report_type'] = report_type
+    if report_type == 'Tubing/Casing Report':
+        widmg.tab_data_header.set('TUBING/CASING')
+        datmg.json_data_dict['report_type'] = report_type
+        datmg.json_data_dict['active_tab'] = 'Tubing Insp Report'
+        datmg.json_data_dict['report_data'] = {
+            "Tubing Insp Report": {
+                'joint_count': 0,
+                "notes_choice": None,
+                'users_column_select': [],
+                "is_complete": False,
+                "inspection_type_data": {
+                    "category_choice": None, 
+                    "addodid_choice": None, 
+                    "additional_choice": None
+                },
+                "joint_data": {}
+            }
+        }
+        # Need to call the first Metadata Input Screen Here
+        create_date_entry_screen(widmg, datmg, root, prev_page, in_sequence=True )
+    elif report_type == 'Drill Pipe Inspection Report':
+        create_tab_select_screen(widmg, datmg, root, prev_page)
+
+            
+            
+
+
+def tx_ss_style_to_tab_select(widmg, datmg, root, ss_style, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
+    datmg.json_data_dict['report_style'] = ss_style
+    datmg.json_data_dict['report_type'] = "Drill Pipe Inspection Report"
+
+    create_tab_select_screen(widmg, datmg, root, prev_page)
+
+
     
     
 
-def back_from_displayincompletereports(widmg, datmg, root):
-    # Clear the widgets from the 'continue_existing_report_screen'
+def back_from_displayincompletereports(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
+
     datmg.filename = None
     branch = datmg.json_data_dict['branch']
     report_type = datmg.json_data_dict['report_type']
+
     datmg.json_data_dict = {
         "branch": branch, 
         "report_type": report_type, 
@@ -960,906 +970,610 @@ def back_from_displayincompletereports(widmg, datmg, root):
         "report_data": {}
     }
 
-    page = widmg.continue_existing_report_screen
-    widmg.hide_widget_grouping(page['display_frames'])
-    widmg.hide_widget_grouping(page['listboxes'])
-    widmg.hide_widget_grouping(page['scrollbars'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    
-    # Navigate to the 'does_spreadsheet_exist_screen'
-    does_spreadsheet_exist_screen(widmg, datmg, root)
+    # Navigate to the 'start_inspection_screen'
+    start_inspection_screen(widmg, datmg, root)
 
 
 
-
-def does_spreadsheet_exist_screen(widmg, datmg, root):
-    widmg.branch_label.place(relx=0.92, rely=0.02, relheight=0.07, relwidth=0.07)
-    page = widmg.spreadsheet_exist_menu
-
-    spread_exist_label = ttk.Label(root, text="START AN INSPECTION", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "spread_exist_label", spread_exist_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
-
-    create_new_ss_button = ttk.Button(root, text="Create New Report", command=lambda: create_new_ss_bridge(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "create_new_ss_button", create_new_ss_button, relx=0.5, rely=0.27, relwidth=0.75, relheight=0.20, anchor='n')
-
-    use_existing_ss_button = ttk.Button(root, text="Continue Existing Report", command=lambda: continue_existing_report_btn(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "use_existing_ss_button", use_existing_ss_button, relx=0.5, rely=0.52, relwidth=0.75, relheight=0.20, anchor='n')
-
-    backto_ss_exist_screen = ttk.Button(root, text="BACK", command=lambda: back_to_dptubesel_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "backto_ss_exist_screen", backto_ss_exist_screen, relx=0.5, rely=0.85, relwidth=0.5, relheight=0.15, anchor='center')  
-
-
-def ss_exist_back_bridge_tx(widmg, datmg, root):
-    page = widmg.select_tx_ss_style_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-
-    does_spreadsheet_exist_screen(widmg, datmg, root)
 
 def back_to_dptubesel_action(widmg, datmg, root):
     branch = datmg.json_data_dict['branch']
-    page = widmg.spreadsheet_exist_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
+    page = widmg.start_inspection_screen_widgets
+    widmg.hide_widget_grouping(page['label'])
+    widmg.hide_widget_grouping(page['button'])
     if branch == 'ND':
         create_tubing_drillpipe_selection_screen(widmg, datmg, root)
     elif branch == 'TX':
         branch_select_screen(widmg, datmg, root)
     
-def create_new_ss_bridge(widmg, datmg, root):
-    page = widmg.spreadsheet_exist_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
 
-    if datmg.json_data_dict['branch'] == 'ND':
-        if datmg.json_data_dict['report_type'] == 'Drill Pipe Inspection Report':
-            create_tab_select_screen(widmg, datmg, root)
-        elif datmg.json_data_dict['report_type'] == 'Tubing/Casing Report':
-            widmg.tab_data_header.set('TUBING/CASING')
-            create_report_metadata_input_widgets(widmg, datmg, root, editing=False)
-    elif datmg.json_data_dict['branch'] == 'TX':
-        select_tx_ss_style_screen(widmg, datmg, root)
         
 
 
-def select_tx_ss_style_screen(widmg, datmg, root):
-    page = widmg.select_tx_ss_style_menu
-
-    spread_exist_label = ttk.Label(root, text="SELECT SPREADSHEET STYLE", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "spread_exist_label", spread_exist_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
-
-    class_2_dbr_btn = ttk.Button(root, text="Class 2 DBR", command=lambda: tx_ss_style_to_tab_select(widmg, datmg, root, 'Class 2 DBR'), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "class_2_dbr_btn", class_2_dbr_btn, relx=0.5, rely=0.25, relwidth=0.75, relheight=0.15, anchor='n')
-
-    class_2_not_dbr_btn = ttk.Button(root, text="Class 2 NOT DBR", command=lambda: tx_ss_style_to_tab_select(widmg, datmg, root, 'Class 2 NOT DBR'), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "class_2_not_dbr_btn", class_2_not_dbr_btn, relx=0.5, rely=0.45, relwidth=0.75, relheight=0.15, anchor='n')
-
-    full_dimensional_btn = ttk.Button(root, text="Full Dimensional", command=lambda: tx_ss_style_to_tab_select(widmg, datmg, root, 'Full Dimensional'), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "full_dimensional_btn", full_dimensional_btn, relx=0.5, rely=0.65, relwidth=0.75, relheight=0.15, anchor='n')
-
-    backto_dptubesel_btn = ttk.Button(root, text="BACK", command=lambda: ss_exist_back_bridge_tx(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "backto_dptubesel_btn", backto_dptubesel_btn, relx=0.5, rely=0.90, relwidth=0.5, relheight=0.10, anchor='center')  
-
-
-def tx_ss_style_to_tab_select(widmg, datmg, root, ss_style):
-    page = widmg.select_tx_ss_style_menu
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-
-    datmg.json_data_dict['report_style'] = ss_style
-    type_storage = datmg.json_data_dict['report_style']
-
-    if ss_style == 'Class 2 DBR':
-        type_storage = 'Class 2 DBR'
-    elif ss_style == 'Class 2 NOT DBR':
-        type_storage = 'Class 2 NOT DBR'
-    elif ss_style == 'Full Dimensional':
-        type_storage = 'Full Dimensional'
-
-    create_tab_select_screen(widmg, datmg, root)
-
-
-def use_existing_ss_bridge(widmg, datmg, root):
-    report_type = datmg.json_data_dict['report_type']
-    branch = datmg.json_data_dict['branch']
-    datmg.xel_file_path = None
-    datmg.new_excel_fp = None
-    page = widmg.spreadsheet_exist_menu
-
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-
-    avail_tabs = return_sheets_active_tabs_first(widmg, datmg, root)
-    workbook = load_workbook(filename=datmg.xel_file_path, read_only=True)
-
-    if branch == 'ND':
-        if report_type == 'Drill Pipe Inspection Report':
-            create_tab_select_existing_screen(avail_tabs, widmg, datmg, root)
-        elif report_type == 'Tubing/Casing Report':
-            ask_for_data_entry_file_screen(widmg, datmg, root)
-    elif branch == 'TX':
-        if 'DATA SHEET' in workbook.sheetnames:
-            data_sheet = workbook['DATA SHEET']
-            value_j2 = data_sheet['J2'].value  # Store the value in J2
-            datmg.json_data_dict['report_style'] = value_j2
-
-        create_tab_select_existing_screen(avail_tabs, widmg, datmg, root)
 
 
 
-def return_sheets_active_tabs_first(widmg, datmg, root):
-    # Open the file dialog to select an Excel file
-    file_path = filedialog.askopenfilename(
-        title="Select the spreadsheet you want to use",
-        filetypes=[("Excel files", "*.xlsx")]
-    )
-    datmg.xel_file_path = file_path
-    if not file_path:  # If no file is selected, return an empty list
-        datmg.xel_file_path = None
-        does_spreadsheet_exist_screen(widmg, datmg, root)
 
-    # Load the workbook and get all sheets
-    workbook = load_workbook(filename=file_path, read_only=True)
-
-
-
-    # List to hold the names of visible tabs
-    visible_tabs = [sheet.title for sheet in workbook.worksheets if not sheet.sheet_state == 'hidden']
-
-    return visible_tabs
-
-def return_sheets_active_tabs_after(widmg, datmg, root):
-    # Load the workbook and get all sheets
-    workbook = load_workbook(filename=datmg.xel_file_path, read_only=True)
-
-    # List to hold the names of visible tabs
-    visible_tabs = [sheet.title for sheet in workbook.worksheets if not sheet.sheet_state == 'hidden']
-
-    return visible_tabs
-
-
-def create_tab_select_screen(widmg, datmg, root):
+def create_tab_select_screen(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
     page = widmg.drillpipe_tabs_usemenu
     style = ttk.Style()
     style.configure('LargeFont.TButton', font=('Helvetica', 20))
 
 
     tabs_select_header_label = ttk.Label(root, text="INCLUDE IN THIS REPORT: ", font=('Arial', 24))
-    widmg.store_and_place(page['labels'], "tabs_select_header_label", tabs_select_header_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
+    widmg.store_and_place(page['label'], "tabs_select_header_label", tabs_select_header_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
 
 
     pdpir_checkbutton = ttk.Checkbutton(root, text="Drill Pipe Inspection (PDPIR)", variable=widmg.pdpir_boolean, style='LargeFont.TCheckbutton')
-    widmg.store_and_place(page['check_buttons'], "pdpir_checkbutton", pdpir_checkbutton, relx=0.5, rely=0.24, relwidth=0.75, relheight=0.17, anchor='n')
+    widmg.store_and_place(page['checkbutton'], "pdpir_checkbutton", pdpir_checkbutton, relx=0.5, rely=0.24, relwidth=0.75, relheight=0.17, anchor='n')
 
     hwdp_checkbutton = ttk.Checkbutton(root, text="Heavy Weight Drill Pipe Inspection (HWDP)", variable=widmg.hwdp_boolean, style='LargeFont.TCheckbutton')
-    widmg.store_and_place(page['check_buttons'], "hwdp_checkbutton", hwdp_checkbutton, relx=0.5, rely=0.42, relwidth=0.75, relheight=0.17, anchor='n')
+    widmg.store_and_place(page['checkbutton'], "hwdp_checkbutton", hwdp_checkbutton, relx=0.5, rely=0.42, relwidth=0.75, relheight=0.17, anchor='n')
 
     subs_checkbutton = ttk.Checkbutton(root, text="Subs Inspection (SUBS)", variable=widmg.subs_boolean, style='LargeFont.TCheckbutton')
-    widmg.store_and_place(page['check_buttons'], "subs_checkbutton", subs_checkbutton, relx=0.50, rely=0.60, relwidth=0.75, relheight=0.17, anchor='n')
+    widmg.store_and_place(page['checkbutton'], "subs_checkbutton", subs_checkbutton, relx=0.50, rely=0.60, relwidth=0.75, relheight=0.17, anchor='n')
 
-    tabs_select_back_button = ttk.Button(root, text="BACK", command=lambda: tabs_select_back_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "tabs_select_back_button", tabs_select_back_button, relx=0.34, rely=0.87, relwidth=0.26, relheight=0.08, anchor='n')
+    tabs_select_back_button = ttk.Button(root, text="BACK", command=lambda: tabs_select_back_action(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "tabs_select_back_button", tabs_select_back_button, relx=0.34, rely=0.87, relwidth=0.26, relheight=0.08, anchor='n')
 
-    next_after_tabs_btn = ttk.Button(root, text="NEXT", command=lambda: tabs_select_next_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "next_after_tabs_btn", next_after_tabs_btn, relx=0.62, rely=0.87, relwidth=0.26, relheight=0.08, anchor='n')
-
-
-def create_tab_select_existing_screen(visible_tabs, widmg, datmg, root):
-    branch = datmg.json_data_dict['branch']
-    page = widmg.drillpipe_tabs_usemenu
-    style = ttk.Style()
-    style.configure('LargeFont.TButton', font=('Helvetica', 28))
+    next_after_tabs_btn = ttk.Button(root, text="NEXT", command=lambda: tabs_select_next_action(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_after_tabs_btn", next_after_tabs_btn, relx=0.62, rely=0.87, relwidth=0.26, relheight=0.08, anchor='n')
 
 
-    tabs_select_header_label = ttk.Label(root, text="WHICH WOULD YOU LIKE TO START?", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "tabs_select_header_label", tabs_select_header_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
 
 
-    for tab in visible_tabs:
-        if tab == 'Prop Drill Pipe Inp Report':
-            pdpir_strt_button = ttk.Button(root, text="Use PDPIR Tab", command=lambda: sel_btn_to_create_dp_spread("Prop Drill Pipe Inp Report", widmg, datmg, root, existing=True), style='LargeFont.TButton')
-            widmg.store_and_place(page['buttons'], "pdpir_strt_button", pdpir_strt_button, relx=0.5, rely=0.24, relwidth=0.75, relheight=0.17, anchor='n')
-
-        elif tab == 'Prop HWDP Inp Report':
-            hwdp_strt_button = ttk.Button(root, text="Use HWDP Tab", command=lambda: sel_btn_to_create_dp_spread("Prop HWDP Inp Report", widmg, datmg, root, existing=True), style='LargeFont.TButton')
-            widmg.store_and_place(page['buttons'], "hwdp_strt_button", hwdp_strt_button, relx=0.5, rely=0.42, relwidth=0.75, relheight=0.17, anchor='n')
-
-        elif tab == 'Prop Subs Inp Report':
-            subs_strt_button = ttk.Button(root, text="Use SUBS Tab", command=lambda: sel_btn_to_create_dp_spread("Prop Subs Inp Report", widmg, datmg, root, existing=True), style='LargeFont.TButton')
-            widmg.store_and_place(page['buttons'], "subs_strt_button", subs_strt_button, relx=0.5, rely=0.60, relwidth=0.75, relheight=0.17, anchor='n')
-
-    for tab in visible_tabs:
-        if tab == "Tubing Insp Report":
-            no_tabs_found_label = ttk.Label(root, text="No Tabs Found (Must Select Drill Pipe Report)", font=('Arial', 24))
-            widmg.store_and_place(page['labels'], "no_tabs_found_label", no_tabs_found_label, relx=0.5, rely=0.5, relwidth=0.95, relheight=0.15, anchor='center')
-            break
-
-    tabs_select_back_button = ttk.Button(root, text="BACK", command=lambda: tabs_select_back_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "tabs_select_back_button", tabs_select_back_button, relx=0.25, rely=0.87, relwidth=0.3, relheight=0.08, anchor='n')
-
-
-def tabs_select_next_action(widmg, datmg, root):
-    save_tabs_screen_clear(widmg, datmg, root)
+def tabs_select_next_action(widmg, datmg, root, prev_page):
     if widmg.pdpir_boolean.get():
         datmg.json_data_dict['report_data']['Prop Drill Pipe Inp Report'] = {
         'joint_count': 0,
+        "notes_choice": None,
         'users_column_select': [],
         'is_complete': False,
-        'inspection_type_data': {"inspection_type_selection": None, "inspection_type_addodid": None, "inspection_type_additional": None },
+        'inspection_type_data': {"category_choice": None, "addodid_choice": None, "additional_choice": None },
         'joint_data': {}
         }
     if widmg.hwdp_boolean.get():
         datmg.json_data_dict['report_data']['Prop HWDP Inp Report'] = {
         'joint_count': 0,
+        "notes_choice": None,
         'users_column_select': [],
         'is_complete': False,
-        'inspection_type_data': {"inspection_type_selection": None, "inspection_type_addodid": None, "inspection_type_additional": None },
+        'inspection_type_data': {"category_choice": None, "addodid_choice": None, "additional_choice": None },
         'joint_data': {}
         }
     if widmg.subs_boolean.get():
         datmg.json_data_dict['report_data']['Prop Subs Inp Report'] = {
         'joint_count': 0,
+        "notes_choice": None,
         'users_column_select': [],
         'is_complete': False,
-        'inspection_type_data': {"inspection_type_selection": None, "inspection_type_addodid": None, "inspection_type_additional": None },
+        'inspection_type_data': {"category_choice": None, "addodid_choice": None, "additional_choice": None },
         'joint_data': {}
         }
 
-    select_active_tab_menu(widmg, datmg, root)
+    select_active_tab_menu(widmg, datmg, root, prev_page)
 
-def tabs_select_back_action(widmg, datmg, root):
-    branch = datmg.json_data_dict['report_user_metadata']['branch']
-    save_tabs_clear(widmg, datmg, root)
+def tabs_select_back_action(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
+
+    branch = datmg.json_data_dict['branch']
     if branch == 'ND':
-        does_spreadsheet_exist_screen(widmg, datmg, root)
+        create_tubing_drillpipe_selection_screen(widmg, datmg, root, prev_page)
     elif branch == 'TX':
-        select_tx_ss_style_screen(widmg, datmg, root)
+        select_tx_ss_style_screen(widmg, datmg, root, prev_page)
 
 
-
-def save_tabs_screen_clear(widmg, datmg, root):
-    page = widmg.drillpipe_tabs_usemenu
-
-    widmg.hide_widget_grouping(page['check_buttons'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-
-def select_active_tab_menu(widmg, datmg, root):
+def select_active_tab_menu(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
     page = widmg.select_active_tab_fresh_menu
 
     active_tab_fresh_select_header = ttk.Label(root, text="WHICH WOULD YOU LIKE TO START?", font=('Arial', 24))
-    widmg.store_and_place(page['labels'], "active_tab_fresh_select_header", active_tab_fresh_select_header, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
+    widmg.store_and_place(page['label'], "active_tab_fresh_select_header", active_tab_fresh_select_header, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
 
     if 'Prop Drill Pipe Inp Report' in datmg.json_data_dict['report_data']:
-        pdpir_sel_button = ttk.Button(root, text="Drill Pipe Inspection (PDPIR)", command=lambda: sel_btn_to_create_dp_spread('Prop Drill Pipe Inp Report', widmg, datmg, root), style='Large.TButton')
-        widmg.store_and_place(page['buttons'], "pdpir_sel_button", pdpir_sel_button, relx=0.5, rely=0.24, relwidth=0.75, relheight=0.17, anchor='n')
+        pdpir_sel_button = ttk.Button(root, text="Drill Pipe Inspection (PDPIR)", command=lambda: sel_btn_to_create_dp_spread('Prop Drill Pipe Inp Report', widmg, datmg, root, page), style='Large.TButton')
+        widmg.store_and_place(page['button'], "pdpir_sel_button", pdpir_sel_button, relx=0.5, rely=0.24, relwidth=0.75, relheight=0.17, anchor='n')
     if 'Prop HWDP Inp Report' in datmg.json_data_dict['report_data']:
-        hwdp_sel_button = ttk.Button(root, text="Heavy Weight Drill Pipe Inspection (HWDP)", command=lambda: sel_btn_to_create_dp_spread('Prop HWDP Inp Report', widmg, datmg, root), style='Large.TButton')
-        widmg.store_and_place(page['buttons'], "hwdp_sel_button", hwdp_sel_button, relx=0.5, rely=0.42, relwidth=0.75, relheight=0.17, anchor='n')
+        hwdp_sel_button = ttk.Button(root, text="Heavy Weight Drill Pipe Inspection (HWDP)", command=lambda: sel_btn_to_create_dp_spread('Prop HWDP Inp Report', widmg, datmg, root, page), style='Large.TButton')
+        widmg.store_and_place(page['button'], "hwdp_sel_button", hwdp_sel_button, relx=0.5, rely=0.42, relwidth=0.75, relheight=0.17, anchor='n')
     if 'Prop Subs Inp Report' in datmg.json_data_dict['report_data']: 
-        subs_sel_button = ttk.Button(root, text="Subs Inspection (SUBS)", command=lambda: sel_btn_to_create_dp_spread('Prop Subs Inp Report', widmg, datmg, root), style='LargeFont.TButton')
-        widmg.store_and_place(page['buttons'], "subs_sel_button", subs_sel_button, relx=0.50, rely=0.60, relwidth=0.75, relheight=0.17, anchor='n')
+        subs_sel_button = ttk.Button(root, text="Subs Inspection (SUBS)", command=lambda: sel_btn_to_create_dp_spread('Prop Subs Inp Report', widmg, datmg, root, page), style='LargeFont.TButton')
+        widmg.store_and_place(page['button'], "subs_sel_button", subs_sel_button, relx=0.50, rely=0.60, relwidth=0.75, relheight=0.17, anchor='n')
 
-    actab_select_back_button = ttk.Button(root, text="BACK", command=lambda: sel_act_tab_bridge_back(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "actab_select_back_button", actab_select_back_button, relx=0.25, rely=0.87, relwidth=0.3, relheight=0.08, anchor='n')
+    actab_select_back_button = ttk.Button(root, text="BACK", command=lambda: create_tab_select_screen(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "actab_select_back_button", actab_select_back_button, relx=0.25, rely=0.87, relwidth=0.3, relheight=0.08, anchor='n')
 
 
 
-def sel_act_tab_bridge_back(widmg, datmg, root):
-    page = widmg.select_active_tab_fresh_menu
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    create_tab_select_screen(widmg, datmg, root)
-
-def sel_btn_to_create_dp_spread(type_rep, widmg, datmg, root, existing=False):
+def sel_btn_to_create_dp_spread(type_rep, widmg, datmg, root, prev_page):
     datmg.json_data_dict['active_tab'] = type_rep
     if type_rep == 'Prop Drill Pipe Inp Report':
-        tab_set = 'PDPIR'
+        widmg.tab_data_header.set('PDPIR')
     elif type_rep == 'Prop HWDP Inp Report':
-        tab_set = 'HWDP'
+        widmg.tab_data_header.set('HWDP')
     elif type_rep == 'Prop Subs Inp Report':
-        tab_set = 'SUBS'
-
-    widmg.tab_data_header.set(tab_set)
-
-    if existing:
-        page = widmg.drillpipe_tabs_usemenu
-    else:   
-        page = widmg.select_active_tab_fresh_menu
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels']) 
-
-    create_report_metadata_input_widgets(widmg, datmg, root, editing=False)
-
-def ask_for_data_entry_file_screen(widmg, datmg, root):
-    page = widmg.ask_datentry_file_window
-
-    de_fileask_label = ttk.Label(root, text="How Would You Like To Proceed For ", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "de_fileask_label", de_fileask_label, relx=0.5, rely=0.15, relheight=0.15, anchor='c')
-
-    create_new_defile_btn = ttk.Button(root, text="Begin Fresh Session", command=lambda: create_new_defile_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "create_new_defile_btn", create_new_defile_btn, relx=0.5, rely=0.24, relwidth=0.75, relheight=0.17, anchor='n')
-
-    upload_previous_defile_btn = ttk.Button(root, text="Upload Previous File", command=lambda: load_previous_defile_button(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "upload_previous_defile_btn", upload_previous_defile_btn, relx=0.5, rely=0.42, relwidth=0.75, relheight=0.17, anchor='n')
-
-    defile_back_button = ttk.Button(root, text="BACK", command=lambda: defile_back_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "defile_back_button", defile_back_button, relx=0.5, rely=0.87, relwidth=0.5, relheight=0.08, anchor='n')
-
-def defile_back_action(widmg, datmg, root):
-    report_type = datmg.json_data_dict['report_user_metadata']['report_type']
-    branch = datmg.json_data_dict['report_user_metadata']['branch']
-
-    page = widmg.ask_datentry_file_window
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-
-    if branch == 'ND':
-        if datmg.xel_file_path != None:
-            if report_type == 'Drill Pipe Inspection Report':
-                active_tabs = return_sheets_active_tabs_after(widmg, datmg, root)
-                create_tab_select_existing_screen(active_tabs, widmg, datmg, root)
-            elif report_type == 'Tubing/Casing Report':
-                does_spreadsheet_exist_screen(widmg, datmg, root)
-        else:
-            if report_type == 'Drill Pipe Inspection Report':
-                select_active_tab_menu(widmg, datmg, root)
-            elif report_type == 'Tubing/Casing Report':
-                does_spreadsheet_exist_screen(widmg, datmg, root)
-    elif branch == 'TX':
-        if datmg.xel_file_path != None:
-            active_tabs = return_sheets_active_tabs_after(widmg, datmg, root)
-            create_tab_select_existing_screen(active_tabs, widmg, datmg, root)
-        else:
-            select_active_tab_menu(widmg, datmg, root)
-
-
-
-def create_new_defile_action(widmg, datmg, root):
-    hide_de_file_ask_screen(widmg, datmg, root)
-    create_report_metadata_input_widgets(widmg, datmg, root, editing=False)
-    
-def hide_de_file_ask_screen(widmg, datmg, root):
-    page = widmg.ask_datentry_file_window   
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-
-def load_previous_defile_button(widmg, datmg, root):
-    hide_de_file_ask_screen(widmg, datmg, root)
-    page = widmg.tubing_or_drillpipe_menu
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    sel_saved_report_scrn(widmg, datmg, root)
-
-
-def sel_saved_report_scrn(widmg, datmg, root):
-    page = widmg.saved_file_select_window
-    file_selecting_frame = tk.Frame(root, bd=1, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "file_selecting_frame", file_selecting_frame, relx=.02, rely=0.15, relwidth=0.40, relheight=0.70)
-    sel_metadisp_frame = tk.Frame(root, bd=1, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "sel_metadisp_frame", sel_metadisp_frame, relx=.45, rely=0.15, relwidth=0.50, relheight=0.70)
-    report_type_header = tk.Label(root, textvariable=widmg.spreadsheet_type_prework, bd=1, relief='solid', font=('Arial', 16, 'bold'), wraplength=(root_width * 0.18))
-    widmg.store_and_place(page['labels'], "report_type_header", report_type_header, font_changer=True, relx=0.73, rely=0.01, relwidth=0.18, relheight=0.12)
-
-    file_listbox = tk.Listbox(file_selecting_frame)
-    widmg.store_and_place(page['listboxes'], "file_listbox", file_listbox, relx=0.001, rely=0.001, relwidth=0.9, relheight=0.99)
-
-    scrollbar = tk.Scrollbar(file_selecting_frame, orient='vertical', command=file_listbox.yview)
-    widmg.store_and_place(page['scrollbars'], "scrollbar", scrollbar, relx=0.90, rely=0.001, relwidth=0.09, relheight=0.99)
-    file_listbox.bind('<<ListboxSelect>>', lambda event: on_file_select(event, widmg))
-    file_listbox.config(yscrollcommand=scrollbar.set)
-
-    for file in list_json_files('data_entry_files'):
-        file_listbox.insert(tk.END, file)
-
-
-    def on_file_select(event, widmg):
-        selection = file_listbox.curselection()
-        if selection:
-            filename = file_listbox.get(selection[0])
-            update_metadata_display(filename, widmg)
-
-    select_file_header = tk.Label(root, text="Upload Report File", font=('Arial', 32))
-    widmg.store_and_place(page['labels'], "select_file_header", select_file_header, relx=0.20, rely=0.01, relwidth=0.5, relheight=0.12)
-
-    meta_operator = tk.Label(sel_metadisp_frame, textvariable=widmg.operator_msv, bd=1, relief="solid", font=('Arial', 18))
-    widmg.store_and_place(page['labels'], "meta_operator", meta_operator, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.12)
-    meta_date = tk.Label(sel_metadisp_frame, textvariable=widmg.date_msv, bd=1, relief="solid", font=('Arial', 18))
-    widmg.store_and_place(page['labels'], "meta_date", meta_date, relx=0.01, rely=0.12, relwidth=0.98, relheight=0.14)
-    meta_contractor = tk.Label(sel_metadisp_frame, textvariable=widmg.contractor_msv, bd=1, relief="solid", font=('Arial', 18))
-    widmg.store_and_place(page['labels'], "meta_contractor", meta_contractor, relx=0.01, rely=0.26, relwidth=0.98, relheight=0.12)
-    meta_invoice = tk.Label(sel_metadisp_frame, textvariable=widmg.invoice_msv, bd=1, relief="solid", font=('Arial', 18))
-    widmg.store_and_place(page['labels'], "meta_invoice", meta_invoice, relx=0.01, rely=0.38, relwidth=0.98, relheight=0.12)
-    meta_location = tk.Label(sel_metadisp_frame, textvariable=widmg.location_msv, bd=1, relief="solid", font=('Arial', 18))
-    widmg.store_and_place(page['labels'], "meta_location", meta_location, relx=0.01, rely=0.50, relwidth=0.98, relheight=0.12)
-    meta_inspecttype = tk.Label(sel_metadisp_frame, textvariable=widmg.inspecttype_msv, bd=1, relief="solid", font=('Arial', 16), wraplength=350)
-    widmg.store_and_place(page['labels'], "meta_inspecttype", meta_inspecttype, relx=0.01, rely=0.62, relwidth=0.98, relheight=0.14)
-    meta_connectsize = tk.Label(sel_metadisp_frame, textvariable=widmg.connectsize_msv, bd=1, relief="solid", font=('Arial', 18))
-    widmg.store_and_place(page['labels'], "meta_connectsize", meta_connectsize, relx=0.01, rely=0.76, relwidth=0.98, relheight=0.13)
-    meta_conntype = tk.Label(sel_metadisp_frame, textvariable=widmg.conntype_msv, bd=1, relief="solid", font=('Arial', 18))
-    widmg.store_and_place(page['labels'], "meta_conntype", meta_conntype, relx=0.01, rely=0.87, relwidth=0.98, relheight=0.12)
-
-    choose_report_btn = ttk.Button(root, text="Load Report", command=lambda: choose_report_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "choose_report_btn", choose_report_btn, relx=0.70, rely=0.87, relwidth=0.25, relheight=0.10)
-
-    back_to_main_btn = ttk.Button(root, text="<< BACK", command=lambda: back_to_main_action(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "back_to_main_btn", back_to_main_btn, relx=0.35, rely=0.87, relwidth=0.25, relheight=0.10)
-
-    delete_file_btn = ttk.Button(root, text="Delete File", command=lambda: delete_selected_file(widmg), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "delete_file_btn", delete_file_btn, relx=0.02, rely=0.87, relwidth=0.20, relheight=0.10)
-
-def choose_report_action(widmg, datmg, root):
-    file_listbox = widmg.saved_file_select_window['listboxes']['file_listbox']['widget']
-    selection = file_listbox.curselection()
-    if selection:
-        datmg.filename = file_listbox.get(selection[0])
-        datmg.load_file_to_dict(datmg.filename)
-    else:
-        print("No file selected")
-    hide_saved_file_select_widgets(widmg, datmg, root)
-    
-    if datmg.json_data_dict['report_user_metadata']['active_tab'] == 'Tubing Insp Report':
-            widmg.tab_data_header.set(datmg.json_data_dict['report_user_metadata']['connection_type_selection'])
-
-    display_main_report_screen(widmg, datmg, root)
-    load_row_data(widmg, datmg, root)
-    update_all_row_cells(widmg, datmg, root)
-
-def list_json_files(directory='data_entry_files'):
-    return [f for f in os.listdir(directory) if f.endswith('.json')]
-
-def update_metadata_display(filename, widmg):
-    try:
-        with open(filename, 'r') as file:
-            data = json.load(file)
-            metadata = data.get('report_user_metadata', {})
-
-        # Update each StringVar with the corresponding metadata value
-        widmg.operator_msv.set(f"{metadata.get('operator_entry', '')}")
-        widmg.date_msv.set(f"{metadata.get('date_entry', '')}")
-        widmg.contractor_msv.set(f"{metadata.get('contractor_entry', '')}")
-        widmg.invoice_msv.set(f"{metadata.get('invoice_entry', '')}")
-        widmg.location_msv.set(f"{metadata.get('location_entry', '')}")
-        widmg.inspecttype_msv.set(f"{metadata.get('inspection_type_selection', '')}")
-        widmg.connectsize_msv.set(f"{metadata.get('connection_size_selection', '')}")
-        widmg.conntype_msv.set(f"{metadata.get('connection_type_selection', '')}")
-    except Exception as e:
-        print(f"Error reading file {filename}: {e}")
-
-
-def hide_saved_file_select_widgets(widmg, datmg, root):
-    page = widmg.saved_file_select_window
-    widmg.hide_widget_grouping(page['display_frames'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['listboxes'])
-    widmg.hide_widget_grouping(page['scrollbars'])
-    widmg.hide_widget_grouping(page['meta_labels'])
-
-def back_to_main_action(widmg, datmg, root):
-    hide_saved_file_select_widgets(widmg, datmg, root)
-    ask_for_data_entry_file_screen(widmg, datmg, root)
-
-def delete_selected_file(widmg):
-    file_listbox = widmg.saved_file_select_window['listboxes']['file_listbox']['widget']
-    selection = file_listbox.curselection()
-    if selection:
-        filename = file_listbox.get(selection[0])
-        if os.path.exists(filename):
-            os.remove(filename)
-            file_listbox.delete(selection[0])
-            print(f"File {filename} deleted.")
-        else:
-            print(f"File {filename} not found.")
-    else:
-        print("No file selected.")
-
-def select_back_to_choose_button(widmg, datmg, root, editing=False):
-    report_type = datmg.json_data_dict['report_user_metadata']['report_type']
-    page = widmg.main_metadata_widgets
-    widmg.hide_widget_grouping(page['entries'])
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['dropdown_menus'])
+        widmg.tab_data_header.set('SUBS')
 
     
-    if editing:
-        display_main_report_screen(widmg, datmg, root, editing=editing)
+    create_date_entry_screen(widmg, datmg, root, prev_page, in_sequence=True)
+
+
+def set_json_metadata_key_dict(datmg):
+    datmg.json_data_dict['report_user_metadata'] = {
+                "operator_choice": None,
+                "contractor_choice": None,
+                "location_choice": None,
+                "date_choice": None,
+                "invoice_choice": None,
+                "connection_size_choice": None,
+                "connection_type_choice": None,
+                "inspected_by_choice": None,
+                "grade_choice": None
+            }
+
+
+def create_prepopulated_combobox(combobox_value, datmg, widmg, page, key, values, root, font, relx, rely, relwidth, relheight, anchor=None):
+    if key in page['combobox']:
+        widmg.place_back_widgets(page['combobox'])
+
     else:
-        if report_type == "Drill Pipe Inspection Report":
-            select_active_tab_menu(widmg, datmg, root)
-        else:
-            does_spreadsheet_exist_screen(widmg, datmg, root)
-        
+        combobox_widget = ttk.Combobox(root, values=values, font=font, state='normal')  # Allows typing and selection
+        if combobox_value is not None:
+            combobox_widget.set(combobox_value)
+        widmg.store_and_place(page['combobox'], key, combobox_widget, relx=relx, rely=rely, relwidth=relwidth, relheight=relheight, anchor=anchor)
 
 
-def create_report_metadata_input_widgets(widmg, datmg, root, editing=False):
+def create_prepopulated_entry(entry_value, datmg, widmg, page, key, root, font, relx, rely, relwidth, relheight, anchor=None):
+    if key in page['entry']:
+        widmg.place_back_widgets(page['entry'])
+    else:
+        entry_widget = ttk.Entry(root, font=font)
+        if entry_value is not None:
+            entry_widget.insert(0, entry_value)
+        widmg.store_and_place(page['entry'], key, entry_widget, relx=relx, rely=rely, relwidth=relwidth, relheight=relheight, anchor=anchor)
+
+
+def create_prepopulated_text(entry_value, datmg, widmg, page, key, root, font, relx, rely, relwidth, relheight, anchor=None):
     report_type = datmg.json_data_dict['report_type']
-    tab_type = datmg.json_data_dict['active_tab']
+    active_tab = datmg.json_data_dict['active_tab']
 
-    page = widmg.main_metadata_widgets
+    if key in page['text']:
+        widmg.place_back_widgets(page['text'])
 
+    else:
+        text_widget = tk.Text(root, font=font)
+
+        if entry_value is not None:
+            notes_text = datmg.json_data_dict['report_data'][active_tab]['notes_choice']
+            text_widget.insert('1.0', notes_text)  # Provide a default empty string if entry_value is None
+        else:
+            if report_type in datmg.notes_prefill:
+                pre_fill_text = datmg.notes_prefill[report_type]
+                text_widget.insert('1.0', pre_fill_text)
+                # Save the pre-filled text as the current notes entry
+                datmg.json_data_dict['report_user_metadata']['notes_choice'] = pre_fill_text
+        widmg.store_and_place(page['text'], key, text_widget, relx=relx, rely=rely, relwidth=relwidth, relheight=relheight, anchor=anchor)
+
+def create_prepopulated_calendar(calendar_value, datmg, widmg, page, key, root, font, relx, rely, relwidth, relheight, anchor=None):
+    if key in page['calendar']:
+        # If the calendar already exists in the page, place it back
+        widmg.place_back_widgets(page['calendar'])
+    else:
+        calendar_widget = Calendar(root, font=font, selectmode='day', date_pattern='mm.dd.yyyy', selectbackground='orange')
+        if calendar_value is not None:
+            # Prepopulate the calendar with the provided value
+            calendar_widget.selection_set(calendar_value)
+        widmg.store_and_place(page['calendar'], key, calendar_widget, relx=relx, rely=rely, relwidth=relwidth, relheight=relheight, anchor=anchor)
+
+
+
+def create_date_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.date_entry_screen_widgets
+    base_keys = ['date_choice']
+    entry_value = datmg.json_data_dict['report_user_metadata'].get('date_choice', None)
+
+    # Instruction Label
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    # Date Choice Label
+    date_choice_label = ttk.Label(root, text="Date Selection:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "date_choice_label", date_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_calendar(entry_value, datmg, widmg, page, "date_choice_calendar", root, ('Arial', 24), 0.03, 0.25, 0.6, 0.5, anchor='nw')
+
+    # Navigation Buttons
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+def create_operator_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.operator_entry_screen_widgets
+    base_keys = ['operator_choice']
+    entry_value = datmg.json_data_dict['report_user_metadata']['operator_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    operator_choice_label = ttk.Label(root, text="Operator:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "operator_choice_label", operator_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_combobox(entry_value, datmg, widmg, page, "operator_choice_combobox", datmg.nd_operator_vals, root, ('Arial', 24), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+def create_contractor_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.contractor_entry_screen_widgets
+    base_keys = ['contractor_choice']
+    entry_value = datmg.json_data_dict['report_user_metadata']['contractor_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    contractor_choice_label = ttk.Label(root, text="Contractor/Rig:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "contractor_choice_label", contractor_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_entry(entry_value, datmg, widmg, page, "contractor_choice_entry", root, ('Arial', 24), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+def create_location_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.location_entry_screen_widgets
+    base_keys = ['location_choice']
+    entry_value = datmg.json_data_dict['report_user_metadata']['location_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    location_choice_label = ttk.Label(root, text="Location:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "location_choice_label", location_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_entry(entry_value, datmg, widmg, page, "location_choice_entry", root, ('Arial', 24), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+
+
+def create_invoice_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.invoice_entry_screen_widgets
+    base_keys = ['invoice_choice']
+    entry_value = datmg.json_data_dict['report_user_metadata']['invoice_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    invoice_choice_label = ttk.Label(root, text="Invoice #:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "invoice_choice_label", invoice_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_entry(entry_value, datmg, widmg, page, "invoice_choice_entry", root, ('Arial', 24), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+def create_conn_size_type_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.conn_size_type_entry_screen_widgets
+
+    rep_type = datmg.json_data_dict['report_type']
+    connection_size_list = datmg.tubing_conn_size_list if rep_type == 'Tubing/Casing Report' else datmg.dp_conn_size_list
+    connection_type_list = datmg.tubing_conn_type_list if rep_type == 'Tubing/Casing Report' else datmg.dp_conn_type_list
+
+    base_keys = ['connection_size_choice', 'connection_type_choice']
+
+    size_entry_value = datmg.json_data_dict['report_user_metadata']['connection_size_choice']
+    type_entry_value = datmg.json_data_dict['report_user_metadata']['connection_type_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    connection_size_choice_label = ttk.Label(root, text="Connection Size:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "connection_size_choice_label", connection_size_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_combobox(size_entry_value, datmg, widmg, page, "connection_size_choice_combobox", connection_size_list, root, ('Arial', 38), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    connection_type_choice_label = ttk.Label(root, text="Connection Type:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "connection_type_choice_label", connection_type_choice_label, relx=0.03, rely=0.37, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_combobox(type_entry_value, datmg, widmg, page, "connection_type_choice_combobox", connection_type_list, root, ('Arial', 38), 0.03, 0.44, 0.90, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+
+def create_gradeinfo_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.grade_info_entry_screen_widgets
+    base_keys = ['grade_choice']
+    entry_value = datmg.json_data_dict['report_user_metadata']['grade_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    grade_choice_label = ttk.Label(root, text="Grade Info:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "grade_choice_label", grade_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_entry(entry_value, datmg, widmg, page, "grade_choice_entry", root, ('Arial', 24), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+def create_inspectedby_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.inspected_by_entry_screen_widgets
+    base_keys = ['inspected_by_choice']
+    entry_value = datmg.json_data_dict['report_user_metadata']['inspected_by_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    inspected_by_choice_label = ttk.Label(root, text="Inspected By:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "inspected_by_choice_label", inspected_by_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_entry(entry_value, datmg, widmg, page, "inspected_by_choice_entry", root, ('Arial', 24), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+def create_inspectiontype_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.inspectiontype_entry_screen_widgets
+
+    rep_type = datmg.json_data_dict['report_type']
+    inspection_type_list = datmg.tubing_inspection_type_list if rep_type == 'Tubing/Casing Report' else datmg.dp_inspection_type_list  
+
+    base_keys = ['category_choice', 'addodid_choice', 'additional_choice']
+
+    active_tab = datmg.json_data_dict['active_tab']
+    entry_value_inp_type_sel = datmg.json_data_dict['report_data'][active_tab]['inspection_type_data']['category_choice']
+    add_entry_label_data = datmg.json_data_dict['report_data'][active_tab]['inspection_type_data']['additional_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    category_choice_label = ttk.Label(root, text="Inspection Type:", font=('Arial', 32, 'bold'))
+    widmg.store_and_place(page['label'], "category_choice_label", category_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_combobox(entry_value_inp_type_sel, datmg, widmg, page, "category_choice_combobox", inspection_type_list, root, ('Arial', 18), 0.03, 0.24, 0.90, 0.12, anchor='nw')
+
+    addodid_choice_checkbutton = tk.Checkbutton(root, variable=widmg.actual_odid_boolean, font=('Arial', 32), bg='white', fg='black')
+    widmg.store_and_place(page['checkbutton'], "addodid_choice_checkbutton", addodid_choice_checkbutton, relx=0.50, rely=0.45, relwidth=0.05, relheight=0.12, anchor='nw')
+    addodid_choice_label = ttk.Label(root, text="Add Actual OD's, ID's, and Tong Spaces?", font=('Arial', 15, 'bold'))
+    widmg.store_and_place(page['label'], "addodid_choice_label", addodid_choice_label, relx=0.95, rely=0.45, relwidth=0.40, relheight=0.12, anchor='ne')
+
+    additional_choice_label = ttk.Label(root, text="Additional Info", font=('Arial', 32, "bold"))
+    widmg.store_and_place(page['label'], "additional_choice_label", additional_choice_label, relx=0.03, rely=0.38, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_entry(add_entry_label_data, datmg, widmg, page, "additional_choice_entry", root, ('Arial', 24), 0.03, 0.45, 0.45, 0.12, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+def create_add_notes_entry_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.add_notes_entry_screen_widgets
+    base_keys = ['notes_choice']
+    active_tab = datmg.json_data_dict['active_tab']
+    entry_value = datmg.json_data_dict['report_data'][active_tab]['notes_choice']
+
+    instruction_label = ttk.Label(root, text="Enter Report Metadata For:", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
+
+    notes_choice_label = ttk.Label(root, text="Notes", font=('Arial', 32))
+    widmg.store_and_place(page['label'], "notes_choice_label", notes_choice_label, relx=0.03, rely=0.17, relwidth=0.33, relheight=0.07, anchor='nw')
+    create_prepopulated_text(entry_value, datmg, widmg, page, "notes_choice_text", root, ('Arial', 16), 0.03, 0.24, 0.90, 0.35, anchor='nw')
+
+    next_button = ttk.Button(root, text="NEXT>", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "next_button", next_button, relx=0.75, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+    back_button = ttk.Button(root, text="<BACK", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, base_keys, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.25, rely=0.92, relwidth=0.2, relheight=0.07, anchor='center')
+
+
+
+
+def save_a_meta_widget_to_json(widmg, datmg, page, base_keys, in_sequence=True):
+    """
+    Save the data from widgets (entry, combobox, text, or checkbutton) stored in a page dictionary
+    to the location in datmg.json_data_dict where the base_key is found.
+
+    Parameters:
+        widmg: Instance of the widget manager containing the widgets.
+        datmg: Instance of the data manager containing json_data_dict.
+        page: Dictionary where widgets are stored (e.g., widmg.location_entry_screen_widgets).
+        base_keys: List of base names of keys in both datmg.json_data_dict and page.
+    """
+
+    def find_and_update_key(data_dict, search_key, new_value):
+        """
+        Recursively search for the search_key in a nested dictionary (data_dict)
+        and update its value with new_value when found.
+        """
+        for key, value in data_dict.items():
+            if key == search_key:
+                data_dict[key] = new_value  # Update the value directly in json_data_dict
+                return True  # Key found and updated
+            elif isinstance(value, dict):
+                # Recursive search in nested dictionaries
+                if find_and_update_key(value, search_key, new_value):
+                    return True
+        return False  # Key not found
+
+
+    # Determine the key suffix for each widget type based on convention
+    widget_suffixes = ["_entry", "_combobox", "_text", "_checkbutton", "_calendar"]
+    current_filename = datmg.filename
+    # Process each base key in the base_keys list
+    for base_key in base_keys:
+        key_found = False  # Flag to track if a key was found and processed
+        for suffix in widget_suffixes:
+            widget_key = f"{base_key}{suffix}"
+
+            # Iterate through each widget type in `page`
+            for widget_type in page:
+                if widget_key in page[widget_type]:
+                    widget = page[widget_type][widget_key]['widget']
+                    
+                    # Retrieve the widget value based on widget type
+                    if suffix == "_entry" or suffix == "_combobox":
+                        value = widget.get() if widget.get() != "" else None
+                    elif suffix == "_text":
+                        value = widget.get("1.0", "end-1c")
+                    elif suffix == "_checkbutton":
+                        value = widmg.actual_odid_boolean.get()
+                    elif suffix == "_calendar":
+                        value = widget.get_date()
+
+                    # Search `json_data_dict` for `base_key` and update it with the retrieved value
+                    if not find_and_update_key(datmg.json_data_dict, base_key, value):
+                        print(f"Warning: Key '{base_key}' not found in json_data_dict.")
+                    key_found = True
+                    break  # Exit widget_type loop once key is processed
+            if key_found:
+                break  # Exit suffix loop once key is processed
+
+        if not key_found:
+            print(f"Warning: Widget for base_key '{base_key}' not found in page dictionary.")
+
+    if not in_sequence:
+        new_filename = datmg.get_json_filename_from_dict()
+
+        if current_filename != new_filename:
+            directory = os.path.join(os.getcwd(), 'data_entry_files')
+            old_filepath = os.path.join(directory, current_filename)
+            new_filepath = os.path.join(directory, new_filename)
+
+            # Rename the file if it exists and the name has changed
+            if os.path.exists(old_filepath):
+                os.rename(old_filepath, new_filepath)
+                print(f"Renamed file: {current_filename} -> {new_filename}")
+            if os.path.exists(f"{old_filepath}.bak"):
+                os.rename(f"{old_filepath}.bak", f"{new_filepath}.bak")
+
+
+            # Update the datmg.filename to the new filename
+            datmg.filename = new_filename
+
+def navigate_next_meta_screen(widmg, datmg, root, page, base_keys=None, in_sequence=True):
+    if base_keys is not None:
+        save_a_meta_widget_to_json(widmg, datmg, page, base_keys, in_sequence=in_sequence)
+
+    if in_sequence == True:
+        if page == widmg.date_entry_screen_widgets:
+            create_operator_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        if page == widmg.operator_entry_screen_widgets:
+            create_contractor_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.contractor_entry_screen_widgets:
+            create_location_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.location_entry_screen_widgets:
+            create_invoice_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.invoice_entry_screen_widgets:
+            create_conn_size_type_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.conn_size_type_entry_screen_widgets:
+            connection_size = widmg.conn_size_type_entry_screen_widgets['combobox']['connection_size_choice_combobox']['widget'].get()
+            connection_type = widmg.conn_size_type_entry_screen_widgets['combobox']['connection_type_choice_combobox']['widget'].get()
+            
+            if connection_size in datmg.invalid_combinations_cs_dt and connection_type in datmg.invalid_combinations_cs_dt[connection_size]:
+                messagebox.showwarning("Invalid Selection", f"{connection_size} and {connection_type} is not a valid selection.")
+                create_conn_size_type_entry_screen(widmg, datmg, root, page, in_sequence=True)
+            else:
+                if datmg.json_data_dict['report_type'] == "Tubing/Casing Report":
+                    widmg.tab_data_header.set(connection_type)
+
+                create_gradeinfo_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence)
+        elif page == widmg.grade_info_entry_screen_widgets:
+            create_inspectedby_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.inspected_by_entry_screen_widgets:
+            create_inspectiontype_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.inspectiontype_entry_screen_widgets:
+            create_add_notes_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.add_notes_entry_screen_widgets:
+            create_select_columns_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.custom_column_selection_page_widgets:
+            add_column_selections_to_meta(widmg, datmg, root)
+            display_main_report_screen(widmg, datmg, root, page, in_sequence=True)
+    else:
+        if page == widmg.custom_column_selection_page_widgets:
+            update_col_select_for_metadata(widmg, datmg, root)
+        elif page == widmg.conn_size_type_entry_screen_widgets:
+            validate_connection_size_type(widmg, datmg, root)
+
+        display_main_report_screen(widmg, datmg, root, page, in_sequence=True)
+
+
+
+
+
+
+def navigate_prev_meta_screen(widmg, datmg, root, page, base_keys=None, in_sequence=True):
+    widmg.hide_all_page_widgets(page)
+    if base_keys is not None:
+        save_a_meta_widget_to_json(widmg, datmg, page, base_keys, in_sequence=in_sequence)
+
+    if in_sequence == True:
+        if page == widmg.custom_column_selection_page_widgets:
+            create_add_notes_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.add_notes_entry_screen_widgets:
+            create_inspectiontype_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.inspectiontype_entry_screen_widgets:
+            create_inspectedby_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.inspected_by_entry_screen_widgets:
+            create_gradeinfo_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.grade_info_entry_screen_widgets:
+            create_conn_size_type_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.conn_size_type_entry_screen_widgets:
+            create_invoice_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.invoice_entry_screen_widgets:
+            create_location_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.location_entry_screen_widgets:
+            create_contractor_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.contractor_entry_screen_widgets:
+            create_operator_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.operator_entry_screen_widgets:
+            create_date_entry_screen(widmg, datmg, root, page, in_sequence=True)
+        elif page == widmg.date_entry_screen_widgets:
+            page_before_metadata_screen(widmg, datmg, root, page)
+    else:
+        display_main_report_screen(widmg, datmg, root, page, in_sequence=True)
+
+
+def page_before_metadata_screen(widmg, datmg, root, prev_page):
     if datmg.json_data_dict['report_type'] == 'Tubing/Casing Report':
-        inspection_type_list, connection_size_list, connection_type_list = datmg.tubing_inspection_type_list, datmg.tubing_conn_size_list, datmg.tubing_conn_type_list 
+        create_tubing_drillpipe_selection_screen(widmg, datmg, root, prev_page)
     elif datmg.json_data_dict['report_type'] == 'Drill Pipe Inspection Report':
-        if datmg.json_data_dict['branch'] == 'TX':
-            inspection_type_list, connection_size_list, connection_type_list = datmg.dp_inspection_type_list_short, datmg.dp_conn_size_list, datmg.dp_conn_type_list
-        else:
-            inspection_type_list, connection_size_list, connection_type_list = datmg.dp_inspection_type_list_short, datmg.dp_conn_size_list, datmg.dp_conn_type_list
+        select_active_tab_menu(widmg, datmg, root, prev_page)
 
-    report_type_label = ttk.Label(root, text=f"Enter Metadata for this {widmg.tab_data_header.get()} Report", font=('Helvetica', 26))
-    widmg.store_and_place(page['labels'], "report_type_label", report_type_label, relx=0.01, rely=0.07, relwidth=0.90, relheight=0.14, anchor='w')
-
-    # Helper function to prepopulate Entry widgets
-    def create_prepopulated_entry(key, root, font, relx, rely, relwidth, relheight):
-        entry_value = datmg.json_data_dict['report_user_metadata'].get(key, "")
-        entry = ttk.Entry(root, font=font)
-        entry.insert(0, entry_value)
-        widmg.store_and_place(page['entries'], key, entry, relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
-
-    # Helper function to prepopulate ComboBox widgets
-    def create_prepopulated_combobox(key, values, root, font, relx, rely, relwidth, relheight):
-        combobox_value = datmg.json_data_dict['report_user_metadata'].get(key, "")
-        combobox = ttk.Combobox(root, values=values, font=font, state='normal')  # Allows typing and selection
-        combobox.set(combobox_value)
-        widmg.store_and_place(page['dropdown_menus'], key, combobox, relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
-
-    # Operator - updated to use create_prepopulated_combobox
-    operator_label = ttk.Label(root, text="Operator:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "operator_label", operator_label, relx=0.03, rely=0.15, relwidth=0.30, relheight=0.1)
-    
-    # Use the existing helper function to create the combobox
-    create_prepopulated_combobox("operator_entry", datmg.nd_operator_vals, root, ('Arial', 16), 0.18, 0.15, 0.36, 0.1)
-
-    # Date
-    date_label = ttk.Label(root, text="Date:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "date_label", date_label, relx=0.66, rely=0.15, relwidth=0.3, relheight=0.1)
-    create_prepopulated_entry("date_entry", root, ('Arial', 16), 0.74, 0.15, 0.23, 0.1)
-    
-    # Contractor
-    contractor_label = ttk.Label(root, text="Contractor/Rig:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "contractor_label", contractor_label, relx=0.03, rely=0.30, relwidth=0.30, relheight=0.1)
-    create_prepopulated_entry("contractor_entry", root, ('Arial', 16), 0.18, 0.30, 0.36, 0.1)
-
-    
-    # Field Invoice
-    invoice_label = ttk.Label(root, text="Field Invoice:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "invoice_label", invoice_label, relx=0.56, rely=0.30, relwidth=0.3, relheight=0.1)
-    create_prepopulated_entry("invoice_entry", root, ('Arial', 16), 0.74, 0.30, 0.23, 0.1)
-    
-    # Location
-    location_label = ttk.Label(root, text="Location:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "location_label", location_label, relx=0.03, rely=0.44, relwidth=0.37, relheight=0.1)
-    create_prepopulated_entry("location_entry", root, ('Arial', 16), 0.18, 0.44, 0.36, 0.1)
-    
-    add_notes_button = ttk.Button(root, text="Add/Edit Notes", command=lambda: add_notes_button_bridge(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "add_notes_button", add_notes_button, relx=0.56, rely=0.44, relwidth=0.40, relheight=0.1)
-    
-    # Inspection Type
-    inspection_label = ttk.Label(root, text="Inspection Type:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "inspection_label", inspection_label, relx=0.03, rely=0.58, relwidth=0.33, relheight=0.1)
-    create_prepopulated_combobox("inspection_type_selection", inspection_type_list, root, ('Arial', 12), 0.18, 0.58, 0.55, 0.1)
-    
-    add_inspectinfo_btn = ttk.Button(root, text="Add Additional Info", command=lambda: create_addinfo_window(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "add_inspectinfo_btn", add_inspectinfo_btn, relx=0.74, rely=0.58, relwidth=0.23, relheight=0.1)
-    
-    # Connection Size
-    connection_size_label = ttk.Label(root, text="Connection Size:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "connection_size_label", connection_size_label, relx=0.03, rely=0.70, relwidth=0.3, relheight=0.1)
-    create_prepopulated_combobox("connection_size_selection", connection_size_list, root, ('Arial', 16), 0.26, 0.70, 0.22, 0.1)
-    
-    # Connection Type
-    connection_type_label = ttk.Label(root, text="Connection Type:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "connection_type_label", connection_type_label, relx=0.50, rely=0.70, relwidth=0.3, relheight=0.1)
-    create_prepopulated_combobox("connection_type_selection", connection_type_list, root, ('Arial', 16), 0.74, 0.70, 0.23, 0.1)
-    
-    add_grade_info_label = ttk.Button(root, text="Add Grade Info", command=lambda: add_grade_info_btn_bridge(widmg, datmg, root), style='Small.TButton')
-    widmg.store_and_place(page['buttons'], "add_grade_info_label", add_grade_info_label, relx=0.50, rely=0.80, relwidth=0.23, relheight=0.05)
-    grade_addition_label = ttk.Label(root, textvariable=widmg.grade_info_tube, font=('Arial', 12, 'italic'))
-    widmg.store_and_place(page['labels'], "grade_addition_label", grade_addition_label, relx=0.74, rely=0.80, relwidth=0.23, relheight=0.05)
-    
-    inspected_by_label = ttk.Label(root, text="Inspected By:", font=('Arial', 16))
-    widmg.store_and_place(page['labels'], "inspected_by_label", inspected_by_label, relx=0.56, rely=0.86, relwidth=0.15, relheight=0.1)
-    create_prepopulated_entry("inspected_by_entry", root, ('Arial', 16), 0.71, 0.86, 0.26, 0.1)
-    
-    # Submit Button
-    submit_button = ttk.Button(root, text="Submit Data", command=lambda: validate_and_submit_data(widmg, datmg, root, editing=editing), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "submit_button", submit_button, relx=0.03, rely=0.87, relwidth=0.25, relheight=0.10)
-    
-    # Back Button (To DP/Tube Select)
-    back_to_choose_button = ttk.Button(root, text="Go Back", command=lambda: select_back_to_choose_button(widmg, datmg, root, editing=editing), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "back_to_choose_button", back_to_choose_button, relx=0.29, rely=0.87, relwidth=0.25, relheight=0.10)
-
-
-
-def validate_and_submit_data(widmg, datmg, root, editing=False):
-    connection_size = widmg.main_metadata_widgets['dropdown_menus']['connection_size_selection']['widget'].get()
-    connection_type = widmg.main_metadata_widgets['dropdown_menus']['connection_type_selection']['widget'].get()
-    
-    if connection_size in datmg.invalid_combinations_cs_dt and connection_type in datmg.invalid_combinations_cs_dt[connection_size]:
-        # Display warning message
-        messagebox.showwarning("Invalid Selection", f"{connection_size} and {connection_type} is not a valid selection.")
-    else:
-        # Call the original submit function if the combination is valid
-        submit_data_button(widmg, datmg, root, editing)
-
-
-
-def add_notes_button_bridge(widmg, datmg, root): 
-    page = widmg.main_metadata_widgets
-    widmg.hide_widget_grouping(page['entries'])
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['dropdown_menus'])
-
-    open_add_notes_window(widmg, datmg, root)
-
-def open_add_notes_window(widmg, datmg, root):
-    datmg.update_user_report_metadata()
-
-    page = widmg.add_notes_window
-
-    add_notes_label = ttk.Label(root, text="Add Notes:", font=('Helvetica', 30))
-    widmg.store_and_place(page['labels'], "add_notes_label", add_notes_label, relx=0.03, rely=0.03, relwidth=0.65, relheight=0.10)
-
-    notes_entry = tk.Text(root, font=('Arial', 16))
-    widmg.store_and_place(page['text'], "notes_entry", notes_entry, relx=0.03, rely=0.15, relwidth=0.90, relheight=0.65)
-
-    report_type = datmg.json_data_dict['report_user_metadata'].get('report_type', '')
-
-    if 'notes_entry' in datmg.json_data_dict['report_user_metadata']:
-        notes_text = datmg.json_data_dict['report_user_metadata']['notes_entry']
-        notes_entry.insert('1.0', notes_text)
-    else:
-        # If no previous notes, check if pre-fill text exists for the report_type
-        if report_type in datmg.notes_prefill:
-            pre_fill_text = datmg.notes_prefill[report_type]
-            notes_entry.insert('1.0', pre_fill_text)
-            # Save the pre-filled text as the current notes entry
-            datmg.json_data_dict['report_user_metadata']['notes_entry'] = pre_fill_text
-
-
-    notes_save_button = ttk.Button(root, text="SAVE", command=lambda: save_notes_button(notes_entry, widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "notes_save_button", notes_save_button, relx=0.53, rely=0.85, relwidth=0.35, relheight=0.10)
-
-    notes_back_button = ttk.Button(root, text="CANCEL", command=lambda: back_from_notes_button(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "notes_back_button", notes_back_button, relx=0.12, rely=0.85, relwidth=0.35, relheight=0.1)
-
-
-def bring_back_metadata_from_notes(widmg, datmg, root):
-    page = widmg.main_metadata_widgets
-
-    widmg.place_back_widgets(page['buttons'])
-    widmg.place_back_widgets(page['labels'])
-
-
-    combined_widgets = list(page['entries'].items()) + list(page['dropdown_menus'].items())
-    for key, widget_info in combined_widgets:
-        widget = widget_info['widget']
-        user_input = datmg.json_data_dict['report_user_metadata'].get(key, "")
-        widget.delete(0, 'end')  # clear the current content
-        widget.insert(0, user_input)  # insert the user input at the beginning of the entry field
-        widget.place(**widget_info['params'])
-
-
-
-def save_notes_button(notes_entry, widmg, datmg, root):
-    datmg.json_data_dict['report_user_metadata']['notes_entry'] = notes_entry.get("1.0", "end")
-    datmg.save_dict_to_file()
-    back_from_notes_button(widmg, datmg, root)
-
-
-def back_from_notes_button(widmg, datmg, root):
-    page = widmg.add_notes_window 
-
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['text'])
-    widmg.hide_widget_grouping(page['buttons'])
-    bring_back_metadata_from_notes(widmg, datmg, root)
-
-def add_grade_info_btn_bridge(widmg, datmg, root):
-    if hasattr(widmg, 'addgradeinfo_window') and widmg.addgradeinfo_window.winfo_exists():
-        # If the window already exists, bring it to the front
-        widmg.addgradeinfo_window.lift()
-        return
-
-    metadata = datmg.json_data_dict['report_user_metadata']
-    widmg.addgradeinfo_window = tk.Toplevel(root)
-    widmg.addgradeinfo_window.title("Add Additional Inspection Type Info")
-    widmg.addgradeinfo_window.geometry("485x275")
-    additional_grade_info = metadata.get('grade_info')
-
-    entry_label = ttk.Label(widmg.addgradeinfo_window, text="Add Grade Info", font=('Arial', 14, "bold"))
-    entry_label.place(relx=0.50, rely=0.30, relwidth=0.30, relheight=0.15, anchor='center')
-
-    widmg.manual_addgrade_entry = ttk.Entry(widmg.addgradeinfo_window, font=('Arial', 14))
-    if additional_grade_info:
-        widmg.manual_addgrade_entry.insert(0, additional_grade_info)
-    widmg.manual_addgrade_entry.place(relx=0.5, rely=0.50, relwidth=0.95, relheight=0.15, anchor='center')
-
-    confirm_button = ttk.Button(widmg.addgradeinfo_window, text="Confirm", command=lambda: add_grade_bridge(widmg, datmg, root))
-    confirm_button.place(relx=0.33, rely=0.75, relwidth=0.25, relheight=0.15, anchor='center')
-
-    cancel_button = ttk.Button(widmg.addgradeinfo_window, text="Cancel", command=widmg.addgradeinfo_window.destroy)
-    cancel_button.place(relx=0.67, rely=0.75, relwidth=0.25, relheight=0.15, anchor='center')
-
-    # Ensure the window is properly cleaned up when closed
-    widmg.addgradeinfo_window.protocol("WM_DELETE_WINDOW", lambda: on_addgradeinfo_window_close(widmg))
-
-def on_addgradeinfo_window_close(widmg):
-    widmg.addgradeinfo_window.destroy()
-    del widmg.addgradeinfo_window
-
-def create_addinfo_window(widmg, datmg, root):
-    # Create a new top-level window
-    metadata = datmg.json_data_dict['report_user_metadata']
-    widmg.addaddinfo_window = tk.Toplevel(root)
-    widmg.addaddinfo_window.title("Add Additional Inspection Type Info")
-    widmg.addaddinfo_window.geometry("485x275")
-    additional_info = metadata.get('inspection_type_additional')
-    add_odid = metadata.get('inspection_type_addodid')
-    if not add_odid:
-        widmg.actual_odid_boolean = tk.BooleanVar()
-
-    style = ttk.Style()
-    style.configure('LargeFont.TCheckbutton', font=('Arial', 14, "bold"))
-    
-    actual_odid_check = ttk.Checkbutton(widmg.addaddinfo_window, text="Actual OD's, ID's, and Tong Space", variable=widmg.actual_odid_boolean, style='LargeFont.TCheckbutton')
-    actual_odid_check.place(relx=0.5, rely=0.25, relwidth=0.95, relheight=0.15, anchor='center')
-
-
-    entry_label = ttk.Label(widmg.addaddinfo_window, text="Additional Info", font=('Arial', 14, "bold"))
-    entry_label.place(relx=0.50, rely=0.45, relwidth=0.30, relheight=0.15, anchor='center')
-
-    # Create an Entry widget, populate it with the provided value, and make it read-only
-    widmg.manual_addinfo_entry = ttk.Entry(widmg.addaddinfo_window, font=('Arial', 14))
-    if additional_info:
-        widmg.manual_addinfo_entry.insert(0, additional_info)
-    widmg.manual_addinfo_entry.place(relx=0.5, rely=0.60, relwidth=0.95, relheight=0.15, anchor='center')
-
-    # Create a button that for now does nothing when clicked
-    # You will replace command=lambda: None with your actual function later
-    confirm_button = ttk.Button(widmg.addaddinfo_window, text="Confirm", command=lambda: add_info_bridge(widmg, datmg, root))
-    confirm_button.place(relx=0.33, rely=0.80, relwidth=0.25, relheight=0.15, anchor='center')
-
-    cancel_button = ttk.Button(widmg.addaddinfo_window, text="Cancel", command=widmg.addaddinfo_window.destroy)
-    cancel_button.place(relx=0.67, rely=0.80, relwidth=0.25, relheight=0.15, anchor='center')
-
-def add_info_bridge(widmg, datmg, root):
-    datmg.json_data_dict['report_user_metadata']['inspection_type_addodid'] = widmg.actual_odid_boolean.get()
-    datmg.json_data_dict['report_user_metadata']['inspection_type_additional'] = widmg.manual_addinfo_entry.get()
-    if datmg.filename is not None:
-        datmg.save_dict_to_file()
-    widmg.addaddinfo_window.destroy()
-
-def add_grade_bridge(widmg, datmg, root):
-    datmg.json_data_dict['report_user_metadata']['grade_info'] = widmg.manual_addgrade_entry.get()
-    if datmg.filename is not None:
-        datmg.save_dict_to_file()
-    widmg.grade_info_tube.set(widmg.manual_addgrade_entry.get())
-    widmg.addgradeinfo_window.destroy()
-
-
-
-def submit_data_button(widmg, datmg, root, editing=False):
-    page = widmg.main_metadata_widgets
-
-    datmg.update_user_report_metadata()
-
-    if datmg.filename is None:
-        datmg.initialize_json(widmg)
-
-    datmg.save_dict_to_file()
-
-    # Place the static labels
-    for key, widget_info in page['labels'].items():
-        label_widget = widget_info['widget']
-        placement_params = widget_info['params']
-        label_widget.place(**placement_params)
-
-    widmg.hide_widget_grouping(page['entries'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['dropdown_menus'])
-
-    show_review_screen(widmg, datmg, root, editing=editing)
-
-
-def show_review_screen(widmg, datmg, root, editing=False):
-    page = widmg.main_metadata_widgets
-
-    widmg.hide_widget_grouping(widmg.table_select_page_widgets['buttons'])
-    widmg.hide_widget_grouping(widmg.table_select_page_widgets['labels'])
-    widmg.place_back_widgets(page['labels'])
-
-    combined_widgets = list(page['entries'].items()) + list(page['dropdown_menus'].items())
-
-    # Replace entry fields with review_labels
-    for key, widget_info in combined_widgets:
-        entry_params = widget_info['params']
-        user_input = datmg.json_data_dict['report_user_metadata'][key]
-        review_label = ttk.Label(root, text=user_input, font=('Arial', 18, 'bold italic'))
-        if key == "inspection_type_selection":
-            widmg.store_and_place(page['review_widgets']['review_labels'], key, review_label, relx=0.25, rely=0.58, relwidth=0.73, relheight=0.1)
-        else:
-            widmg.store_and_place(page['review_widgets']['review_labels'], key, review_label, **entry_params)
-
-
-    # Add "Proceed" and "Edit Data" buttons
-    proceed_button = ttk.Button(root, text="Proceed", command=lambda: proceed_fn_button(widmg, datmg, root, editing=editing), style='Large.TButton')
-    widmg.store_and_place(page['review_widgets']['review_buttons'], "proceed_button", proceed_button, relx=0.29, rely=0.87, relwidth=0.25, relheight=0.10)
-    edit_data_button = ttk.Button(root, text="Edit Data", command=lambda: edit_data_fn_button(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['review_widgets']['review_buttons'], "edit_button", edit_data_button, relx=0.03, rely=0.87, relwidth=0.25, relheight=0.10)
-
-def edit_data_fn_button(widmg, datmg, root):
-    page = widmg.main_metadata_widgets
-
-    widmg.hide_widget_grouping(page['review_widgets']['review_buttons'])
-    widmg.hide_widget_grouping(page['review_widgets']['review_labels'])
-
-    widmg.place_back_widgets(page['buttons'])
-    widmg.place_back_widgets(page['entries'])
-
-
-    combined_widgets = list(page['entries'].items()) + list(page['dropdown_menus'].items())
-    for key, widget_info in combined_widgets:
-        widget = widget_info['widget']
-        user_input = datmg.json_data_dict['report_user_metadata'].get(key, "")
-        widget.delete(0, 'end')  # clear the current content
-        widget.insert(0, user_input)  # insert the user input at the beginning of the entry field
-        widget.place(**widget_info['params'])
-
-
-def proceed_fn_button(widmg, datmg, root, editing=False):
-    datmg.update_user_report_metadata()
-    datmg.save_dict_to_file()
-
-    widmg.hide_widget_grouping(widmg.main_metadata_widgets['review_widgets']['review_buttons'])
-    widmg.hide_widget_grouping(widmg.main_metadata_widgets['review_widgets']['review_labels'])
-    widmg.hide_widget_grouping(widmg.main_metadata_widgets['labels'])
-    widmg.hide_widget_grouping(widmg.main_metadata_widgets['entries'])
-    widmg.hide_widget_grouping(widmg.main_metadata_widgets['buttons'])
-    widmg.hide_widget_grouping(widmg.main_metadata_widgets['dropdown_menus'])
-
-    show_table_selection_screen(widmg, datmg, root, editing=editing)
-
-
-def show_table_selection_screen(widmg, datmg, root, editing=False):
-    widmg.current_joint_number.set('1')
-    widmg.magni_header.set("")
-    widmg.magni_content.set("")
-
-    if datmg.json_data_dict['active_tab'] == 'Tubing Insp Report':
-        widmg.tab_data_header.set(datmg.json_data_dict['report_user_metadata']['connection_type_selection'])
-
-    widmg.hide_widget_grouping(widmg.main_table_display_widgets['back_buttons'])
-    widmg.hide_widget_grouping(widmg.custom_column_selection_page_widgets['dropdown_menus'])
-    widmg.hide_widget_grouping(widmg.custom_column_selection_page_widgets['labels'])
-    widmg.hide_widget_grouping(widmg.custom_column_selection_page_widgets['buttons'])
-
-    widmg.hide_widget_grouping(widmg.main_table_display_widgets['display_frames'])
-    widmg.hide_widget_grouping(widmg.main_table_display_widgets['buttons'])
-    
-    if editing == True:
-        display_main_report_screen(widmg, datmg, root, editing=editing)
-        update_all_row_cells(widmg, datmg, root)
-    else:
-        active_tab = datmg.json_data_dict['active_tab']
-        datmg.json_data_dict['report_data'][active_tab]['joint_data'] = {}
-        widmg.prev_first_row_label_list = []
-        widmg.prev_sec_row_label_list = []
-        widmg.next_first_row_label_list = []
-        widmg.next_second_row_label_list = []
-        select_custom_columns_fn_button(widmg, datmg, root)
-
-
-
-
-
-def select_custom_columns_fn_button(widmg, datmg, root):
-    widmg.hide_widget_grouping(widmg.table_select_page_widgets['buttons'])
-    widmg.hide_widget_grouping(widmg.table_select_page_widgets['labels'])
-    add_dropdowns(widmg, datmg, root)
 
 
 def determine_allowed_columns(widmg, datmg, root):
@@ -1900,22 +1614,23 @@ def determine_allowed_columns(widmg, datmg, root):
         return
 
 
-def add_dropdowns(widmg, datmg, root, editing=False):
+def create_select_columns_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
     active_tab = datmg.json_data_dict['active_tab']
     page = widmg.custom_column_selection_page_widgets
     options = determine_allowed_columns(widmg, datmg, root)
     
-    if editing:
+    if in_sequence:
+        current_selections = {f"combo_box{i}": '' for i in range(1, 16)}  # Updated for 15 comboboxes
+    else:
         current_selections = {f"combo_box{i}": datmg.json_data_dict['report_data'][active_tab]['users_column_select'][i-1] 
                               if i-1 < len(datmg.json_data_dict['report_data'][active_tab]['users_column_select']) else '' 
                               for i in range(1, 16)}  # Updated for 15 comboboxes
-    else:
-        current_selections = {f"combo_box{i}": '' for i in range(1, 16)}  # Updated for 15 comboboxes
     
     comboboxes = {}
 
     selecting_label = ttk.Label(root, text="Select Your Custom Column Types", font=('Arial', 28))
-    widmg.store_and_place(page['labels'], "selecting_label", selecting_label, relx=0.10, rely=0.03, relwidth=0.80, relheight=0.17)
+    widmg.store_and_place(page['label'], "selecting_label", selecting_label, relx=0.10, rely=0.03, relwidth=0.80, relheight=0.17)
 
     def update_combobox_options(name):
         """Updates options for each combobox while keeping current selections visible."""
@@ -1935,40 +1650,37 @@ def add_dropdowns(widmg, datmg, root, editing=False):
         combobox_name = f"combo_box{i}"
         combobox = ttk.Combobox(root, values=options, font=('Arial', 16))
         comboboxes[combobox_name] = combobox
-        if editing:
+        if not in_sequence:
             combobox.set(current_selections[combobox_name])
         
         # Calculate relx and rely for a 3x5 grid
         relx_value = 0.06 + 0.18 * ((i - 1) % 5)  # Adjusted relx for 5 in a row
         rely_value = 0.25 + 0.18 * ((i - 1) // 5)  # Adjusted rely for 3 rows
-        widmg.store_and_place(page['dropdown_menus'], combobox_name, combobox, relx=relx_value, rely=rely_value, relwidth=0.16, relheight=0.12)  # Adjusted relwidth for narrower dropdowns
+        widmg.store_and_place(page['combobox'], combobox_name, combobox, relx=relx_value, rely=rely_value, relwidth=0.16, relheight=0.12)  # Adjusted relwidth for narrower dropdowns
 
         # Bind the function to update selections and adjust options
         combobox.bind('<<ComboboxSelected>>', lambda event, name=combobox_name: selection_handler(event, name))
 
     update_combobox_options(None)
     
-    back_button = ttk.Button(root, text="Back", command=lambda: dropdown_back_bridge(widmg, datmg, root, editing=editing), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "back_button", back_button, relx=0.20, rely=0.80, relwidth=0.25, relheight=0.15)
+    back_button = ttk.Button(root, text="Back", command=lambda: navigate_prev_meta_screen(widmg, datmg, root, page, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.20, rely=0.80, relwidth=0.25, relheight=0.15)
 
-    start_report_button = ttk.Button(root, text="Start Report", command=lambda: start_report_fn_button(widmg, datmg, root, editing=editing), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "start_report_button", start_report_button, relx=0.55, rely=0.80, relwidth=0.25, relheight=0.15)
+    start_report_button = ttk.Button(root, text="Start Report", command=lambda: navigate_next_meta_screen(widmg, datmg, root, page, in_sequence=in_sequence), style='Large.TButton')
+    widmg.store_and_place(page['button'], "start_report_button", start_report_button, relx=0.55, rely=0.80, relwidth=0.25, relheight=0.15)
 
 
-def dropdown_back_bridge(widmg, datmg, root, editing=False):
+def back_from_select_columns_screen(widmg, datmg, root, prev_page, editing=False):
+    widmg.hide_all_page_widgets(prev_page)
     if editing:
-        page = widmg.custom_column_selection_page_widgets
-        widmg.hide_widget_grouping(page['dropdown_menus'])
-        widmg.hide_widget_grouping(page['buttons'])
-        widmg.hide_widget_grouping(page['labels'])
-        display_main_report_screen(widmg, datmg, root, editing=editing)
+        display_main_report_screen(widmg, datmg, root, page, in_sequence=True)
     else:
-        cust_columns_to_review_screen(widmg, datmg, root)
+        create_add_notes_entry_screen(widmg, datmg, root, in_sequence=True)
 
-def start_edited_col_report(widmg, datmg, root):
+def update_col_select_for_metadata(widmg, datmg, root):
     active_tab = datmg.json_data_dict['active_tab']
     page = widmg.custom_column_selection_page_widgets
-    combobox_list = page['dropdown_menus']
+    combobox_list = page['combobox']
     
     new_selections = []
     for key, widget_info in combobox_list.items():
@@ -2002,24 +1714,11 @@ def start_edited_col_report(widmg, datmg, root):
         updated_data = {key: value for key, value in data.items() if key in new_selections}
         datmg.json_data_dict['report_data'][active_tab]['joint_data'][joint] = updated_data
 
-def start_report_fn_button(widmg, datmg, root, editing=False):
-    if editing:
-        start_edited_col_report(widmg, datmg, root)
-        display_main_report_screen(widmg, datmg, root, editing=editing)
-    else:
-        add_column_selections_to_meta(widmg, datmg, root)
-        display_main_report_screen(widmg, datmg, root)
     
-def cust_columns_to_review_screen(widmg, datmg, root):
-    page = widmg.custom_column_selection_page_widgets
-    widmg.hide_widget_grouping(page['dropdown_menus'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    show_review_screen(widmg, datmg, root, editing=False)
 
 def add_column_selections_to_meta(widmg, datmg, root):
     active_tab = datmg.json_data_dict['active_tab']
-    combobox_list = widmg.custom_column_selection_page_widgets['dropdown_menus']
+    combobox_list = widmg.custom_column_selection_page_widgets['combobox']
     values = []
     for key, widget_info in combobox_list.items():
         widget = widget_info['widget']
@@ -2028,16 +1727,13 @@ def add_column_selections_to_meta(widmg, datmg, root):
             values.append(value)
 
     datmg.json_data_dict['report_data'][active_tab]['users_column_select'] = values
-    datmg.save_dict_to_file()
+    datmg.initialize_json()
 
 
 
-def back_bridge_step(widmg, datmg, root):
-    page = widmg.main_table_display_widgets
-    widmg.hide_widget_grouping(page['back_buttons'])
-    widmg.hide_widget_grouping(page['display_frames'])
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
+
+def back_bridge_step(widmg, datmg, root, prev_page):
+    widmg.hide_all_page_widgets(prev_page)
 
     datmg = DataManager()
     widmg = WidgetManager(root)
@@ -2045,18 +1741,18 @@ def back_bridge_step(widmg, datmg, root):
     widmg.set_data_manager(datmg)
     root.bind("<Configure>", widmg.schedule_resize_fonts)
     
-    branch_select_screen(widmg, datmg, root)
+    start_inspection_screen(widmg, datmg, root)
 
 
-def back_bridge_shtblslscn(widmg, datmg, root):
+def back_bridge_shtblslscn(widmg, datmg, root, prev_page):
     page = widmg.main_table_display_widgets
-    widmg.hide_widget_grouping(page['buttons'])
+    widmg.hide_widget_grouping(page['button'])
 
     widmg.magni_header.set("Are You Sure?")
     widmg.magni_content.set("Continuing will clear your current data. (JSON File will be saved.)")
 
     # Create and store "Yes" and "Cancel" buttons
-    yes_back_button = ttk.Button(root, text="Yes", command=lambda: back_bridge_step(widmg, datmg, root), style='Large.TButton')
+    yes_back_button = ttk.Button(root, text="Yes", command=lambda: back_bridge_step(widmg, datmg, root, page), style='Large.TButton')
     widmg.store_and_place(page['back_buttons'], "yes_back_button", yes_back_button, relx=0.05, rely=0.85, relwidth=0.15, relheight=0.1)
 
     cancel_back_button = ttk.Button(root, text="Cancel", command=lambda: cancel_back_action(widmg, datmg, root), style='Large.TButton')
@@ -2069,51 +1765,52 @@ def cancel_back_action(widmg, datmg, root):
     widmg.magni_content.set("")
 
     widmg.hide_widget_grouping(page['back_buttons'])
-    widmg.place_back_widgets(page['buttons'])
+    widmg.place_back_widgets(page['button'])
     widmg.first_entry_widget.focus_set()
 
 
-def display_main_report_screen(widmg, datmg, root, editing=False):
-    widmg.hide_widget_grouping(widmg.table_select_page_widgets['buttons'])
-    widmg.hide_widget_grouping(widmg.table_select_page_widgets['labels'])
-    widmg.hide_widget_grouping(widmg.custom_column_selection_page_widgets['dropdown_menus'])
-    widmg.hide_widget_grouping(widmg.custom_column_selection_page_widgets['labels'])
-    widmg.hide_widget_grouping(widmg.custom_column_selection_page_widgets['buttons'])
+def display_main_report_screen(widmg, datmg, root, prev_page, in_sequence=True):
+    widmg.hide_all_page_widgets(prev_page)
+
+
+    widmg.current_joint_number.set('1')
+    widmg.magni_header.set("")
+    widmg.magni_content.set("")
 
     page = widmg.main_table_display_widgets
 
-    create_header_and_first_row(widmg, datmg, root)
-    create_all_four_rows(widmg, datmg, root, editing=editing)
-    create_row_count_box(widmg, datmg, root)
     create_magnifier_window(widmg, datmg, root)
+    create_header_and_first_row(widmg, datmg, root)
+    create_all_four_rows(widmg, datmg, root, in_sequence=in_sequence)
+    create_row_count_box(widmg, datmg, root)
     create_microfier_windows(widmg, datmg, root)
     create_mini_meta_display(widmg, datmg, root)
     create_tab_data_box(widmg, datmg, root)
   
     # nav_increment_button = ttk.Button(root, text="Next Joint", command=lambda: increment_joint_number(widmg, datmg, root), style='Large.TButton')
-    # widmg.store_and_place(page['buttons'], "nav_increment_button", nav_increment_button, relx=0.76, rely=0.55, relwidth=0.20, relheight=0.15)
+    # widmg.store_and_place(page['button'], "nav_increment_button", nav_increment_button, relx=0.76, rely=0.55, relwidth=0.20, relheight=0.15)
     # nav_decrement_button = ttk.Button(root, text="Prev Joint", command=lambda: decrement_joint_number(widmg, datmg, root), style='Large.TButton')
-    # widmg.store_and_place(page['buttons'], "nav_decrement_button", nav_decrement_button, relx=0.55, rely=0.55, relwidth=0.2, relheight=0.15)
+    # widmg.store_and_place(page['button'], "nav_decrement_button", nav_decrement_button, relx=0.55, rely=0.55, relwidth=0.2, relheight=0.15)
     
 
-    back_button = ttk.Button(root, text="Start Over", command=lambda: back_bridge_shtblslscn(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "back_button", back_button, relx=0.02, rely=0.80, relwidth=0.20, relheight=0.08)
+    back_button = ttk.Button(root, text="Start Over", command=lambda: back_bridge_shtblslscn(widmg, datmg, root, page), style='Large.TButton')
+    widmg.store_and_place(page['button'], "back_button", back_button, relx=0.02, rely=0.80, relwidth=0.20, relheight=0.08)
 
     finalize_button = ttk.Button(root, text="Finalize", command=lambda: create_confirmation_window(widmg, datmg, root), style='Large.TButton')
-    widmg.store_and_place(page['buttons'], "finalize_button", finalize_button, relx=0.78, rely=0.80, relwidth=0.2, relheight=0.08)
+    widmg.store_and_place(page['button'], "finalize_button", finalize_button, relx=0.78, rely=0.80, relwidth=0.2, relheight=0.08)
 
 
 def create_tab_data_box(widmg, datmg, root):
     page = widmg.main_table_display_widgets
 
     tab_data_box_frame = tk.Frame(root, bd=5, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "tab_data_box_frame", tab_data_box_frame, relx=0.02, rely=0.02, relwidth=0.08, relheigh=0.08)
+    widmg.store_and_place(page['display_frame'], "tab_data_box_frame", tab_data_box_frame, relx=0.02, rely=0.02, relwidth=0.08, relheigh=0.08)
     tab_data_box_frame.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
     tab_data_box_frame.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
     tab_data_box_frame.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
 
     tab_data_label = tk.Label(tab_data_box_frame, textvariable=widmg.tab_data_header, font=('Arial', 20, 'bold'))
-    widmg.store_and_place(page['labels'], "tab_data_label", tab_data_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.99, relheight=0.99)
+    widmg.store_and_place(page['label'], "tab_data_label", tab_data_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.99, relheight=0.99)
     tab_data_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
     tab_data_label.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
     tab_data_label.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
@@ -2122,19 +1819,19 @@ def create_row_count_box(widmg, datmg, root):
     page = widmg.main_table_display_widgets
 
     row_count_box_frame = tk.Frame(root, bd=5, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "row_count_box_frame", row_count_box_frame, relx=.02, rely=0.175, relwidth=0.13, relheigh=0.20)
+    widmg.store_and_place(page['display_frame'], "row_count_box_frame", row_count_box_frame, relx=.02, rely=0.175, relwidth=0.13, relheigh=0.20)
     row_count_box_frame.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
     row_count_box_frame.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
     row_count_box_frame.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
 
 
     joint_number_label = tk.Label(row_count_box_frame, text="JOINT #", font=('Arial', 12, 'bold italic'), padx=1, pady=1)
-    widmg.store_and_place(page['labels'], "joint_number_label", joint_number_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.99, relheight=0.25)
+    widmg.store_and_place(page['label'], "joint_number_label", joint_number_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.99, relheight=0.25)
     joint_number_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
     joint_number_label.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
     joint_number_label.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
     current_joint_number_label = tk.Label(row_count_box_frame, textvariable=widmg.current_joint_number, font=('Arial', 40, 'bold'))
-    widmg.store_and_place(page['labels'], "current_joint_number_label", current_joint_number_label, font_changer=True, relx=0.01, rely=0.26, relwidth=0.99, relheight=0.74)
+    widmg.store_and_place(page['label'], "current_joint_number_label", current_joint_number_label, font_changer=True, relx=0.01, rely=0.26, relwidth=0.99, relheight=0.74)
     current_joint_number_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
     current_joint_number_label.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
     current_joint_number_label.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
@@ -2154,7 +1851,7 @@ def create_header_and_first_row(widmg, datmg, root):
 
 
     col_header_display_frame = tk.Frame(root, bd=4, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "col_header_display_frame", col_header_display_frame, relx=0.15, rely=0.175, relwidth=0.83, relheight=0.20)
+    widmg.store_and_place(page['display_frame'], "col_header_display_frame", col_header_display_frame, relx=0.15, rely=0.175, relwidth=0.83, relheight=0.20)
     col_header_display_frame.bind("<Configure>", adjust_row_height)
     col_header_display_frame.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
     col_header_display_frame.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
@@ -2190,7 +1887,7 @@ def create_header_and_first_row(widmg, datmg, root):
     widmg.first_entry_widget.focus_set()
 
 
-def create_all_four_rows(widmg, datmg, root, editing=False):
+def create_all_four_rows(widmg, datmg, root, in_sequence=True):
     page = widmg.main_table_display_widgets
     active_tab = datmg.json_data_dict['active_tab']
     headers_list = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
@@ -2206,13 +1903,13 @@ def create_all_four_rows(widmg, datmg, root, editing=False):
             label_width = new_width // total_headers
             for idx, header in enumerate(headers_list):
                 key = f"{header}_{idx}"
-                if key in page['display_frames'][row_var_list]:
-                    label_info = page['display_frames'][row_var_list][key]
+                if key in page['display_frame'][row_var_list]:
+                    label_info = page['display_frame'][row_var_list][key]
                     label_widget = label_info['widget']
                     label_widget.config(width=label_width, wraplength=int(label_width * 0.98))
 
         row_frame = tk.Frame(root, bd=1, relief=tk.GROOVE)
-        widmg.store_and_place(page['display_frames'], row_var_list, row_frame, relx=0.15, rely=rel_y, relwidth=0.83, relheight=0.07)
+        widmg.store_and_place(page['display_frame'], row_var_list, row_frame, relx=0.15, rely=rel_y, relwidth=0.83, relheight=0.07)
         row_frame.bind("<Configure>", adjust_row_height)
         row_frame.bind("<Configure>", adjust_label_sizes)
         row_frame.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
@@ -2227,13 +1924,13 @@ def create_all_four_rows(widmg, datmg, root, editing=False):
 
             row_label = tk.Label(row_frame, textvariable=string_var, bd=1, relief="solid", font=('Arial', 12, 'normal'))
             row_label.config(width=label_width, wraplength=int(label_width * 0.98))
-            widmg.store_and_place(page['display_frames'][row_var_list], f"{header}_{idx}", row_label, font_changer=True, relx=idx/total_headers, rely=0, relwidth=1/total_headers, relheight=1)
+            widmg.store_and_place(page['display_frame'][row_var_list], f"{header}_{idx}", row_label, font_changer=True, relx=idx/total_headers, rely=0, relwidth=1/total_headers, relheight=1)
             row_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
             row_label.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
             row_label.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
 
     def update_row_frame(rel_y, row_var_list):
-        row_frame_info = page['display_frames'][row_var_list]
+        row_frame_info = page['display_frame'][row_var_list]
         row_frame = row_frame_info['widget']
         row_frame.place(**row_frame_info['params'])
 
@@ -2243,7 +1940,7 @@ def create_all_four_rows(widmg, datmg, root, editing=False):
         existing_headers = set(row_frame_info.keys()) - {'widget', 'params', 'visible'}
 
         for key in existing_headers - current_headers:
-            widget_info = page['display_frames'][row_var_list].pop(key)
+            widget_info = page['display_frame'][row_var_list].pop(key)
             widget_info['widget'].destroy()
 
             widget_dict_id = id(row_frame_info)
@@ -2269,22 +1966,22 @@ def create_all_four_rows(widmg, datmg, root, editing=False):
             string_var = getattr(widmg, row_var_list)[idx]
 
             if key in row_frame_info:
-                row_label = page['display_frames'][row_var_list][key]['widget']
+                row_label = page['display_frame'][row_var_list][key]['widget']
                 row_label.config(textvariable=string_var, width=label_width, wraplength=int(label_width * 0.98))
-                widmg.store_and_place(page['display_frames'][row_var_list], key, row_label, font_changer=True, relx=idx/total_headers, rely=0, relwidth=1/total_headers, relheight=1)
+                widmg.store_and_place(page['display_frame'][row_var_list], key, row_label, font_changer=True, relx=idx/total_headers, rely=0, relwidth=1/total_headers, relheight=1)
                 row_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
                 row_label.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
                 row_label.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
             else:
                 row_label = tk.Label(row_frame, textvariable=string_var, bd=1, relief="solid", font=('Arial', 12, 'normal'))
                 row_label.config(width=label_width, wraplength=int(label_width * 0.98))
-                widmg.store_and_place(page['display_frames'][row_var_list], key, row_label, font_changer=True, relx=idx/total_headers, rely=0, relwidth=1/total_headers, relheight=1)
+                widmg.store_and_place(page['display_frame'][row_var_list], key, row_label, font_changer=True, relx=idx/total_headers, rely=0, relwidth=1/total_headers, relheight=1)
                 row_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
                 row_label.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
                 row_label.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
 
 
-    if editing:
+    if not in_sequence:
         update_row_frame(0.03, 'prev_sec_row_label_list')
         update_row_frame(0.10, 'prev_first_row_label_list')
         update_row_frame(0.375, 'next_first_row_label_list')
@@ -2298,20 +1995,20 @@ def create_all_four_rows(widmg, datmg, root, editing=False):
 def create_magnifier_window(widmg, datmg, root):
     page = widmg.main_table_display_widgets
     magnifier_disp_frame = tk.Frame(root, bd=5, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "magnifier_disp_frame", magnifier_disp_frame, relx=0.06, rely=0.52, relwidth=0.90, relheight=0.24)
+    widmg.store_and_place(page['display_frame'], "magnifier_disp_frame", magnifier_disp_frame, relx=0.06, rely=0.52, relwidth=0.90, relheight=0.24)
     magnifier_disp_frame.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
 
     magni_header_label = tk.Label(magnifier_disp_frame, textvariable=widmg.magni_header, font=("Arial", 45, 'bold'), wraplength=388)
-    widmg.store_and_place(page['labels'], "magni_header_label", magni_header_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.40, relheight=0.95, anchor='nw')
+    widmg.store_and_place(page['label'], "magni_header_label", magni_header_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.40, relheight=0.95, anchor='nw')
     magni_header_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
 
     # Create the green border frame for the magni_content_label
     magni_content_border_frame = tk.Frame(magnifier_disp_frame, background='green', bd=0)
-    widmg.store_and_place(page['display_frames'], "magni_content_border_frame", magni_content_border_frame, relx=0.42, rely=0.01, relwidth=0.58, relheight=0.95, anchor='nw')
+    widmg.store_and_place(page['display_frame'], "magni_content_border_frame", magni_content_border_frame, relx=0.42, rely=0.01, relwidth=0.58, relheight=0.95, anchor='nw')
 
     # Place the actual magni_content_label inside this green border frame
     magni_content_label = tk.Label(magni_content_border_frame, textvariable=widmg.magni_content, font=("Helvetica", 38, 'italic'), wraplength=552)
-    widmg.store_and_place(page['labels'], "magni_content_label", magni_content_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.98, anchor='nw')
+    widmg.store_and_place(page['label'], "magni_content_label", magni_content_label, font_changer=True, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.98, anchor='nw')
     magni_content_label.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
 
 
@@ -2340,19 +2037,22 @@ def adjust_magnifier_fonts(widmg, root):
         label.config(font=(base_font_family, base_font_size, base_font_weight))
 
     # Adjust font for magni_header_label
-    magni_header_label = widmg.main_table_display_widgets['labels']['magni_header_label']['widget']
+    magni_header_label = widmg.main_table_display_widgets['label']['magni_header_label']['widget']
     adjust_font(magni_header_label, widmg.magni_header, "Arial", 45, 'bold')
 
     # Adjust font for magni_content_label
-    magni_content_label = widmg.main_table_display_widgets['labels']['magni_content_label']['widget']
+    magni_content_label = widmg.main_table_display_widgets['label']['magni_content_label']['widget']
     adjust_font(magni_content_label, widmg.magni_content, "Helvetica", 38, 'italic')
 
 
 
 def create_mini_meta_display(widmg, datmg, root):
     page = widmg.main_table_display_widgets
+
+    active_tab = datmg.json_data_dict['active_tab']
+    insp_type_data = datmg.json_data_dict['report_data'][active_tab]['inspection_type_data']
     mini_meta_disp_frame = tk.Frame(root, bd=5, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "mini_meta_disp_frame", mini_meta_disp_frame, relx=0.5, rely=0.86, relwidth=0.55, relheight=0.20, anchor='center')
+    widmg.store_and_place(page['display_frame'], "mini_meta_disp_frame", mini_meta_disp_frame, relx=0.5, rely=0.86, relwidth=0.55, relheight=0.20, anchor='center')
     mini_meta_disp_frame.bind("<MouseWheel>", lambda event: on_mouse_wheel(event, widmg, datmg, root))
     mini_meta_disp_frame.bind("<Up>", lambda event: decrement_joint_number(widmg, datmg, root))
     mini_meta_disp_frame.bind("<Down>", lambda event: increment_joint_number(widmg, datmg, root))
@@ -2360,88 +2060,117 @@ def create_mini_meta_display(widmg, datmg, root):
     # Metadata and labels
     metadata = datmg.json_data_dict['report_user_metadata']
     header_labels = {
-        'operator_entry': 'Operator: ',
-        'date_entry': 'Date: ',
-        'contractor_entry': 'Contractor: ',
-        'invoice_entry': 'Invoice: ',
-        'location_entry': 'Location: ',
-        'inspected_by_entry': 'Inspected By: ',
-        'inspection_type_selection': 'Inspection Type: ',
-        'connection_size_selection': 'Connection Size: ',
-        'connection_type_selection': 'Connection Type: '
+        'operator_choice': 'Operator: ',
+        'date_choice': 'Date: ',
+        'contractor_choice': 'Contractor: ',
+        'invoice_choice': 'Invoice: ',
+        'location_choice': 'Location: ',
+        'inspected_by_choice': 'Inspected By: ',
+        'category_choice': 'Inspection Type: ',
+        'connection_size_choice': 'Connection Size: ',
+        'connection_type_choice': 'Connection Type: '
     }
 
     # Manually calculated positions
     label_positions = [
-        ('operator_entry', 0.0, 0.0, 0.17),  # (key, x position header, y position, width)
-        ('date_entry', 0.5, 0.0, 0.20),
-        ('contractor_entry', 0.0, 0.15, 0.17),
-        ('invoice_entry', 0.5, 0.15, 0.20),
-        ('location_entry', 0.0, 0.30, 0.17),
-        ('inspected_by_entry', 0.5, 0.30, 0.20),
-        ('inspection_type_selection', 0.0, 0.45, 0.235),
-        ('connection_size_selection', 0.0, 0.85, 0.24),
-        ('connection_type_selection', 0.5, 0.85, 0.24)
+        ('operator_choice', 0.0, 0.0, 0.17),  # (key, x position header, y position, width)
+        ('date_choice', 0.5, 0.0, 0.20),
+        ('contractor_choice', 0.0, 0.15, 0.17),
+        ('invoice_choice', 0.5, 0.15, 0.20),
+        ('location_choice', 0.0, 0.30, 0.17),
+        ('inspected_by_choice', 0.5, 0.30, 0.20),
+        ('category_choice', 0.0, 0.45, 0.235),
+        ('connection_size_choice', 0.0, 0.85, 0.24),
+        ('connection_type_choice', 0.5, 0.85, 0.24)
     ]
 
     for key, relx, rely, relwidth in label_positions:
-        if key == 'inspection_type_selection':
+        if key == 'category_choice':
             # Create and store metadata labels
             header_text = header_labels[key]
             header_label = tk.Label(mini_meta_disp_frame, text=header_text, bd=1, relief="solid", font=('Arial', 12, 'bold'), anchor='w')
-            widmg.store_and_place(page['labels'], f"{key}_header_label", header_label, font_changer=True, relx=relx, rely=rely, relwidth=relwidth, relheight=0.4, anchor='nw')
+            widmg.store_and_place(page['label'], f"{key}_header_label", header_label, font_changer=True, relx=relx, rely=rely, relwidth=relwidth, relheight=0.4, anchor='nw')
             
             # Construct the value text
-            value_text = metadata.get(key, '')
-            if metadata.get('inspection_type_addodid', False):
-                value_text += " Actual OD's, ID's, and Tong Space"
-            if 'inspection_type_additional' in metadata:
-                value_text += f" {metadata['inspection_type_additional']}"
+            value_text = insp_type_data.get(key, '')
+            if insp_type_data.get('addodid_choice', False):
+                value_text += ", Actual OD's, ID's, and Tong Space"
+            if insp_type_data.get('additional_choice', None):
+                value_text += f", {insp_type_data['additional_choice']}"
 
             value_label = tk.Label(mini_meta_disp_frame, text=value_text, bd=1, relief="solid", font=('Helvetica', 11, 'italic'), anchor='center', wraplength=425)
-            widmg.store_and_place(page['labels'], f"{key}_value_label", value_label, font_changer=True, relx=relx + relwidth, rely=rely, relwidth=float(1 - relwidth), relheight=0.4)
-        elif key == 'connection_size_selection':
+            widmg.store_and_place(page['label'], f"{key}_value_label", value_label, font_changer=True, relx=relx + relwidth, rely=rely, relwidth=float(1 - relwidth), relheight=0.4)
+        elif key == 'connection_size_choice':
             header_text = header_labels[key]
             header_label = tk.Label(mini_meta_disp_frame, text=header_text, bd=1, relief="solid", font=('Arial', 12, 'bold'), anchor='w')
-            widmg.store_and_place(page['labels'], f"{key}_header_label", header_label, font_changer=True, relx=relx, rely=rely, relwidth=relwidth, relheight=0.15, anchor='nw')
-            value_to_get = metadata.get(key, '') + " " + metadata.get('grade_info', '')
+            widmg.store_and_place(page['label'], f"{key}_header_label", header_label, font_changer=True, relx=relx, rely=rely, relwidth=relwidth, relheight=0.15, anchor='nw')
+            grade_choice = metadata.get('grade_choice', '') if metadata.get('grade_choice', '') is not None else ""
+            value_to_get = metadata.get(key, '') + " " + grade_choice
             value_label = tk.Label(mini_meta_disp_frame, text=value_to_get, bd=1, relief="solid", font=('Helvetica', 11, 'italic'), anchor='w')
-            widmg.store_and_place(page['labels'], f"{key}_value_label", value_label, font_changer=True, relx=relx + relwidth, rely=rely, relwidth=float(0.5 - relwidth), relheight=0.15)
+            widmg.store_and_place(page['label'], f"{key}_value_label", value_label, font_changer=True, relx=relx + relwidth, rely=rely, relwidth=float(0.5 - relwidth), relheight=0.15)
 
         else:
             header_text = header_labels[key]
             header_label = tk.Label(mini_meta_disp_frame, text=header_text, bd=1, relief="solid", font=('Arial', 12, 'bold'), anchor='w')
-            widmg.store_and_place(page['labels'], f"{key}_header_label", header_label, font_changer=True, relx=relx, rely=rely, relwidth=relwidth, relheight=0.15, anchor='nw')
+            widmg.store_and_place(page['label'], f"{key}_header_label", header_label, font_changer=True, relx=relx, rely=rely, relwidth=relwidth, relheight=0.15, anchor='nw')
             value_label = tk.Label(mini_meta_disp_frame, text=metadata.get(key, ''), bd=1, relief="solid", font=('Helvetica', 11, 'italic'), anchor='w')
-            widmg.store_and_place(page['labels'], f"{key}_value_label", value_label, font_changer=True, relx=relx + relwidth, rely=rely, relwidth=float(0.5 - relwidth), relheight=0.15)
+            widmg.store_and_place(page['label'], f"{key}_value_label", value_label, font_changer=True, relx=relx + relwidth, rely=rely, relwidth=float(0.5 - relwidth), relheight=0.15)
 
-    edit_metadata_btn = ttk.Button(root, text="Edit Metadata", command=lambda: edit_metadata_action_bridge(widmg, datmg, root), style='Small.TButton')
-    widmg.store_and_place(page['buttons'], "edit_metadata_btn", edit_metadata_btn, relx=0.05, rely=0.90, relwidth=0.15, relheight=0.05)
+    edit_metadata_btn = ttk.Button(root, text="Edit Metadata", command=lambda: create_metadata_edit_screen(widmg, datmg, root, page, in_sequence=False), style='Small.TButton')
+    widmg.store_and_place(page['button'], "edit_metadata_btn", edit_metadata_btn, relx=0.05, rely=0.90, relwidth=0.15, relheight=0.05)
 
-    edit_columns_btn = ttk.Button(root, text="Edit Columns", command=lambda: edit_columns_bridge(widmg, datmg, root), style='Small.TButton')
-    widmg.store_and_place(page['buttons'], "edit_columns_btn", edit_columns_btn, relx=0.81, rely=0.90, relwidth=0.15, relheight=0.05)
+    edit_columns_btn = ttk.Button(root, text="Edit Columns", command=lambda: create_select_columns_screen(widmg, datmg, root, page, in_sequence=False), style='Small.TButton')
+    widmg.store_and_place(page['button'], "edit_columns_btn", edit_columns_btn, relx=0.81, rely=0.90, relwidth=0.15, relheight=0.05)
 
 
 
-def edit_columns_bridge(widmg, datmg, root):
-    page = widmg.main_table_display_widgets
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['display_frames'])
 
-    add_dropdowns(widmg, datmg, root, editing=True)
+def create_metadata_edit_screen(widmg, datmg, root, prev_page, in_sequence=False):
+    widmg.hide_all_page_widgets(prev_page)
+    page = widmg.metadata_edit_screen_widgets  # Dictionary for storing widgets on this screen
 
-def edit_metadata_action_bridge(widmg, datmg, root):
-    page = widmg.main_table_display_widgets
+    # Create the label at the top
+    instruction_label = ttk.Label(root, text="Edit Metadata For Current Report", font=('Arial', 42, 'underline bold italic'))
+    widmg.store_and_place(page['label'], "instruction_label", instruction_label, relx=0.01, rely=0.01, relwidth=0.98, relheight=0.15, anchor='nw')
 
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['display_frames'])
+    # Button texts and corresponding functions
+    button_actions = {
+        "DATE": lambda: create_date_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "OPERATOR": lambda: create_operator_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "CONTRACTOR": lambda: create_contractor_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "LOCATION": lambda: create_location_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "INVOICE": lambda: create_invoice_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "CONNECTION SIZE/TYPE": lambda: create_conn_size_type_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "GRADE": lambda: create_gradeinfo_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "INSPECTED BY": lambda: create_inspectedby_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "INSPECTION TYPE": lambda: create_inspectiontype_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+        "NOTES": lambda: create_add_notes_entry_screen(widmg, datmg, root, page, in_sequence=in_sequence),
+    }
 
-    if 'grade_info' in datmg.json_data_dict['report_user_metadata']:
-        widmg.grade_info_tube.set(datmg.json_data_dict['report_user_metadata']['grade_info'])
-    
-    create_report_metadata_input_widgets(widmg, datmg, root, editing=True)
+    # Grid layout configuration
+    rows = 4
+    cols = 3
+    relx_start = 0.03
+    relwidth = 0.30
+    relheight = 0.11
+    relx_spacing = 0.02
+    rely_spacing = 0.05
+    button_wraplength = (root_width * relwidth)
+
+    # Create buttons and arrange them in a grid
+    for i, (text, action) in enumerate(button_actions.items()):
+        row = i // cols
+        col = i % cols
+
+        # Calculate positions
+        relx = relx_start + col * (relwidth + relx_spacing)
+        rely = 0.2 + row * (relheight + rely_spacing)
+
+        # Create and store the button
+        button = ttk.Button(root, text=text, command=action, style='Large.TButton')
+        widmg.store_and_place(page['button'], f"{text.lower().replace(' ', '_')}_button", button, relx=relx, rely=rely, relwidth=relwidth, relheight=relheight, anchor='nw')
+
+
 
 def update_microfier_windows(widmg, datmg, root):
     current_value = int(widmg.current_joint_number.get())
@@ -2464,24 +2193,24 @@ def update_microfier_windows(widmg, datmg, root):
 def create_microfier_windows(widmg, datmg, root):
     page = widmg.main_table_display_widgets
     microfier_negative_two_frame = tk.Frame(root, bd=1, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "microfier_negative_two_frame", microfier_negative_two_frame, relx=0.11, rely=0.03, relwidth=0.04, relheight=0.07)
+    widmg.store_and_place(page['display_frame'], "microfier_negative_two_frame", microfier_negative_two_frame, relx=0.11, rely=0.03, relwidth=0.04, relheight=0.07)
     micro_neg_two_label = tk.Label(microfier_negative_two_frame, textvariable=widmg.micro_negative_two_stvar, bd=1, font=('Arial', 12, 'bold'))
-    widmg.store_and_place(page['labels'], "micro_neg_two_label", micro_neg_two_label, relx=0.01, rely=0.01)
+    widmg.store_and_place(page['label'], "micro_neg_two_label", micro_neg_two_label, relx=0.01, rely=0.01)
 
     microfier_negative_one_frame = tk.Frame(root, bd=1, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "microfier_negative_one_frame", microfier_negative_one_frame, relx=0.11, rely=0.10, relwidth=0.04, relheight=0.07)
+    widmg.store_and_place(page['display_frame'], "microfier_negative_one_frame", microfier_negative_one_frame, relx=0.11, rely=0.10, relwidth=0.04, relheight=0.07)
     micro_neg_one_label = tk.Label(microfier_negative_one_frame, textvariable=widmg.micro_negative_one_stvar, bd=1, font=('Arial', 12, 'bold'))
-    widmg.store_and_place(page['labels'], "micro_neg_one_label", micro_neg_one_label, relx=0.01, rely=0.01)
+    widmg.store_and_place(page['label'], "micro_neg_one_label", micro_neg_one_label, relx=0.01, rely=0.01)
 
     microfier_plus_one_frame = tk.Frame(root, bd=1, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "microfier_plus_one_frame", microfier_plus_one_frame, relx=0.11, rely=0.375, relwidth=0.04, relheight=0.07)
+    widmg.store_and_place(page['display_frame'], "microfier_plus_one_frame", microfier_plus_one_frame, relx=0.11, rely=0.375, relwidth=0.04, relheight=0.07)
     micro_plus_one_label = tk.Label(microfier_plus_one_frame, textvariable=widmg.micro_plus_one_stvar, bd=1, font=('Arial', 12, 'bold'))
-    widmg.store_and_place(page['labels'], "micro_plus_one_label", micro_plus_one_label, relx=0.01, rely=0.01)
+    widmg.store_and_place(page['label'], "micro_plus_one_label", micro_plus_one_label, relx=0.01, rely=0.01)
 
     microfier_plus_two_frame = tk.Frame(root, bd=1, relief=tk.GROOVE)
-    widmg.store_and_place(page['display_frames'], "microfier_plus_two_frame", microfier_plus_two_frame, relx=0.11, rely=0.445, relwidth=0.04, relheight=0.07)
+    widmg.store_and_place(page['display_frame'], "microfier_plus_two_frame", microfier_plus_two_frame, relx=0.11, rely=0.445, relwidth=0.04, relheight=0.07)
     micro_plus_two_label = tk.Label(microfier_plus_two_frame, textvariable=widmg.micro_plus_two_stvar, bd=1, font=('Arial', 12, 'bold'))
-    widmg.store_and_place(page['labels'], "micro_plus_two_label", micro_plus_two_label, relx=0.01, rely=0.01)
+    widmg.store_and_place(page['label'], "micro_plus_two_label", micro_plus_two_label, relx=0.01, rely=0.01)
 
 
 def on_mouse_wheel(event, widmg, datmg, root):
@@ -2590,7 +2319,7 @@ def update_all_row_cells(widmg, datmg, root, editing=False):
         active_tab = datmg.json_data_dict['active_tab']
         joint_key = f"Joint_{current_value + joint_key_offset}"
         cells = getattr(widmg, row_var_list)
-        row_dict = widmg.main_table_display_widgets['display_frames'][row_var_list]
+        row_dict = widmg.main_table_display_widgets['display_frame'][row_var_list]
         frame_key = f"{row_var_list}"
 
         if set_default:
@@ -2712,8 +2441,8 @@ def update_all_row_cells(widmg, datmg, root, editing=False):
 
 def validate_ut(header_value, header, datmg):
     active_tab = datmg.json_data_dict['active_tab']
-    connection_size = datmg.json_data_dict['report_user_metadata']['connection_size_selection']
-    conn_type_select = datmg.json_data_dict['report_user_metadata']['connection_type_selection'] 
+    connection_size = datmg.json_data_dict['report_user_metadata']['connection_size_choice']
+    conn_type_select = datmg.json_data_dict['report_user_metadata']['connection_type_choice'] 
     report_type = datmg.json_data_dict['report_type']
     if report_type == 'Drill Pipe Inspection Report':
         nominal_wall = 1000 * (datmg.dp_conn_size_nom_rel_dict[connection_size])
@@ -2748,7 +2477,7 @@ def validate_reface(header_value, header, datmg):
     n = len(data_chunks)
     reface_kws = ["R1", "R2", "R3", "R4", "R"]
 
-    conn_type = datmg.json_data_dict['report_user_metadata']['connection_type_selection']
+    conn_type = datmg.json_data_dict['report_user_metadata']['connection_type_choice']
 
     boxcl_min_bef = str(datmg.dp_conn_type_vals_dict[conn_type][4]).split(".")[0]
     boxcl_max_bef = str(datmg.dp_conn_type_vals_dict[conn_type][5]).split(".")[0]
@@ -2787,7 +2516,7 @@ def validate_reface(header_value, header, datmg):
 def save_current_row_data(widmg, datmg, root):
     active_tab = datmg.json_data_dict['active_tab']
     col_selects = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
-    col_head_frame = widmg.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
+    col_head_frame = widmg.main_table_display_widgets['display_frame']['col_header_display_frame']['widget']
     current_value = int(widmg.current_joint_number.get())
     joint_key = f"Joint_{current_value}"
 
@@ -2803,7 +2532,7 @@ def load_row_data(widmg, datmg, root):
     active_tab = datmg.json_data_dict['active_tab']
     col_selects = datmg.json_data_dict['report_data'][active_tab]['users_column_select']
 
-    col_head_frame = widmg.main_table_display_widgets['display_frames']['col_header_display_frame']['widget']
+    col_head_frame = widmg.main_table_display_widgets['display_frame']['col_header_display_frame']['widget']
     current_value = int(widmg.current_joint_number.get())
     joint_key = f"Joint_{current_value}"
 
@@ -2820,6 +2549,7 @@ def update_report_data(widmg, datmg, root):
     joint_data = datmg.json_data_dict['report_data'][active_tab]['joint_data']
 
     max_joint_number = int(widmg.update_rows_entry_widget.get())
+    datmg.json_data_dict['report_data'][active_tab]['joint_count'] = int(widmg.update_rows_entry_widget.get())
     keys_to_delete = [key for key in joint_data.keys() if int(key.split('_')[1]) > max_joint_number]
     for key in keys_to_delete:
         del joint_data[key]
@@ -2974,9 +2704,9 @@ def update_new_report_metadata(datmg, widmg, typrep):
 def hide_main_report_scrn_dp_tab_new_json(datmg, widmg, root):
     page = widmg.main_table_display_widgets
 
-    widmg.hide_widget_grouping(page['buttons'])
-    widmg.hide_widget_grouping(page['labels'])
-    widmg.hide_widget_grouping(page['display_frames'])
+    widmg.hide_widget_grouping(page['button'])
+    widmg.hide_widget_grouping(page['label'])
+    widmg.hide_widget_grouping(page['display_frame'])
 
     create_report_metadata_input_widgets(widmg, datmg, root, editing=False)
 
@@ -3318,6 +3048,7 @@ def find_highest_joint_num_for_export(widmg, datmg, root):
             joint_numbers.append(joint_number)
     if joint_numbers:
         highest_joint_number = max(joint_numbers)
+        datmg.json_data_dict['report_data'][active_tab]['joint_count'] = highest_joint_number
         return highest_joint_number
     else:
         return 0
@@ -3331,31 +3062,31 @@ def create_modify_excel_document_nd_tubing(folder_selected, widmg, datmg, root):
         wb = openpyxl.load_workbook(datmg.xel_file_path)
 
     metadata = datmg.json_data_dict['report_user_metadata']
-    if metadata['connection_type_selection'] in ["PH6", "FATBOY-PH6", "CS8", "AOH", "BTC", "TWCC"]:
+    if metadata['connection_type_choice'] in ["PH6", "FATBOY-PH6", "CS8", "AOH", "BTC", "TWCC"]:
         del wb['Sum EUE Tubing']
-    elif metadata['connection_type_selection'] == "EUE":
+    elif metadata['connection_type_choice'] == "EUE":
         del wb['Sum PH6 Tubing']
 
     data_sheet = wb['Data Sheet']
     data_mappings = {
-        'B1': metadata['operator_entry'],
-        'B2': metadata['contractor_entry'],
-        'B6': metadata['location_entry'],
-        'B3': metadata['date_entry'],
-        'B4': metadata['invoice_entry'],
-        'B11': metadata['connection_size_selection'],
-        'B12': metadata['connection_type_selection'],
-        'B13': metadata['grade_info'] if 'grade_info' in metadata else "",
-        'B7': metadata['inspected_by_entry'],
-        'B9': metadata['inspection_type_selection'] + (", " + metadata['inspection_type_additional'] if 'inspection_type_additional' in metadata else "")
+        'B1': metadata['operator_choice'],
+        'B2': metadata['contractor_choice'],
+        'B6': metadata['location_choice'],
+        'B3': metadata['date_choice'],
+        'B4': metadata['invoice_choice'],
+        'B11': metadata['connection_size_choice'],
+        'B12': metadata['connection_type_choice'],
+        'B13': metadata['grade_choice'] if 'grade_choice' in metadata else "",
+        'B7': metadata['inspected_by_choice'],
+        'B9': metadata['category_choice'] + (", " + metadata['additional_choice'] if 'additional_choice' in metadata else "")
     }
 
-    if metadata['connection_size_selection'] == "2 7/8\"":
+    if metadata['connection_size_choice'] == "2 7/8\"":
         file_con_sizesel = '2.875'
-    elif metadata['connection_size_selection'] == "2 3/8\"":
+    elif metadata['connection_size_choice'] == "2 3/8\"":
         file_con_sizesel = '2.375'
     else:
-        file_con_sizesel = metadata['connection_size_selection'].strip('"')
+        file_con_sizesel = metadata['connection_size_choice'].strip('"')
 
     for cell, value in data_mappings.items():
         data_sheet[cell] = value
@@ -3372,19 +3103,19 @@ def create_modify_excel_document_nd_tubing(folder_selected, widmg, datmg, root):
     sheet_index = wb.sheetnames.index('Tubing Insp Report')       
     wb.active = sheet_index
 
-    if 'grade_info' in metadata and metadata['grade_info'] != "":
-        grade_info = f"{metadata['grade_info']}_"
+    if 'grade_choice' in metadata and metadata['grade_choice'] != "":
+        grade_info = f"{metadata['grade_choice']}_"
     else:
-        grade_info = f"{metadata['grade_info']}_" if 'grade_info' in metadata else ""
+        grade_info = f"{metadata['grade_choice']}_" if 'grade_choice' in metadata else ""
 
     if datmg.xel_file_path is not None:
         datmg.xel_file_path = os.path.join(folder_selected, datmg.xel_file_path)
         wb.save(datmg.xel_file_path)
     else:
-        datmg.new_excel_fp = os.path.join(folder_selected, f"{metadata['date_entry'].replace('/', '.')}_INV{metadata['invoice_entry']}_{metadata['operator_entry']}_{file_con_sizesel}_{grade_info}Tubing_{metadata['contractor_entry']}_{metadata['connection_type_selection']}_{total_joint_count}JTS.xlsx")
+        datmg.new_excel_fp = os.path.join(folder_selected, f"{metadata['date_choice'].replace('/', '.')}_INV{metadata['invoice_choice']}_{metadata['operator_choice']}_{file_con_sizesel}_{grade_info}Tubing_{metadata['contractor_choice']}_{metadata['connection_type_choice']}_{total_joint_count}JTS.xlsx")
         wb.save(datmg.new_excel_fp) 
                 
-    pdffilename = f"{metadata['date_entry'].replace('/', '.')}_INV{metadata['invoice_entry']}_{metadata['operator_entry']}_{file_con_sizesel}_{grade_info}Tubing_{metadata['contractor_entry']}_{metadata['connection_type_selection']}_{total_joint_count}JTS_PDF-COPY.pdf"
+    pdffilename = f"{metadata['date_choice'].replace('/', '.')}_INV{metadata['invoice_choice']}_{metadata['operator_choice']}_{file_con_sizesel}_{grade_info}Tubing_{metadata['contractor_choice']}_{metadata['connection_type_choice']}_{total_joint_count}JTS_PDF-COPY.pdf"
     pdf_abs_location = os.path.join(folder_selected, pdffilename)
 
     return pdf_abs_location
@@ -3440,15 +3171,15 @@ def create_modify_excel_document_nd_pdpir(folder_selected, widmg, datmg, root):
     # Handle data writing to the 'Data Sheet'
     data_sheet = wb['Data Sheet']
     data_mappings = {
-        'B2': metadata['operator_entry'],
-        'B3': metadata['contractor_entry'],
-        'B12': metadata['location_entry'],
-        'B4': metadata['date_entry'],
-        'B5': metadata['invoice_entry'],
-        'B8': float(metadata['connection_size_selection']),
-        'B9': metadata['connection_type_selection'],
-        'B6': metadata['inspected_by_entry'],
-        'B10': metadata['grade_info'] if 'grade_info' in metadata else ""
+        'B2': metadata['operator_choice'],
+        'B3': metadata['contractor_choice'],
+        'B12': metadata['location_choice'],
+        'B4': metadata['date_choice'],
+        'B5': metadata['invoice_choice'],
+        'B8': float(metadata['connection_size_choice']),
+        'B9': metadata['connection_type_choice'],
+        'B6': metadata['inspected_by_choice'],
+        'B10': metadata['grade_choice'] if 'grade_choice' in metadata else ""
     }
 
     for cell, value in data_mappings.items():
@@ -3463,9 +3194,9 @@ def create_modify_excel_document_nd_pdpir(folder_selected, widmg, datmg, root):
     elif metadata['active_tab'] == 'Prop Subs Inp Report':
         target_tab = 'Sum Subs'
 
-    inspection_type = metadata['inspection_type_selection']
-    additional_1 = ", Actual OD's, ID's, and Tong Space" if 'inspection_type_addodid' in metadata and metadata['inspection_type_addodid'] == True else None
-    additional_2 = metadata['inspection_type_additional'] if 'inspection_type_additional' in metadata and metadata['inspection_type_additional'] is not None else None
+    inspection_type = metadata['category_choice']
+    additional_1 = ", Actual OD's, ID's, and Tong Space" if 'addodid_choice' in metadata and metadata['addodid_choice'] == True else None
+    additional_2 = metadata['additional_choice'] if 'additional_choice' in metadata and metadata['additional_choice'] is not None else None
 
     target_sheet = wb[target_tab]
     target_sheet['M3'] = inspection_type
@@ -3562,12 +3293,12 @@ def create_modify_excel_document_nd_pdpir(folder_selected, widmg, datmg, root):
 
 
     else:
-        base_full_path = os.path.join(folder_selected, f"{metadata['date_entry'].replace('/', '.')}_INV{metadata['invoice_entry']}_{metadata['connection_size_selection']} Inch {typrep} Inspection Report_{metadata['operator_entry']}_{metadata['contractor_entry']}_{total_joint_count}JTS")
+        base_full_path = os.path.join(folder_selected, f"{metadata['date_choice'].replace('/', '.')}_INV{metadata['invoice_choice']}_{metadata['connection_size_choice']} Inch {typrep} Inspection Report_{metadata['operator_choice']}_{metadata['contractor_choice']}_{total_joint_count}JTS")
         datmg.new_excel_fp = f"{base_full_path}.xlsx"
         datmg.json_tct_filepath = f"{base_full_path}_tct.json"
  
 
-    pdffilename = f"{metadata['date_entry'].replace('/', '.')}_INV{metadata['invoice_entry']}_{metadata['connection_size_selection']} Inch {pdf_typrep} Inspection Report_{metadata['operator_entry']}_{metadata['contractor_entry']}_{total_joint_count}JTS_PDF-COPY.pdf"
+    pdffilename = f"{metadata['date_choice'].replace('/', '.')}_INV{metadata['invoice_choice']}_{metadata['connection_size_choice']} Inch {pdf_typrep} Inspection Report_{metadata['operator_choice']}_{metadata['contractor_choice']}_{total_joint_count}JTS_PDF-COPY.pdf"
 
 
     return wb, undo_filepath, undo_jsontct_filepath, pdf_to_delete, pdffilename
@@ -3607,15 +3338,15 @@ def create_modify_excel_document_tx_multi(folder_selected, widmg, datmg, root):
     # Handle data writing to the 'Data Sheet'
     data_sheet = wb['DATA SHEET']
     data_mappings = {
-        'B2': metadata['operator_entry'],
-        'B3': metadata['contractor_entry'],
-        'B4': metadata['location_entry'],
-        'B5': metadata['date_entry'],
-        'B6': metadata['invoice_entry'],
-        'B9': float(metadata['connection_size_selection']),
-        'B10': metadata['connection_type_selection'],
-        'B7': metadata['inspected_by_entry'],
-        'B11': metadata['grade_info'] if 'grade_info' in metadata else "",
+        'B2': metadata['operator_choice'],
+        'B3': metadata['contractor_choice'],
+        'B4': metadata['location_choice'],
+        'B5': metadata['date_choice'],
+        'B6': metadata['invoice_choice'],
+        'B9': float(metadata['connection_size_choice']),
+        'B10': metadata['connection_type_choice'],
+        'B7': metadata['inspected_by_choice'],
+        'B11': metadata['grade_choice'] if 'grade_choice' in metadata else "",
 
     }
 
@@ -3623,9 +3354,9 @@ def create_modify_excel_document_tx_multi(folder_selected, widmg, datmg, root):
         data_sheet[cell] = value
 
 
-    inspection_type = metadata['inspection_type_selection']
-    additional_1 = ", Actual OD's, ID's, and Tong Space" if 'inspection_type_addodid' in metadata and metadata['inspection_type_addodid'] == True else None
-    additional_2 = metadata['inspection_type_additional'] if 'inspection_type_additional' in metadata and metadata['inspection_type_additional'] is not None else None
+    inspection_type = metadata['category_choice']
+    additional_1 = ", Actual OD's, ID's, and Tong Space" if 'addodid_choice' in metadata and metadata['addodid_choice'] == True else None
+    additional_2 = metadata['additional_choice'] if 'additional_choice' in metadata and metadata['additional_choice'] is not None else None
 
     if metadata['active_tab'] == 'Prop Drill Pipe Inp Report':
         data_sheet['E3'] = inspection_type 
@@ -3722,10 +3453,10 @@ def create_modify_excel_document_tx_multi(folder_selected, widmg, datmg, root):
         datmg.xel_file_path = new_file_path
         wb.save(datmg.xel_file_path)
     else:
-        datmg.new_excel_fp = os.path.join(folder_selected, f"{metadata['date_entry'].replace('/', '.')}_INV{metadata['invoice_entry']}_{metadata['connection_size_selection']} Inch {typrep} Inspection Report_{metadata['operator_entry']}_{metadata['contractor_entry']}_{total_joint_count}JTS.xlsx")
+        datmg.new_excel_fp = os.path.join(folder_selected, f"{metadata['date_choice'].replace('/', '.')}_INV{metadata['invoice_choice']}_{metadata['connection_size_choice']} Inch {typrep} Inspection Report_{metadata['operator_choice']}_{metadata['contractor_choice']}_{total_joint_count}JTS.xlsx")
         wb.save(datmg.new_excel_fp)
 
-    pdffilename = f"{metadata['date_entry'].replace('/', '.')}_INV{metadata['invoice_entry']}_{metadata['connection_size_selection']} Inch {pdf_typrep} Inspection Report_{metadata['operator_entry']}_{metadata['contractor_entry']}_{total_joint_count}JTS_PDF-COPY.pdf"
+    pdffilename = f"{metadata['date_choice'].replace('/', '.')}_INV{metadata['invoice_choice']}_{metadata['connection_size_choice']} Inch {pdf_typrep} Inspection Report_{metadata['operator_choice']}_{metadata['contractor_choice']}_{total_joint_count}JTS_PDF-COPY.pdf"
     pdf_abs_location = os.path.join(folder_selected, pdffilename)
     return pdf_abs_location
 
@@ -5388,7 +5119,7 @@ def write_summary_notes_nd_tubing(datmg, workbook):
         sheet[write_cell_hbs] = matched_text
 
 def generate_summary_entry_ndtube(keyword_tally_dict, datmg):
-    connection_size = datmg.json_data_dict['report_user_metadata']['connection_size_selection']
+    connection_size = datmg.json_data_dict['report_user_metadata']['connection_size_choice']
     joint_tallies = keyword_tally_dict.get("Joint Tallies", {})
     keyword_tallies = keyword_tally_dict.get("Keyword Tallies", {})
 
@@ -5639,19 +5370,19 @@ def generate_pdf_copy(summary_data, filename, widmg, datmg, root):
 
     metadata = datmg.json_data_dict['report_user_metadata']
     header_labels = {
-        'operator_entry': 'Operator: ',
-        'date_entry': 'Date: ',
-        'contractor_entry': 'Contractor/Rig: ',
-        'invoice_entry': 'Invoice: ',
-        'location_entry': 'Location: ',
-        'inspected_by_entry': 'Inspected By: ',
-        'inspection_type_selection': 'Inspection Type: ',
-        'connection_size_selection': 'Connection Size: ',
-        'connection_type_selection': 'Connection Type: '
+        'operator_choice': 'Operator: ',
+        'date_choice': 'Date: ',
+        'contractor_choice': 'Contractor/Rig: ',
+        'invoice_choice': 'Invoice: ',
+        'location_choice': 'Location: ',
+        'inspected_by_choice': 'Inspected By: ',
+        'category_choice': 'Inspection Type: ',
+        'connection_size_choice': 'Connection Size: ',
+        'connection_type_choice': 'Connection Type: '
     }
 
-    additional_1 = "Actual OD's, ID's, and Tong Space" if metadata.get('inspection_type_addodid', False) else ""
-    additional_2 = f"{metadata.get('inspection_type_additional', '')}" if 'inspection_type_additional' in metadata else ""
+    additional_1 = "Actual OD's, ID's, and Tong Space" if metadata.get('addodid_choice', False) else ""
+    additional_2 = f"{metadata.get('additional_choice', '')}" if 'additional_choice' in metadata else ""
 
     def print_meta_table():
         pdf.set_font("Arial", 'B', size=12)
@@ -5665,22 +5396,22 @@ def generate_pdf_copy(summary_data, filename, widmg, datmg, root):
         pdf.cell(frame_width, frame_height, border=1)
 
         label_positions = [
-            ('operator_entry', 0.0, 0.0, 0.20),  # (key, x position header, y position, width)
-            ('date_entry', 0.5, 0.0, 0.20),
-            ('contractor_entry', 0.0, 0.16, 0.20),
-            ('invoice_entry', 0.5, 0.16, 0.20),
-            ('location_entry', 0.0, 0.32, 0.20),
-            ('inspected_by_entry', 0.5, 0.32, 0.20),
-            ('inspection_type_selection', 0.0, 0.48, 0.20),
-            ('connection_size_selection', 0.0, 0.84, 0.20),
-            ('connection_type_selection', 0.5, 0.84, 0.20)
+            ('operator_choice', 0.0, 0.0, 0.20),  # (key, x position header, y position, width)
+            ('date_choice', 0.5, 0.0, 0.20),
+            ('contractor_choice', 0.0, 0.16, 0.20),
+            ('invoice_choice', 0.5, 0.16, 0.20),
+            ('location_choice', 0.0, 0.32, 0.20),
+            ('inspected_by_choice', 0.5, 0.32, 0.20),
+            ('category_choice', 0.0, 0.48, 0.20),
+            ('connection_size_choice', 0.0, 0.84, 0.20),
+            ('connection_type_choice', 0.5, 0.84, 0.20)
         ]
 
         for key, relx, rely, relwidth in label_positions:
             header_text = header_labels[key]
             value_text = metadata.get(key, '')
 
-            if key == 'inspection_type_selection':
+            if key == 'category_choice':
                 if additional_1:
                     value_text += f" {additional_1}"
                 if additional_2:
@@ -5688,8 +5419,8 @@ def generate_pdf_copy(summary_data, filename, widmg, datmg, root):
                 wraplength = frame_width * 0.425
                 relheight = 0.36
                 align = 'C'
-            elif key == 'connection_size_selection':
-                value_text = metadata.get(key, '') + " " + metadata.get('grade_info', '')
+            elif key == 'connection_size_choice':
+                value_text = metadata.get(key, '') + " " + metadata.get('grade_choice', '')
                 wraplength = None
                 relheight = 0.16
                 align = 'L'
@@ -6011,7 +5742,7 @@ def main():
         widmg = WidgetManager(root)
         datmg.set_widget_manager(widmg)
         widmg.set_data_manager(datmg)
-        branch_select_screen(widmg, datmg, root)
+        start_inspection_screen(widmg, datmg, root)
         root.bind("<Configure>", widmg.schedule_resize_fonts)
         root.mainloop()
     except Exception as e:
