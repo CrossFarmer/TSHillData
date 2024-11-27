@@ -1,0 +1,8 @@
+{           
+	    "": "", "COMMENTS": "COMMENTS", "SERIAL": "SERIAL", "UT": "UT", "TUBE": "TUBE",
+            "BOX": "BOX", "OD": "OD", "TS-BOX": "TS-BOX", 
+            "PIN": "PIN", "ID": "ID", "TS-PIN": "TS-PIN", "BD-BOX": "BD-BOX", "BD-PIN": "BD-PIN",
+            "DESCRIPTION": "DESCRIPTION", "SUBS CONN/DATA": "SUBS CONN/DATA",
+            "BORBAK": "BORBAK", "STRES REL GRV": "STRES REL GRV", "C BORE": "C BORE",
+            "PIN NOSE DIA": "PIN NOSE DIA", "SEAL WIDTH": "SEAL WIDTH"
+}

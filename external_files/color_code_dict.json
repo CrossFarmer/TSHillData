@@ -1,0 +1,8 @@
+{
+    "Good Nominal Wall": ["black", "systemButtonFace", ["Helvetica", 12, "bold"]],
+    "Class 2": ["yellow", "gray13", ["Helvetica", 12, "bold"]],
+    "Class 3": ["orange", "gray20", ["Helvetica", 12, "bold"]],
+    "Default": ["black", "systemButtonFace", ["TKDefaultFont", 12, "normal"]],
+    "Invalid Validation": ["red", "systemButtonFace", ["Helvetica", 12, "bold"]],
+    "Invalid Syntax": ["white", "red3", ["TKDefaultFont", 12, "normal"]]
+}
