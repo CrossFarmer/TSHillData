@@ -122,4 +122,4 @@ TSHillData is released under a **Non-Commercial License**. It is free for person
 ---
 
 ## Contact
-For inquiries or support, please contact **Chase Gartner** at [chasebgartner@gmail.com](mailto:chasebgartner@gmail.com).
+For inquiries or support, please contact **Chase Gartner** at [contact@chasebgartner.site](mailto:contact@chasebgartner.site).
